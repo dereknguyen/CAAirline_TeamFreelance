@@ -1,0 +1,33 @@
+1. What are some problems that customers have with the current system?
+
+2. What are the reliability requirements (uptime, update rate)
+
+3. What search criteria should the employees and customers use to find flights?
+
+4. Should a customer be able to check out or search without an account?
+
+5. What should be included in management reports?
+
+6. Is the empty seats formula based only on this airline?
+
+7. Which city/cities in Arizona are flights going to?
+
+8. Should flight information be saved into a user/employee's account?
+
+9. How should customers receive a confirmation number? (email, notification, etc)
+
+10. Should there be an additional fee for baggage or a baggage limit per customer?
+
+11. Do all the flights have to go through SLO or can planes go directly from one area to the other?
+
+12. Do other airports schedule their own flights to this airport?
+
+13. Should we produce an error message for flights that cannot be scheduled?
+
+14. What flight statuses are there? What is the definition of the status? Should we track airplane position in real time?
+
+15. What does checking in do? What happens if a customer does not check in?
+
+16. How early/late can a flight be scheduled (by employees) and booked (by customers) before it takes off?
+
+17. Should we allow a customer to book a one-way flight?
