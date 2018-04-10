@@ -1,7 +1,7 @@
-## Team FreeLance
+# Team FreeLance
 CSC307 - 03
 
-# Team Leaders
+## Team Leaders
 1. Marina Moore - Database and Time reporter
 2. Nick Parra - Design and Architecture
 3. Isabel Jellen - Implementation and Test
