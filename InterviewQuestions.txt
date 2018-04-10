@@ -32,7 +32,7 @@
 
 17. Should we allow a customer to book a one-way flight?
 
-18. For customers that purchase in groups, can one customer's account buy tickets for other people? How many maximum tickets can a customer purchase?
+18. For customers that purchase in groups, can one customer's account buy tickets for other people? If so, are they required to put in identifying information?  DO they get separate confirmation numbers? How many maximum tickets can a customer purchase?
 
 19. Do all airplanes have the same number of seats? Does the employee enter the seat count when registering a flight?
 
@@ -45,3 +45,5 @@
 23. Should we provide or calculate flight duration, or will it be entered by an employee?
 
 24. Does the airline have a maximum number of airplanes?
+
+25. 
