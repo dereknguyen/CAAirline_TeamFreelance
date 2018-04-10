@@ -43,3 +43,5 @@
 22. Is the base price the same for all flights to a location, or does it change for each individual trip?
 
 23. Should we provide or calculate flight duration, or will it be entered by an employee?
+
+24. Does the airline have a maximum number of airplanes?
