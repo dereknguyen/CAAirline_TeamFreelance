@@ -1,0 +1,11 @@
+• Introduction: System description and Problem Statement
+• Who are the users of system?
+• Different iterations and deadlines
+• Constraints such as portability and reliability
+• Glossary
+• Use Cases with description and step by step description (if is applicable). Sometimes actions in use cases include another actions.
+• functional requirements, non-functional requirements
+• Acceptance Criteria
+• Data flow digram
+• Dictionary for at least one process and one data element Decision tree for corner cases (at least 2)
+• User interface Wireframing (electronic, but not functional) 
