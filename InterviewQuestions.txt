@@ -37,3 +37,5 @@
 19. Do all airplanes have the same number of seats? Does the employee enter the seat count when registering a flight?
 
 20. During the first two weeks, how will seat price be determined? If a flight is completely empty, should it be cancelled? Is there a minumum price that seats should not drop below?
+
+21. Is there a brand or color scheme that the GUI should follow?
