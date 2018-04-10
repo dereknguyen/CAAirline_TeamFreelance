@@ -39,3 +39,5 @@
 20. During the first two weeks, how will seat price be determined? If a flight is completely empty, should it be cancelled? Is there a minumum price that seats should not drop below?
 
 21. Is there a brand or color scheme that the GUI should follow?
+
+22. Is the base price the same for all flights to a location, or does it change for each individual trip?
