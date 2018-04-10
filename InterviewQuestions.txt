@@ -26,7 +26,7 @@
 
 14. What flight statuses are there? What is the definition of the status? Should we track airplane position in real time?
 
-15. What does checking in do? What happens if a customer does not check in?
+15. What does checking in do? What happens if a customer does not check in? If a customer does not check in does their seat count as empty?
 
 16. How early/late can a flight be scheduled (by employees) and booked (by customers) before it takes off?
 
