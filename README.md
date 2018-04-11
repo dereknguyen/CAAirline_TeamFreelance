@@ -1,4 +1,4 @@
-![Team Logo] (Logo.png "Title")
+![](Logo.png "Title")
 # Team FreeLance
 CSC307 - 03
 
