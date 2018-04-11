@@ -1,3 +1,4 @@
+![] (Assets/Logo.png "Logo")
 # Team FreeLance
 CSC307 - 03
 
