@@ -17,6 +17,7 @@ Table of Contents:
 2. Users and Use Cases
   Users of this software are employees of CAI and customers of CAI. Employees will have an employee account that allows them to schedule flights, set ticket price, and edit flight status. Customers will have a customer account that allows them to view and purchase flight tickets, check in to flights, and view flight statuses. Customers which have not created an account will only be able to view flights and ticket prices.
 
+2a. Use Case 1
 
 Glossary 
 
