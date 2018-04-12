@@ -1,12 +1,13 @@
+![](Logo.png "Title")
 # Team FreeLance
 CSC307 - 03
 
-## Team Leaders
-1. Marina Moore - Database and Time reporter mmoore32@calpoly.edu mnm678@gmail.com
-2. Nick Parra - Design and Architecture nparra1997@gmail.com nparra@calpoly.edu
-3. Isabel Jellen - Implementation and Test blueribbonij02@gmail.com
-4. Robert Liu - Requirement and Analysis
-5. Derek Nguyen - GUI
+# Team Leaders
+- **Database and Time Reporter** - Marina Moore (mmoore32@calpoly.edu, mnm678@gmail.com)
+- **Design and Architecture** - Nick Parra (nparra1997@gmail.com, nparra@calpoly.edu)
+- **Implementation and Test** - Isabel Jellen (blueribbonij02@gmail.com)
+- **Requirement and Analysis** - Robert Liu
+- **UI / UX** - Derek Nguyen (dnguy121@calpoly.edu, derek.nguyen.t@gmail.com)
 
 
 
