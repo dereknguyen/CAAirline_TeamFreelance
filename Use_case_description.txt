@@ -1,7 +1,0 @@
-1. The "Flight Reservation and Purchasing a Ticket" use case refers to the ability of a registered customer to reserve a seat on a flight, receiving in return a confirmation number.
-
-2. The "Check in to Flights" use case refers to the ability of a registered customer who has purchased an upcoming flight to confirm that they will be traveling and receive in return a boarding pass to print.
-
-3. The "Viewing Flight Status" use case refers to the ability of a registered customer who has purchased a ticket on an upcoming flight and checked in to that flight to view updates on departure time and predicted flight duration.
-
-4. The "Schedule Flights" use case refers to the ability of a CAI employee to schedule an upcoming flight, provided the flight meets requirements such as runway delay time.
