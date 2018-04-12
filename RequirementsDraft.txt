@@ -1,34 +1,25 @@
 Table of Contents:
-1. System Description / Problem Statement
-2. Use Cases
-3. Functional Requirements
-4. Nonfunctional Requirements
+1. Problem Statement
+1a. System Description
+2. Users and Use Cases
+2a. Use Case 1
+2b. Use Case 2
+3. Constraints
+4. Requirements
+4a. Functional Requirements
+4b. Nonfunctional Requirements
+4c. Acceptance Criteria
 5. Data Flow Diagram
-6. Acceptance Criteria
+6. Iterations and Deadlines
 7. User Interface Wireframe
 8. Glossary
 
+2. Users and Use Cases
+  Users of this software are employees of CAI and customers of CAI. Employees will have an employee account that allows them to schedule flights, set ticket price, and edit flight status. Customers will have a customer account that allows them to view and purchase flight tickets, check in to flights, and view flight statuses.
 
-1. Problem Statement
+Glossary 
 
-
-2. Use Cases
-Use Case 1:
-
-Use Case 2:
-
-3. Functional Requirements
-
-4. Nonfunctional Requirements
-
-5. Data Flow Diagram
-
-6. Acceptance Criteria
-
-7. User Interface Wireframe
-
-8. Glossary 
-
+Account - username and password which allows a user to access the software and perform certain tasks
 Arrival - the time a flight arrives 
 Baggage Policy - number of allowed bags and cost for these bags 
 Board - get onto plane 
