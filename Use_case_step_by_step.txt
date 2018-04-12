@@ -11,3 +11,10 @@ Schedule flights:
 2.2 Ensure the runway is available
 3. Display warnings if anything in 2 produced an error
 4. Save new flight
+
+Checkin:
+1. From a customer’s account who has purchased a seat on a flight, they can click a “Check In” button.
+	1.1. Bags can optionally be purchased by the customer.
+	1.2. An agreement regarding firearms, hazardous materials, and other important information will be presented.
+2. A PDF document containing the customer’s boarding pass will be generated and presented to the customer.
+3. The customer’s account will be updated to signify that the customer has checked in to the flight.
