@@ -1,0 +1,15 @@
+0. ***Timesheet***
+
+1. More use case diagrams (exhaustive)
+
+2. Explaining users of the system
+
+3. Problem Statement
+
+4. Parse answers to use for formal requirements
+
+5. Listing iterations and deadlines in the draft document
+
+6. Portability and Reliability Constraints
+
+7. 
