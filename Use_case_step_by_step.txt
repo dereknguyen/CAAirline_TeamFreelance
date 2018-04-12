@@ -1,0 +1,13 @@
+Viewing flight status:
+1. Select flight
+2. See status of on time, delayed, or canceled
+
+Schedule flights:
+1. Add flight details
+1.1 Select date and time
+1.2 Select route
+2. Check for conflicts
+2.1 Ensure the plane for that route is free
+2.2 Ensure the runway is available
+3. Display warnings if anything in 2 produced an error
+4. Save new flight
