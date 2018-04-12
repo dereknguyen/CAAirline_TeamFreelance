@@ -1,16 +1,35 @@
+Flight Reservation and Purchasing Ticket (assuming they have an account already in the system)
+1. Input necessary log-in information which includes: email, and password
+2. Click Log In button
+3. Click “Book Flight” Option
+4. Select Destination from 1 of 6 options in drop down menu
+5. Select Week of Departure
+6. Choose from one of at least two available weekly flights
+7. Select Week of Return 
+8. Choose from one of at least two available weekly flights
+9. Click “Confirm Flight Details”
+10. Submission will not be accepted with missing/unspecified fields 
+11. Input all necessary information to purchase via credit card, which includes: Credit card number, Expiration Date, CSV, Billing Address
+12. Click “Confirm Purchase”
+13. Submission will not be accepted with missing/unspecified fields
+14. Seats will be reserved on Departure and Return Flights
+
+
 Viewing flight status:
-1. Select flight
-2. See status of on time, delayed, or canceled
+1. Input flight number
+2. Click Submit
+3. See status of on time, delayed, or canceled
 
 Schedule flights:
+1. Click "Schedule Flight"
 1. Add flight details
-1.1 Select date and time
-1.2 Select route
+	1.1 Select date and time
+	1.2 Select Destination
 2. Check for conflicts
-2.1 Ensure the plane for that route is free
-2.2 Ensure the runway is available
-3. Display warnings if anything in 2 produced an error
-4. Save new flight
+	2.1 Ensure the plane for that route is free
+	2.2 Ensure the runway is available
+	2.3 Display warnings if anything in 2 produced an error
+4. Click "Save New Flight"
 
 Checkin:
 1. From a customer’s account who has purchased a seat on a flight, they can click a “Check In” button.
