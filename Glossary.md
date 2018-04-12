@@ -1,7 +1,6 @@
 # Glossary
-1. **Arrival** - the time a flight arrives
-
-2. **Baggage Policy** - number of allowed bags and cost for these bags
+1. **Arrival** - the time a flight arrives.
+2. **Baggage Policy** - number of allowed bags and cost for these bags.
 
 **Board** - get onto plane
 
