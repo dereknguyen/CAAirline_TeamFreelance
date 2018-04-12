@@ -1,5 +1,5 @@
 # Glossary
-Arrival - the time a flight arrives
+**Arrival** - the time a flight arrives
 
 Baggage Policy - number of allowed bags and cost for these bags
 
