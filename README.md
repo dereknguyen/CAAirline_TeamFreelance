@@ -6,7 +6,7 @@ CSC307 - 03
 - **Database and Time Reporter** - Marina Moore (mmoore32@calpoly.edu, mnm678@gmail.com)
 - **Design and Architecture** - Nick Parra (nparra1997@gmail.com, nparra@calpoly.edu)
 - **Implementation and Test** - Isabel Jellen (blueribbonij02@gmail.com)
-- **Requirement and Analysis** - Robert Liu
+- **Requirement and Analysis** - Robert Liu (robertpliu@gmail.com)
 - **UI / UX** - Derek Nguyen (dnguy121@calpoly.edu, derek.nguyen.t@gmail.com)
 
 
