@@ -14,6 +14,16 @@ Table of Contents:
 7. User Interface Wireframe
 8. Glossary
 
+1. Problem Statement
+  The following document outlines requirements for the development of airline management software for California Airlines (CAI) such that employees and customers are able to easily view and purchase flights, check flight status, and generate statistics to monitor company performance, among other features.
+
+1a. System Description
+  The system will be organized into three major categories: Database, Customer Accounts, and Employee Accounts.
+  1. The database will store information pertaining to flight date, location, price, and passengers, and can only be directly edited by employee accounts. The database will be viewed through a GUI for both employees and customers.
+  2. Employee accounts will be registered to each employee at CAI and allow employees to directly edit the database such as through scheduling flights, setting flight statuses, and setting ticket prices. Employee accounts also have all privileges given to customer accounts.
+  3. Customer accounts allow customers of CAI to view and purchase flights, check in, and view flight statuses. Customers which have not created an account are only able to view flight information and status.
+  
+
 2. Users and Use Cases
   Users of this software are employees of CAI and customers of CAI. Employees will have an employee account that allows them to schedule flights, set ticket price, and edit flight status. Customers will have a customer account that allows them to view and purchase flight tickets, check in to flights, and view flight statuses. Customers which have not created an account will only be able to view flights and ticket prices.
 
