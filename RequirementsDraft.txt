@@ -29,6 +29,9 @@ Table of Contents:
 
 2a. Use Case 1
   See Google Doc
+
+3. Constraints
+The system must be 98% reliable and should work on Mac and Windows.
   
 Glossary 
 
