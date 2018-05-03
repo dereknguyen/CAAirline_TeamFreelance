@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class EmployeeControl{
    /*
+    * Edit flight
     * Return 0 on success, 1 on failure
     */
    public int editFlight(){
