@@ -39,6 +39,9 @@ public class Database_Interface {
         return 0;
     }
 
+    // Attempts to remove flight from database. Returns 0 on success, 1 on erro
+    public int removeFlight(){ return 0; }
+
     // Calculates recommended ticket price using previous two weeks of flight information. Returns recommended price
     // TODO Move this to a control class?
     public double calculatePrice(double base){
