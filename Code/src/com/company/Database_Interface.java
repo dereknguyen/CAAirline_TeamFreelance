@@ -66,21 +66,21 @@ public class Database_Interface {
     public String getFlightById(int id)
     {
         String query = "SELECT * FROM flights WHERE Id = " + id;
-        String Destination = "";
+        int DestinationId = -1;
         String Date = "";
         try
         {
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
-            Destination = rs.getString("Destination");
+            DestinationId = rs.getInt("DestinationId");
             Date = rs.getString("Date");
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-        return Destination + " " + Date;
+        return DestinationId + " " + Date;
     }
 
     // Returns the number of flights that occurred between two dates (inclusive)
@@ -221,14 +221,14 @@ public class Database_Interface {
     }
 
     // Attempts to add flight to database. Returns 0 on success, 1 on error
-    public int addFlight(int Id, String Destination, Date date, int FullSeats)
+    public int addFlight(int Id, int DestinationId, Date date, int FullSeats)
     {
-        String query = "INSERT INTO flights (Id, Destination, Date, FullSeats) values (?,?,?,?)";
+        String query = "INSERT INTO flights (Id, DestinationId, Date, FullSeats) values (?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, Id);
-            ps.setString(2, Destination);
+            ps.setInt(2, DestinationId);
             ps.setDate(3, date);
             ps.setInt(4, FullSeats);
             ps.execute();
@@ -239,6 +239,12 @@ public class Database_Interface {
             return 1;
         }
         return 0;
+    }
+
+    // Defaults FullSeats to 0
+    public int addFlight(int Id, int DestinationId, Date date)
+    {
+        return addFlight(Id, DestinationId, date, 0);
     }
 
     // Attempts to remove flight from database. Returns 0 on success, 1 on erro
@@ -257,6 +263,26 @@ public class Database_Interface {
             return 1;
         }
         return 0;
+    }
+
+    // Returns flight id associated with DestinationId and Date, or -1 if it doesn't exist
+    public int getFlightId(int DestinationId, Date date)
+    {
+        String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
+        int id = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            id = rs.getInt("Id");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return id;
     }
 
     // Calculates average number of empty seats using previous two weeks of flight information

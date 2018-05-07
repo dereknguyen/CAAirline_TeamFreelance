@@ -1,21 +1,36 @@
 package com.company;
 
+import java.util.Calendar;
 import java.util.Scanner;
+import java.sql.Date;
 
 public class EmployeeControl{
+   private Database_Interface db;
+   private Calendar cal;
+   private Scanner reader;
+
+   public EmployeeControl()
+   {
+      db = new Database_Interface();
+      cal = Calendar.getInstance();
+      reader = new Scanner(System.in);
+   }
+
    /*
     * Return 0 on success, 1 on failure
     */
    public int editFlight(){
-      Flightdatabase_interface fdb = new Flightdatabase_interface();
-      Scanner reader = new Scanner(System.in);
-      int destination, month, day, hour, min, action, new_hour, new_min;
+      int destination, year, month, day, hour, min, action, new_hour, new_min;
+      Date date;
+      int id;
 
       System.out.println("Edit (0) or delete (1) a flight?");
       action = reader.nextInt();
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
       destination = reader.nextInt();
+      System.out.println("Year: ");
+      year = reader.nextInt();
       System.out.println("Month: ");
       month = reader.nextInt();
       System.out.println("Day: ");
@@ -29,16 +44,20 @@ public class EmployeeControl{
       System.out.println("New Minute (Pacific Time): ");
       new_min = reader.nextInt();
 
-      flightdatabase_interface flight = new flightdatabase_interface();
-      if(action)
-         flight.removeFlight(getFlight(destination, month, day, hour, min));
+      cal.set(year, month, day, hour, min);
+      date = new Date(cal.getTime().getTime());
+      id = db.getFlightId(destination, date);
+
+      if(action == 1)
+         db.removeFlight(id);
       else{
-         flight.removeFlight(getFlight(destination, month, day, hour, min));
-         flight.setFlight(destination, month, day, new_hour, new_min);
+         db.removeFlight(id);
+         db.addFlight(id, destination, date);
       }
+      return 0;
    }
+
    public void scheduleFlight(){
-      flightdatabase_interface flight = new flightdatabase_interface();
       int destination, month, day, hour, min;
 
       System.out.println("Enter Integer 0 - 5 for Destination:");
@@ -53,7 +72,7 @@ public class EmployeeControl{
       System.out.println("Minute (Pacific Time): ");
       min = reader.nextInt();
 
-      flight.setFlight(destination, month, day, hour, min);
+      db.setFlight(destination, month, day, hour, min);
    }
 
    /*
