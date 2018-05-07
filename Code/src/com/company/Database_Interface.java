@@ -1,4 +1,6 @@
 package com.company;
+import com.sun.tools.doclets.internal.toolkit.util.ClassUseMapper;
+
 import java.sql.*;
 
 public class Database_Interface {
@@ -281,12 +283,43 @@ public class Database_Interface {
     }
 
     // Attempts to reserve flight seat for user. Returns 0 on success, 1 on error
-    public int reserveSeat(){
+    public int reserveSeat(int CustomerId, int FlightId, int SeatNumber)
+    {
+        String query = "INSERT INTO reservations (CustomerId, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, CustomerId);
+            ps.setInt(2, FlightId);
+            ps.setInt(3, SeatNumber);
+            ps.setBoolean(4, false);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
         return 0;
     }
 
     // Attempts to check user in for flight. Returns 0 on success, 1 on error
-    public int flightCheckIn(){
+    public int flightCheckIn(int CustomerId, int FlightId)
+    {
+        String query = "UPDATE reservations SET CheckedIn = ? WHERE CustomerId = ? AND FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setBoolean(1, true);
+            ps.setInt(2, CustomerId);
+            ps.setInt(3, FlightId);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
         return 0;
     }
 }
