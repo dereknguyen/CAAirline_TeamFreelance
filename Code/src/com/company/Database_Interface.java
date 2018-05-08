@@ -4,10 +4,11 @@ import com.sun.tools.doclets.internal.toolkit.util.ClassUseMapper;
 import java.sql.*;
 
 public class Database_Interface {
+    static private Database_Interface uniqueInstance;
     private Connection conn;
     private Statement st;
 
-    public Database_Interface(){
+    private Database_Interface(){
         String driver = "org.gjt.mm.mysql.Driver";
         String url = "database_url";
         try
@@ -21,6 +22,15 @@ public class Database_Interface {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    static public Database_Interface getInstance()
+    {
+        if (uniqueInstance == null)
+        {
+            uniqueInstance = new Database_Interface();
+        }
+        return uniqueInstance;
     }
 
     public String getCustomerById(int id)
@@ -84,9 +94,14 @@ public class Database_Interface {
     }
 
     // Returns the number of flights that occurred between two dates (inclusive)
+    // If both dates are null, returns all flights in database
     public int getNumFlights(Date from, Date to)
     {
         String query = "SELECT COUNT(*) FROM (SELECT * FROM flights WHERE Date BETWEEN " + from + "AND" + to + ") AS count";
+        if (from == null && to == null)
+        {
+            query = "SELECT COUNT(*) FROM (SELECT * FROM flights) AS count";
+        }
         int NumFlights = 0;
         try
         {
@@ -103,7 +118,6 @@ public class Database_Interface {
     }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    //TODO fields for each customer entry
     public int addCustomerAccount(String FirstName, String LastName, int Id)
     {
         String query = "INSERT INTO customers (FirstName, LastName, Id) values (?,?,?)";
@@ -265,7 +279,7 @@ public class Database_Interface {
         return 0;
     }
 
-    // Returns flight id associated with DestinationId and Date, or -1 if it doesn't exist
+    // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
     public int getFlightId(int DestinationId, Date date)
     {
         String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
@@ -279,16 +293,17 @@ public class Database_Interface {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            return -1;
+            // No matching flight found, return a new ID
+            return getNumFlights(null, null);
         }
         return id;
     }
 
     // Calculates average number of empty seats using previous two weeks of flight information
-    public double calculateAvgEmpty()
+    public double calculateAvgEmpty(int DestinationId)
     {
-        String query = "SELECT * FROM flights WHERE Date BETWEEN DATESUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()";
+        String query = "SELECT * FROM flights WHERE Date BETWEEN DATESUB(CURDATE(), " +
+                "INTERVAL 2 WEEK) AND CURDATE() AND DestinationId = " + DestinationId;
         double total = 0;
         double count;
         try
