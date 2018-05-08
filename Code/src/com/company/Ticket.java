@@ -8,8 +8,11 @@ public class Ticket {
 	private int ticketNumber;
 	private int planeNumber;
 	
-	public Ticket() {
-		
+	public Ticket(Date d, Trip t, int ticketNum, int planeNum) {
+		date = d;
+		trip = t;
+		ticketNumber = ticketNum;
+		planeNumber = planeNum;
 
 	}
 }
