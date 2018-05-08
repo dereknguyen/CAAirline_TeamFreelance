@@ -7,4 +7,9 @@ public class Ticket {
 	private Trip trip;
 	private int ticketNumber;
 	private int planeNumber;
+	
+	public Ticket() {
+		
+
+	}
 }
