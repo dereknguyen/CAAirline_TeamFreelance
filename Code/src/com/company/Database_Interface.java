@@ -27,6 +27,12 @@ flights
     Price double
     Status int
 
+reservations
+    CustomerUsername String
+    FlightId  int        -- (CustomerUsername, FlightId) is unique
+    SeatNumber int
+    CheckedIn boolean
+
  */
 
 //TODO text file implementation
@@ -60,73 +66,6 @@ public class Database_Interface {
         }
         return uniqueInstance;
     }
-
-    /*
-    //TODO remove this method?
-    public String getCustomerById(int id)
-    {
-        String query = "SELECT * FROM customers WHERE Id = " + id;
-        String FirstName = "";
-        String LastName = "";
-        String Username = "";
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            FirstName = rs.getString("FirstName");
-            LastName = rs.getString("LastName");
-            Username = rs.getString("Username");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return FirstName + " " + LastName + " " + Username;
-    }
-
-    //TODO remove this method?
-    public String getEmployeeById(int id)
-    {
-        String query = "SELECT * FROM employees WHERE Id = " + id;
-        String FirstName = "";
-        String LastName = "";
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            FirstName = rs.getString("FirstName");
-            LastName = rs.getString("LastName");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return FirstName + " " + LastName;
-    }
-
-    //TODO remove this method?
-    public String getFlightById(int id)
-    {
-        String query = "SELECT * FROM flights WHERE Id = " + id;
-        int DestinationId = -1;
-        String Date = "";
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            DestinationId = rs.getInt("DestinationId");
-            Date = rs.getString("Date");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return DestinationId + " " + Date;
-    }*/
-
 
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
     private int getFlightId(int DestinationId, Date date)
@@ -321,11 +260,10 @@ public class Database_Interface {
     // Attempts to remove customer account to database. Returns 0 on success, 1 on error
     public int removeCustomer(String Username)
     {
-        String query = "DELETE FROM customers WHERE Username = ?";
+        String query = "DELETE FROM customers WHERE Username = " + Username;
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
             ps.execute();
         }
         catch (Exception e)
@@ -339,11 +277,10 @@ public class Database_Interface {
     // Attempts to remove employee account to database. Returns 0 on success, 1 on error
     public int removeEmployee(String Username)
     {
-        String query = "DELETE FROM employees WHERE Username = ?";
+        String query = "DELETE FROM employees WHERE Username " + Username;
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
             ps.execute();
         }
         catch (Exception e)
@@ -356,10 +293,10 @@ public class Database_Interface {
 
     // Attempts to add flight to database. Returns 0 on success, 1 on error
     // Defaults status to 0 (On-time)
-    //TODO handle flight id internally, dont require as parameter
-    public int addFlight(int Id, int DestinationId, Date date, int FullSeats, double Price)
+    public int addFlight(int DestinationId, Date date, int FullSeats, double Price)
     {
         String query = "INSERT INTO flights (Id, DestinationId, Date, FullSeats, Price, Status) values (?,?,?,?,?,0)";
+        int Id = getNumFlights();
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -379,19 +316,40 @@ public class Database_Interface {
     }
 
     // Defaults FullSeats to 0 and Price to 0
-    public int addFlight(int Id, int DestinationId, Date date)
+    public int addFlight(int DestinationId, Date date)
     {
-        return addFlight(Id, DestinationId, date, 0, 0);
+        return addFlight(DestinationId, date, 0, 0);
     }
 
     // Attempts to remove flight from database. Returns 0 on success, 1 on error
-    public int removeFlight(int Id)
+    public int removeFlight(int DestinationId, Date date)
     {
         String query = "DELETE FROM flights WHERE Id = ?";
+        int Id = getFlightId(DestinationId, date);
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, Id);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
+    public int setStatus(int DestinationId, Date date, int Status)
+    {
+        String query = "UPDATE flights SET Status = ? WHERE FlightId = ?";
+        int Id = getFlightId(DestinationId, date);
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, Status);
+            ps.setInt(2, Id);
             ps.execute();
         }
         catch (Exception e)
@@ -427,13 +385,13 @@ public class Database_Interface {
     }
 
     // Attempts to reserve flight seat for user. Returns 0 on success, 1 on error
-    public int reserveSeat(int CustomerId, int FlightId, int SeatNumber)
+    public int reserveSeat(String CustomerUsername, int FlightId, int SeatNumber)
     {
-        String query = "INSERT INTO reservations (CustomerId, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        String query = "INSERT INTO reservations (CustomerUsername, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, CustomerId);
+            ps.setString(1, CustomerUsername);
             ps.setInt(2, FlightId);
             ps.setInt(3, SeatNumber);
             ps.setBoolean(4, false);
@@ -448,14 +406,14 @@ public class Database_Interface {
     }
 
     // Attempts to check user in for flight. Returns 0 on success, 1 on error
-    public int flightCheckIn(int CustomerId, int FlightId)
+    public int flightCheckIn(String CustomerUsername, int FlightId)
     {
-        String query = "UPDATE reservations SET CheckedIn = ? WHERE CustomerId = ? AND FlightId = ?";
+        String query = "UPDATE reservations SET CheckedIn = ? WHERE CustomerUsername = ? AND FlightId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setBoolean(1, true);
-            ps.setInt(2, CustomerId);
+            ps.setString(2, CustomerUsername);
             ps.setInt(3, FlightId);
             ps.execute();
         }
@@ -465,11 +423,5 @@ public class Database_Interface {
             return 1;
         }
         return 0;
-    }
-
-    // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
-    public int setStatus(int flightId, int status)
-    {
-        return
     }
 }
