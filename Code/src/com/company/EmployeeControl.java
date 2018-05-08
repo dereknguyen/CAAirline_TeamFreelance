@@ -54,6 +54,7 @@ public class EmployeeControl{
          db.removeFlight(id);
          db.addFlight(id, destination, date);
       }
+      //TODO check return values of addFlight() removeFlight()
       return 0;
    }
 
@@ -96,15 +97,6 @@ public class EmployeeControl{
       double avgEmpty = db.calculateAvgEmpty(destination);
       int P = flight.baseprice(destination);
       double p = P - ((avgEmpty/2)*P);
-
-      /*int totalEmpty = 0;
-      for(int i = day; i>day-14; i--){
-         totalEmpty += db.calculateAvgEmpty(destination);
-      }
-      int X = totalEmpty / (14*20); /* 20 is total seats, 14 is number of days */
-      /*int P = flight.baseprice(destination);
-      int p = P - ((X/2)*P);*/
-
 
       System.out.println("Price recommendation: " + p);
    }

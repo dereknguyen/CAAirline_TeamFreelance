@@ -1,7 +1,35 @@
 package com.company;
 import com.sun.tools.doclets.internal.toolkit.util.ClassUseMapper;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
+import javax.xml.transform.Result;
 import java.sql.*;
+
+/*
+
+Tables:
+
+customers
+    Username (unique) String
+    FirstName String
+    LastName String
+
+employees
+    Username (unique) String
+    FirstName String
+    LastName String
+
+flights
+    Id (unique) int
+    DestinationId int    -- (DestinationId, Date) is unique
+    Date (mysql Date type)
+    FullSeats int
+    Price double
+    Status int
+
+ */
+
+//TODO text file implementation
 
 public class Database_Interface {
     static private Database_Interface uniqueInstance;
@@ -33,11 +61,14 @@ public class Database_Interface {
         return uniqueInstance;
     }
 
+    /*
+    //TODO remove this method?
     public String getCustomerById(int id)
     {
         String query = "SELECT * FROM customers WHERE Id = " + id;
         String FirstName = "";
         String LastName = "";
+        String Username = "";
         try
         {
             ResultSet rs = st.executeQuery(query);
@@ -45,14 +76,16 @@ public class Database_Interface {
             rs.next();
             FirstName = rs.getString("FirstName");
             LastName = rs.getString("LastName");
+            Username = rs.getString("Username");
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-        return FirstName + " " + LastName;
+        return FirstName + " " + LastName + " " + Username;
     }
 
+    //TODO remove this method?
     public String getEmployeeById(int id)
     {
         String query = "SELECT * FROM employees WHERE Id = " + id;
@@ -73,6 +106,7 @@ public class Database_Interface {
         return FirstName + " " + LastName;
     }
 
+    //TODO remove this method?
     public String getFlightById(int id)
     {
         String query = "SELECT * FROM flights WHERE Id = " + id;
@@ -91,13 +125,35 @@ public class Database_Interface {
             System.out.println(e.getMessage());
         }
         return DestinationId + " " + Date;
+    }*/
+
+
+    // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
+    private int getFlightId(int DestinationId, Date date)
+    {
+        String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
+        int id = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            id = rs.getInt("Id");
+        }
+        catch (Exception e)
+        {
+            // No matching flight found, return a new ID
+            return getNumFlights(null, null);
+        }
+        return id;
     }
 
     // Returns the number of flights that occurred between two dates (inclusive)
-    // If both dates are null, returns all flights in database
-    public int getNumFlights(Date from, Date to)
+    // If both dates are null, returns number of flights in database
+    private int getNumFlights(Date from, Date to)
     {
-        String query = "SELECT COUNT(*) FROM (SELECT * FROM flights WHERE Date BETWEEN " + from + "AND" + to + ") AS count";
+        String query = "SELECT COUNT(*) FROM (SELECT * FROM flights " +
+                "WHERE Date BETWEEN " + from + "AND" + to + ") AS count";
         if (from == null && to == null)
         {
             query = "SELECT COUNT(*) FROM (SELECT * FROM flights) AS count";
@@ -117,54 +173,81 @@ public class Database_Interface {
         return NumFlights;
     }
 
+    // Overload for simplicity
+    private int getNumFlights()
+    {
+        return getNumFlights(null, null);
+    }
+
+    /*
+    //TODO remove this?
+    // Returns the number of customers (used to get the next customer ID) or -1 on error
+    private int getNumCustomers()
+    {
+        String query = "SELECT COUNT(*) FROM (SELECT * FROM customers) AS count";
+        int count = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("count");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
+
+    //TODO remove this?
+    // Returns the number of employees or -1 on error
+    private int getNumEmployees()
+    {
+        String query = "SELECT COUNT(*) FROM (SELECT * FROM employees) AS count";
+        int count = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("count");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }*/
+
+    // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
+    public int getStatus(int DestinationId, Date date)
+    {
+        int flightId = getFlightId(DestinationId, date);
+        String query = "SELECT Status FROM flights WHERE Id = " + flightId;
+        int status;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            status = rs.getInt("Status");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return status;
+    }
+
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String FirstName, String LastName, int Id)
+    public int addCustomerAccount(String FirstName, String LastName, String Username)
     {
-        String query = "INSERT INTO customers (FirstName, LastName, Id) values (?,?,?)";
+        String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setInt(3, Id);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Edits existing customer by Id and sets values to parameters passed
-    public int editCustomer(String FirstName, String LastName, int Id)
-    {
-        String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Id = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setInt(3, Id);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Attempts to remove customer account to database. Returns 0 on success, 1 on error
-    public int removeCustomer(int Id)
-    {
-        String query = "DELETE FROM customers WHERE Id = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, Id);
+            ps.setString(1, Username);
+            ps.setString(2, FirstName);
+            ps.setString(3, LastName);
             ps.execute();
         }
         catch (Exception e)
@@ -176,16 +259,15 @@ public class Database_Interface {
     }
 
     // Attempts to add employee account to database. Returns 0 on success, 1 on error
-    // Will replace/update existing accounts with the same name/id
-    public int addEmployeeAccount(String FirstName, String LastName, int Id)
+    public int addEmployeeAccount(String Username, String FirstName, String LastName)
     {
-        String query = "INSERT INTO employees (FirstName, LastName, Id) values (?,?,?)";
+        String query = "INSERT INTO employees (Username, FirstName, LastName) values (?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setInt(3, Id);
+            ps.setString(1, Username);
+            ps.setString(2, FirstName);
+            ps.setString(3, LastName);
             ps.execute();
         }
         catch (Exception e)
@@ -196,16 +278,54 @@ public class Database_Interface {
         return 0;
     }
 
-    // Edits existing customer by Id and sets values to parameters passed
-    public int editEmployee(String FirstName, String LastName, int Id)
+    // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
+    public int editCustomer(String FirstName, String LastName, String Username)
     {
-        String query = "UPDATE employees SET FirstName = ?, LastName = ? WHERE Id = ?";
+        String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Username = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, FirstName);
             ps.setString(2, LastName);
-            ps.setInt(3, Id);
+            ps.setString(3, Username);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Edits existing customer and sets values to parameters passed (cannot change username). Return 1 on error
+    public int editEmployee(String FirstName, String LastName, String Username)
+    {
+        String query = "UPDATE employees SET FirstName = ?, LastName = ? WHERE Username = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, FirstName);
+            ps.setString(2, LastName);
+            ps.setString(3, Username);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Attempts to remove customer account to database. Returns 0 on success, 1 on error
+    public int removeCustomer(String Username)
+    {
+        String query = "DELETE FROM customers WHERE Username = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
             ps.execute();
         }
         catch (Exception e)
@@ -217,13 +337,13 @@ public class Database_Interface {
     }
 
     // Attempts to remove employee account to database. Returns 0 on success, 1 on error
-    public int removeEmployee(int Id)
+    public int removeEmployee(String Username)
     {
-        String query = "DELETE FROM employees WHERE Id = ?";
+        String query = "DELETE FROM employees WHERE Username = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, Id);
+            ps.setString(1, Username);
             ps.execute();
         }
         catch (Exception e)
@@ -235,9 +355,11 @@ public class Database_Interface {
     }
 
     // Attempts to add flight to database. Returns 0 on success, 1 on error
-    public int addFlight(int Id, int DestinationId, Date date, int FullSeats)
+    // Defaults status to 0 (On-time)
+    //TODO handle flight id internally, dont require as parameter
+    public int addFlight(int Id, int DestinationId, Date date, int FullSeats, double Price)
     {
-        String query = "INSERT INTO flights (Id, DestinationId, Date, FullSeats) values (?,?,?,?)";
+        String query = "INSERT INTO flights (Id, DestinationId, Date, FullSeats, Price, Status) values (?,?,?,?,?,0)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -245,6 +367,7 @@ public class Database_Interface {
             ps.setInt(2, DestinationId);
             ps.setDate(3, date);
             ps.setInt(4, FullSeats);
+            ps.setDouble(5, Price);
             ps.execute();
         }
         catch (Exception e)
@@ -255,13 +378,13 @@ public class Database_Interface {
         return 0;
     }
 
-    // Defaults FullSeats to 0
+    // Defaults FullSeats to 0 and Price to 0
     public int addFlight(int Id, int DestinationId, Date date)
     {
-        return addFlight(Id, DestinationId, date, 0);
+        return addFlight(Id, DestinationId, date, 0, 0);
     }
 
-    // Attempts to remove flight from database. Returns 0 on success, 1 on erro
+    // Attempts to remove flight from database. Returns 0 on success, 1 on error
     public int removeFlight(int Id)
     {
         String query = "DELETE FROM flights WHERE Id = ?";
@@ -277,26 +400,6 @@ public class Database_Interface {
             return 1;
         }
         return 0;
-    }
-
-    // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
-    public int getFlightId(int DestinationId, Date date)
-    {
-        String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
-        int id = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            id = rs.getInt("Id");
-        }
-        catch (Exception e)
-        {
-            // No matching flight found, return a new ID
-            return getNumFlights(null, null);
-        }
-        return id;
     }
 
     // Calculates average number of empty seats using previous two weeks of flight information
@@ -362,5 +465,11 @@ public class Database_Interface {
             return 1;
         }
         return 0;
+    }
+
+    // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
+    public int setStatus(int flightId, int status)
+    {
+        return
     }
 }
