@@ -1,6 +1,6 @@
-package com.company;
+package Code;
 
-import java.util.Arrylist;
+import java.util.ArrayList;
 
 public class Account {
 
@@ -25,11 +25,11 @@ public class Account {
     }
 
     public Ticket getTicket(int confirmNum) {
-        return nill;
+        return null;
     }
 
     public FlightStatus viewFlightStatus(int flightNum) {
-        return nill;
+        return null;
     }
 
     public boolean purchaseTicket(Date date, Trip trip) {

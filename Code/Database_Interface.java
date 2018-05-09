@@ -1,8 +1,5 @@
-package com.company;
-import com.sun.tools.doclets.internal.toolkit.util.ClassUseMapper;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+package Code;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 /*

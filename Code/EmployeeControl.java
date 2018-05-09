@@ -1,4 +1,4 @@
-package com.company;
+package Code;
 
 import java.util.Calendar;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package com.company;
+package Code;
 
 public class Employee extends Account {
 
