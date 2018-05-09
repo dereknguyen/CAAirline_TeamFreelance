@@ -1,6 +1,7 @@
-package com.company;
+package Code;
 
 import java.util.Scanner;
+import java.sql.*;
 
 public class FlightManager{
    Scanner reader = new Scanner(System.in);
@@ -42,6 +43,6 @@ public class FlightManager{
       Database_Interface db = Database_Interface.getInstance();
       Trip trip = getTripFromUser();
       Date date = getDateFromUser();
-      db.addFlight(flightID, date, trip);
+      db.addFlight(date, trip);
    }
 }

@@ -1,4 +1,4 @@
-package com.company;
+package Code;
 
 import java.util.Calendar;
 import java.util.Scanner;
@@ -23,7 +23,6 @@ public class EmployeeControl{
    public int editFlight(){
       int destination, year, month, day, hour, min, action, new_hour, new_min;
       Date date;
-      int id;
 
       System.out.println("Edit (0) or delete (1) a flight?");
       action = reader.nextInt();
@@ -45,15 +44,27 @@ public class EmployeeControl{
       System.out.println("New Minute (Pacific Time): ");
       new_min = reader.nextInt();
 
-      cal.set(year, month, day, hour, min);
+      cal.set(year, month-1, day, hour, min);
       date = new Date(cal.getTime().getTime());
-      id = db.getFlightId(destination, date);
 
       if(action == 1)
-         db.removeFlight(id);
-      else{
-         db.removeFlight(id);
-         db.addFlight(id, destination, date);
+         if (db.removeFlight(destination, date) == 1)
+         {
+            System.out.println("No matching flight found in database");
+         }
+      else
+      {
+         if (db.removeFlight(destination, date) == 1)
+         {
+            System.out.println("No matching flight found in database");
+         }
+         else
+         {
+            if (db.addFlight(destination, date) == 1)
+            {
+               System.out.println("Could not edit flight");
+            }
+         }
       }
       return 0;
    }
@@ -61,7 +72,6 @@ public class EmployeeControl{
    public void scheduleFlight(){
       int destination, year, month, day, hour, min;
       Date date;
-      int id;
 
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
@@ -77,11 +87,13 @@ public class EmployeeControl{
       System.out.println("Minute (Pacific Time): ");
       min = reader.nextInt();
 
-      cal.set(year, month, day, hour, min);
+      cal.set(year, month-1, day, hour, min);
       date = new Date(cal.getTime().getTime());
-      id = db.getFlightId(destination, date);
 
-      db.addFlight(id, destination, date);
+      if (db.addFlight(destination, date) == 1)
+      {
+         System.out.println("Could not add flight to database");
+      }
    }
 
    /*
@@ -98,15 +110,6 @@ public class EmployeeControl{
       int P = flight.baseprice(destination);
       double p = P - ((avgEmpty/2)*P);
 
-      /*int totalEmpty = 0;
-      for(int i = day; i>day-14; i--){
-         totalEmpty += db.calculateAvgEmpty(destination);
-      }
-      int X = totalEmpty / (14*20); /* 20 is total seats, 14 is number of days */
-      /*int P = flight.baseprice(destination);
-      int p = P - ((X/2)*P);*/
-
-
       System.out.println("Price recommendation: " + p);
    }
 
@@ -114,10 +117,9 @@ public class EmployeeControl{
    {
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
-      /* ask user for date and time too */
+      // TODO ask user for date and time too
 
-      //TODO implement setPrice
-      db.setPrice(destination, month, day, minute, hour);
+      db.setPrice(destination, date, price);
    }
 
    public void editEmployee()
@@ -125,6 +127,6 @@ public class EmployeeControl{
       System.out.println("Add (0) or delete (1)?");
       int action = reader.nextInt();
       Account acct = new Account();
-      /*...*/
+      //TODO implement
    }
 }
