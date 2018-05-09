@@ -67,10 +67,11 @@ public class Database_Interface {
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
     private int getFlightId(int DestinationId, Date date)
     {
-        String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
+        String query = "SELECT Id FROM flights WHERE DestinationId = " + DestinationId + " AND Date = " + date;
         int id = -1;
         try
         {
+
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
@@ -136,7 +137,7 @@ public class Database_Interface {
     }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String FirstName, String LastName, String Username)
+    public int addCustomerAccount(String Username, String FirstName, String LastName)
     {
         String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
         try
