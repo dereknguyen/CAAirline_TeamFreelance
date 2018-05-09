@@ -87,7 +87,7 @@ public class Database_Interface {
 
     // Returns the number of flights that occurred between two dates (inclusive)
     // If both dates are null, returns number of flights in database
-    private int getNumFlights(Date from, Date to)
+    public int getNumFlights(Date from, Date to)
     {
         String query = "SELECT COUNT(*) FROM (SELECT * FROM flights " +
                 "WHERE Date BETWEEN " + from + "AND" + to + ") AS count";
@@ -111,7 +111,7 @@ public class Database_Interface {
     }
 
     // Overload for simplicity
-    private int getNumFlights()
+    public int getNumFlights()
     {
         return getNumFlights(null, null);
     }
