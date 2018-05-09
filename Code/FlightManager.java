@@ -24,13 +24,13 @@ public class FlightManager{
       int y = reader.nextInt();
       System.out.println("Enter month");
       int m = reader.nextInt();
-      System.out.println("Enter date"):
+      System.out.println("Enter date");
       int d = reader.nextInt();
       System.out.println("Enter hrs");
       int h = reader.nextInt();
       System.out.println("Enter min");
-      int m = reader.nextInt()
-      Date date = new Date(y,m,d,h,m);
+      int min = reader.nextInt();
+      Date date = new Date(y,m,d,h,min);
       Trip trip = new Trip(date,destination)
       return trip;
    }
@@ -47,7 +47,7 @@ public class FlightManager{
       Date minH = new Date(date.getTime()-40*60*1000); //40 min in ms
       Date maxH = new Date(date.getTime()+40*60*1000);
       if(db.getNumFlights(minH, maxH)==0){
-         db.addFlight(trip);
+         db.addFlight(trip.destination, trip.date);
       }
    }
 }
