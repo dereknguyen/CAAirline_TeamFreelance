@@ -118,45 +118,6 @@ public class Database_Interface {
         return getNumFlights(null, null);
     }
 
-    /*
-    //TODO remove this?
-    // Returns the number of customers (used to get the next customer ID) or -1 on error
-    private int getNumCustomers()
-    {
-        String query = "SELECT COUNT(*) FROM (SELECT * FROM customers) AS count";
-        int count = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            count = rs.getInt("count");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return count;
-    }
-
-    //TODO remove this?
-    // Returns the number of employees or -1 on error
-    private int getNumEmployees()
-    {
-        String query = "SELECT COUNT(*) FROM (SELECT * FROM employees) AS count";
-        int count = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            count = rs.getInt("count");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return count;
-    }*/
-
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
     public int getStatus(int DestinationId, Date date)
     {
@@ -349,6 +310,26 @@ public class Database_Interface {
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, Status);
+            ps.setInt(2, Id);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Sets a flight's price. Returns 0 on success, 1 on error
+    public int setPrice(int DestinationId, Date date, double Price)
+    {
+        String query = "UPDATE flights SET Price = ? WHERE FlightId = ?";
+        int Id = getFlightId(DestinationId, date);
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1, Price);
             ps.setInt(2, Id);
             ps.execute();
         }
