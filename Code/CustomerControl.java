@@ -45,7 +45,6 @@ public class CustomerControl{
    // View status
    public void status(){
       FlightManager fm = new FlightManager();
-      Database_Interface db = Database_Interface.getInstance();
       Trip trip = fm.getTripFromUser();
 
       System.out.println("Status" + db.getStatus(trip.getDest(), trip.getDate()));
