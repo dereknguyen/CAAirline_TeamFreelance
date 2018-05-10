@@ -4,8 +4,20 @@ import java.lang.System;
 import java.util.Scanner;
 
 public class CustomerControl{
-   public CustomerControl(){}
+   static private CustomerControl uniqueinstance;
+
+   private CustomerControl(){}
    // Flight Reserve
+
+   static public CustomerControl getInstance()
+   {
+      if (uniqueinstance == null)
+      {
+         uniqueinstance = new CustomerControl();
+      }
+      return uniqueinstance;
+   }
+
    public void reserve(String username){
       Scanner scan = new Scanner(System.in);
       Database_Interface db = Database_Interface.getInstance();
