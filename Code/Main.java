@@ -36,7 +36,22 @@ public class Main {
         else if (resp == 2) {
             System.out.println("Type 1 for purchase ticket, 2 for checkin, 3 for view flight status");
             resp = scan.nextInt();
+            CustomerControl cc = CustomerControl.getInstance();
             //call functions here
+            if (resp == 1)
+            {
+                System.out.println("Enter your username");
+                cc.reserve(scan.nextLine());
+            }
+            else if (resp == 2)
+            {
+                System.out.println("Enter your username");
+                cc.checkin(scan.nextLine());
+            }
+            else if (resp == 3)
+            {
+                cc.status();
+            }
         }
 
     }
