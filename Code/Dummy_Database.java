@@ -1,7 +1,5 @@
 package Code;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
