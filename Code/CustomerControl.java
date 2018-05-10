@@ -4,11 +4,13 @@ import java.lang.System;
 import java.util.Scanner;
 
 public class CustomerControl{
-   private Database_Interface db;
+   //private Database_Interface db;
+   private Dummy_Database db;
    private static CustomerControl uniqueinstance;
 
    private  CustomerControl(){
-      db = Database_Interface.getInstance();
+      //db = Database_Interface.getInstance();
+      db = Dummy_Database.getInstance();
    }
 
    // Flight Reserve

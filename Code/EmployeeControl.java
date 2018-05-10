@@ -8,13 +8,15 @@ import java.sql.Date;
 
 public class EmployeeControl{
    private static EmployeeControl uniqueinstance;
-   private Database_Interface db;
+   //private Database_Interface db;
+   private Dummy_Database db;
    private Calendar cal;
    private Scanner reader;
 
    private EmployeeControl()
    {
-      db = Database_Interface.getInstance();
+      //db = Database_Interface.getInstance();
+      db = Dummy_Database.getInstance();
       cal = Calendar.getInstance();
       reader = new Scanner(System.in);
    }
