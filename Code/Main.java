@@ -14,7 +14,7 @@ public class Main {
             System.out.println("Type 1 for purchase ticket, 2 for checkin, 3 for view flight status");
             System.out.println("Type 4 for Edit employee, 5 for add flight, 6 for edit flight status, 7 for get price recommendation");
             resp = scan.nextInt();
-            EmployeeControl ec = new EmployeeControl();
+            EmployeeControl ec = EmployeeControl.getInstance();
             //call functions here
             if (resp == 4) {
                 //edit employee

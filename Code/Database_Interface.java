@@ -1,5 +1,8 @@
 package Code;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+
+import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 
 /*
@@ -24,9 +27,9 @@ flights
     Price double
     Status int
 
-reservations
-    CustomerUsername String
-    FlightId  int        -- (CustomerUsername, FlightId) is unique
+tickets
+    Username String
+    FlightId  int        -- (Username, FlightId) is unique
     SeatNumber int
     CheckedIn boolean
 
@@ -174,6 +177,32 @@ public class Database_Interface {
         return 0;
     }
 
+    // Adds a ticket to the database. Returns 0 on success, 1 on error
+    public int addTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
+    {
+        String query = "INSERT INTO tickets (Username, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setInt(2, FlightId);
+            ps.setInt(3, SeatNumber);
+            ps.setBoolean(4, CheckedIn);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Overload for simplicity
+    public int addTicket(String Username, int FlightId, int SeatNumber)
+    {
+        return addTicket(Username, FlightId, SeatNumber, false);
+    }
+
     // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
     public int editCustomer(String FirstName, String LastName, String Username)
     {
@@ -195,7 +224,7 @@ public class Database_Interface {
     }
 
     // Edits existing customer and sets values to parameters passed (cannot change username). Return 1 on error
-    public int editEmployee(String FirstName, String LastName, String Username)
+    public int editEmployee(String Username, String FirstName, String LastName)
     {
         String query = "UPDATE employees SET FirstName = ?, LastName = ? WHERE Username = ?";
         try
@@ -204,6 +233,27 @@ public class Database_Interface {
             ps.setString(1, FirstName);
             ps.setString(2, LastName);
             ps.setString(3, Username);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Edits existing customer and changes SeatNumber and CheckedIn
+    public int editTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
+    {
+        String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, SeatNumber);
+            ps.setBoolean(2, CheckedIn);
+            ps.setString(3, Username);
+            ps.setInt(4, FlightId);
             ps.execute();
         }
         catch (Exception e)
@@ -238,6 +288,25 @@ public class Database_Interface {
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Attempts to remove ticket from database. Returns 0 on success, 1 on error
+    public int removeTicket(String Username, int FlightId)
+    {
+        String query = "DELETE FROM tickets WHERE Username = ? AND FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setInt(2, FlightId);
             ps.execute();
         }
         catch (Exception e)
@@ -361,36 +430,15 @@ public class Database_Interface {
         return total / count;
     }
 
-    // Attempts to reserve flight seat for user. Returns 0 on success, 1 on error
-    public int reserveSeat(String CustomerUsername, int FlightId, int SeatNumber)
-    {
-        String query = "INSERT INTO reservations (CustomerUsername, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, CustomerUsername);
-            ps.setInt(2, FlightId);
-            ps.setInt(3, SeatNumber);
-            ps.setBoolean(4, false);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
     // Attempts to check user in for flight. Returns 0 on success, 1 on error
-    public int flightCheckIn(String CustomerUsername, int FlightId)
+    public int flightCheckIn(String Username, int FlightId)
     {
-        String query = "UPDATE reservations SET CheckedIn = ? WHERE CustomerUsername = ? AND FlightId = ?";
+        String query = "UPDATE tickets SET CheckedIn = ? WHERE Username = ? AND FlightId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setBoolean(1, true);
-            ps.setString(2, CustomerUsername);
+            ps.setString(2, Username);
             ps.setInt(3, FlightId);
             ps.execute();
         }
