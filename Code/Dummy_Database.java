@@ -242,9 +242,9 @@ public class Dummy_Database {
     public int addFlight(int DestinationId, Date date, int FullSeats, double Price)
     {
         int id = getNumFlights();
-        String line = id + ", " + DestinationId + ", " + date + ", " + FullSeats + ", " + Price + ", 0";
-        c_out.println(line);
-        c_out.flush();
+        String line = id + ", " + DestinationId + ", " + date.toString() + ", " + FullSeats + ", " + Price + ", 0";
+        f_out.println(line);
+        f_out.flush();
         return 0;
     }
 
