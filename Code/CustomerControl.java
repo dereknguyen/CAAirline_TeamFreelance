@@ -29,7 +29,6 @@ public class CustomerControl{
       Trip trip = fm.getTripFromUser();
 
       int flightId = db.getFlightId(trip.getDest(), trip.getDate());
-      int flightId = 0;
       System.out.println("What seat would you like? Enter a number 1-20");
       int seatNo = scan.nextInt();
       db.addTicket(username, flightId, seatNo);
@@ -41,8 +40,7 @@ public class CustomerControl{
       Database_Interface db = Database_Interface.getInstance();
       Trip trip = fm.getTripFromUser();
 
-      //int flightId = db.getFlightId(trip.getDest(), trip.getDate());
-      int flightId = 0;
+      int flightId = db.getFlightId(trip.getDest(), trip.getDate());
       db.flightCheckIn(username, flightId);
    }
 
