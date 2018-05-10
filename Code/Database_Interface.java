@@ -32,8 +32,6 @@ reservations
 
  */
 
-//TODO text file implementation
-
 public class Database_Interface {
     static private Database_Interface uniqueInstance;
     private Connection conn;
