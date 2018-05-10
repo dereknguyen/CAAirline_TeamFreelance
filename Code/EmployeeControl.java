@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.sql.Date;
 
 public class EmployeeControl{
-   static private EmployeeControl uniqueinstance;
+   private static EmployeeControl uniqueinstance;
    private Database_Interface db;
    private Calendar cal;
    private Scanner reader;
@@ -19,7 +19,7 @@ public class EmployeeControl{
       reader = new Scanner(System.in);
    }
 
-   static public EmployeeControl getInstance()
+   public static EmployeeControl getInstance()
    {
       if (uniqueinstance == null)
       {
@@ -119,7 +119,8 @@ public class EmployeeControl{
       int destination = reader.nextInt();
 
       double avgEmpty = db.calculateAvgEmpty(destination);
-      int P = flight.baseprice(destination);
+      //int P = flight.baseprice(destination);
+      int P = 5;
       double p = P - ((avgEmpty/2)*P);
 
       System.out.println("Price recommendation: " + p);

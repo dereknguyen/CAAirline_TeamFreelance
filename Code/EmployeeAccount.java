@@ -10,7 +10,7 @@ public class EmployeeAccount extends Account {
     public EmployeeAccount(String firstName, String lastName, String userName, ArrayList<Ticket> ticket) {
         super(firstName, lastName, userName, ticket);
 
-        this.controller = new EmployeeControl();
+        this.controller = EmployeeControl.getInstance();
     }
 
     public void editFlightStatus() {
