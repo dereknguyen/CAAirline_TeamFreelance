@@ -189,6 +189,7 @@ public class Dummy_Database {
     {
         String line = Username + ", " + FlightId + ", " + SeatNumber + ", " + CheckedIn;
         t_out.println(line);
+        t_out.close();
         return 0;
     }
 
