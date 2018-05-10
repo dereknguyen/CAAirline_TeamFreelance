@@ -28,6 +28,7 @@ public class CustomerControl{
       int seatNo = scan.nextInt();
       db.addTicket(username, flightId, seatNo);
    }
+
    // Checkin
    public void checkin(String username){
       Database_Interface db = Database_Interface.getInstance();
@@ -36,6 +37,7 @@ public class CustomerControl{
       int flightId = db.getFlightId(trip.getDest(), trip.getDate());
       db.flightCheckIn(username, flightId);
    }
+
    // View status
    public void status(){
       Database_Interface db = Database_Interface.getInstance();

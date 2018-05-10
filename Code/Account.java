@@ -55,6 +55,14 @@ public class Account {
         return false;
     }
 
+    public int removeTicket() {
+        return 0;
+    }
+
+    public int checkIn() {
+        return 0;
+    }
+
     /**
      * Get the registered username.
      * @return Username.
