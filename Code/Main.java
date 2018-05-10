@@ -26,10 +26,12 @@ public class Main {
             //call functions here
             if (resp == 1)
             {
+                System.out.println("Enter your username");
                 cc.reserve(scan.nextLine());
             }
             else if (resp == 2)
             {
+                System.out.println("Enter your username");
                 cc.checkin(scan.nextLine());
             }
             else if (resp == 3)
