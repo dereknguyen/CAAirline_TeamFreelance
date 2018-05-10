@@ -1,5 +1,7 @@
 package Code;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -24,8 +26,8 @@ employees
 flights
     Id, DestinationId, Date, FullSeats, Price, Status
 
-reservations
-    CustomerUsername, FlightId, SeatNumber, CheckedIn
+tickets
+    Username, FlightId, SeatNumber, CheckedIn
 
  */
 
@@ -34,15 +36,15 @@ public class Dummy_Database {
     private String customersfile = "customers.txt";
     private String employeesfile = "employees.txt";
     private String flightsfile = "flights.txt";
-    private String reservationsfile = "reservations.txt";
+    private String ticketsfile = "tickets.txt";
     private Scanner customers;
     private Scanner employees;
     private Scanner flights;
-    private Scanner reservations;
+    private Scanner tickets;
     private PrintWriter c_out;
     private PrintWriter e_out;
     private PrintWriter f_out;
-    private PrintWriter r_out;
+    private PrintWriter t_out;
 
     private Dummy_Database()
     {
@@ -51,11 +53,11 @@ public class Dummy_Database {
             customers = new Scanner(new FileInputStream(customersfile));
             employees = new Scanner(new FileInputStream(employeesfile));
             flights = new Scanner(new FileInputStream(flightsfile));
-            reservations = new Scanner(new FileInputStream(reservationsfile));
+            tickets = new Scanner(new FileInputStream(ticketsfile));
             c_out = new PrintWriter(customersfile, "UTF-8");
             e_out = new PrintWriter(employeesfile, "UTF-8");
             f_out = new PrintWriter(flightsfile, "UTF-8");
-            r_out = new PrintWriter(reservationsfile, "UTF-8");
+            t_out = new PrintWriter(ticketsfile, "UTF-8");
         }
         catch (Exception e)
         {
@@ -152,6 +154,21 @@ public class Dummy_Database {
         return 0;
     }
 
+    // Attempts to add ticket to database. Returns 0 on success, 1 on error
+    // NOTE: dummy version will not enforce one ticket per customer per flight
+    public int addTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
+    {
+        String line = Username + ", " + FlightId + ", " + SeatNumber + ", " + CheckedIn;
+        t_out.println(line);
+        return 0;
+    }
+
+    // Overload for simplicity
+    public int addTicket(String Username, int FlightId, int SeatNumber)
+    {
+        return addTicket(Username, FlightId, SeatNumber, false);
+    }
+
     // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
     // NOTE: not implemented in dummy version, use add/remove instead
     public int editCustomer(String FirstName, String LastName, String Username)
@@ -177,6 +194,14 @@ public class Dummy_Database {
     // NOTE: not implemented in dummy version
     public int removeEmployee(String Username)
     {
+        return 0;
+    }
+
+    // Attempts to remove ticket from database. Returns 0 on success, 1 on error
+    // NOTE: not implemented in dummy version
+    public int removeTicket(String Username, int FlightId)
+    {
+
         return 0;
     }
 
@@ -241,14 +266,14 @@ public class Dummy_Database {
 
     // Attempts to reserve flight seat for user. Returns 0 on success, 1 on error
     // NOTE: not implemented in dummy version
-    public int reserveSeat(String CustomerUsername, int FlightId, int SeatNumber)
+    public int reserveSeat(String Username, int FlightId, int SeatNumber)
     {
         return 0;
     }
 
     // Attempts to check user in for flight. Returns 0 on success, 1 on error
     // NOTE: not implemented in dummy version
-    public int flightCheckIn(String CustomerUsername, int FlightId)
+    public int flightCheckIn(String Username, int FlightId)
     {
         return 0;
     }
