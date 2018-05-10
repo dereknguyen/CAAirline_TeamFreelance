@@ -16,6 +16,7 @@ public class Main {
         System.out.println("Would you like to log in as an employee or customer?");
         System.out.println("Type 1 for employee or 2 for customer");
         int resp = scan.nextInt();
+        String username;
 
         if(resp == 1) {
             System.out.println("Type 1 for purchase ticket, 2 for checkin, 3 for view flight status");
@@ -26,13 +27,17 @@ public class Main {
             //call functions here
             if (resp == 1)
             {
-                System.out.println("Enter your username");
-                cc.reserve(scan.nextLine());
+                System.out.println("Enter your username: ");
+                scan.nextLine();
+                username = scan.nextLine();
+                cc.reserve(username);
             }
             else if (resp == 2)
             {
-                System.out.println("Enter your username");
-                cc.checkin(scan.nextLine());
+                System.out.println("Enter your username: ");
+                scan.nextLine();
+                username = scan.nextLine();
+                cc.checkin(username);
             }
             else if (resp == 3)
             {
@@ -62,13 +67,17 @@ public class Main {
             //call functions here
             if (resp == 1)
             {
-                System.out.println("Enter your username");
-                cc.reserve(scan.nextLine());
+                System.out.println("Enter your username: ");
+                scan.nextLine();
+                username = scan.nextLine();
+                cc.reserve(username);
             }
             else if (resp == 2)
             {
-                System.out.println("Enter your username");
-                cc.checkin(scan.nextLine());
+                System.out.println("Enter your username: ");
+                scan.nextLine();
+                username = scan.nextLine();
+                cc.checkin(username);
             }
             else if (resp == 3)
             {
