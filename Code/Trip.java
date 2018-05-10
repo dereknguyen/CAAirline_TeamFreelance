@@ -14,6 +14,6 @@ public class Trip {
       return date;
    }
    public int getDest(){
-      return destination
+      return destination;
    }
 }
