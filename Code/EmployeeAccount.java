@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public class EmployeeAccount extends Account {
 
+
     public EmployeeAccount(String firstName, String lastName, String userName, ArrayList<Ticket> ticket) {
         super(firstName, lastName, userName, ticket);
     }
