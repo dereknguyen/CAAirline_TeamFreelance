@@ -1,5 +1,7 @@
 package Code;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.sql.Date;
@@ -117,16 +119,40 @@ public class EmployeeControl{
    {
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
+      int destination = reader.nextInt();
       // TODO ask user for date and time too
 
-      db.setPrice(destination, date, price);
+      //db.setPrice(destination, date, price);
    }
 
    public void editEmployee()
    {
+      AccountManager am = new AccountManager();
       System.out.println("Add (0) or delete (1)?");
       int action = reader.nextInt();
-      Account acct = new Account();
-      //TODO implement
+      System.out.println("Is this account a customer (0) or employee (1) account?");
+      int level = reader.nextInt();
+      System.out.println("What is your username?");
+      String username = reader.next();
+      if (action == 0) {
+         System.out.println("What is your first name?");
+         String firstname = reader.next();
+         System.out.println("What is your last name?");
+         String lastname = reader.next();
+         if (level == 0) {
+            am.CreateUserAccount(firstname, lastname, username);
+         }
+         else if (level == 1) {
+            am.CreateEmployeeAccount(firstname, lastname, username);
+         }
+      }
+      else if (action == 1) {
+         if (level == 0) {
+            am.DeleteUserAccount(username);
+         }
+         else if (level == 1) {
+            am.DeleteEmployeeAccount(username);
+         }
+      }
    }
 }

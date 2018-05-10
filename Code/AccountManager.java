@@ -17,13 +17,11 @@ public class AccountManager {
         db.addCustomerAccount(firstName, lastName, username);
         return new Account(firstName, lastName, username, new ArrayList<>());
     }
-    public void DeleteAccount(Account toDelete){
-        if (toDelete instanceof EmployeeAccount) {
-            db.removeEmployee(toDelete.getUserName());
-        }
-        else {
-            db.removeCustomer(toDelete.getUserName());
-        }
+    public void DeleteUserAccount(String toDelete){
+        db.removeCustomer(toDelete);
+    }
+    public void DeleteEmployeeAccount(String toDelete) {
+        db.removeEmployee(toDelete);
     }
 
 }
