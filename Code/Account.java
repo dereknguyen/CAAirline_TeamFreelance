@@ -54,12 +54,16 @@ public class Account {
         return false;
     }
 
-    public int removeTicket() {
-        return 0;
+    public void getFlightStatus() {
+        CustomerControl.getInstance().status();
     }
 
-    public int checkIn() {
-        return 0;
+    public void reserve() {
+        CustomerControl.getInstance().reserve(this.userName);
+    }
+
+    public void checkIn() {
+        CustomerControl.getInstance().checkin(this.userName);
     }
 
     /**
