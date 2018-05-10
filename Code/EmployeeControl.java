@@ -7,15 +7,25 @@ import java.util.Scanner;
 import java.sql.Date;
 
 public class EmployeeControl{
+   private static EmployeeControl uniqueinstance;
    private Database_Interface db;
    private Calendar cal;
    private Scanner reader;
 
-   public EmployeeControl()
+   private EmployeeControl()
    {
       db = Database_Interface.getInstance();
       cal = Calendar.getInstance();
       reader = new Scanner(System.in);
+   }
+
+   public static EmployeeControl getInstance()
+   {
+      if (uniqueinstance == null)
+      {
+         uniqueinstance = new EmployeeControl();
+      }
+      return uniqueinstance;
    }
 
    /*

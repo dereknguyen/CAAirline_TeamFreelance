@@ -5,10 +5,23 @@ import java.util.Scanner;
 
 public class CustomerControl{
    private Database_Interface db;
-   public CustomerControl(){
+   private static CustomerControl uniqueinstance;
+
+   private  CustomerControl(){
       db = Database_Interface.getInstance();
    }
+
    // Flight Reserve
+
+   static public CustomerControl getInstance()
+   {
+      if (uniqueinstance == null)
+      {
+         uniqueinstance = new CustomerControl();
+      }
+      return uniqueinstance;
+   }
+
    public void reserve(String username){
       FlightManager fm = new FlightManager();
       Scanner scan = new Scanner(System.in);
