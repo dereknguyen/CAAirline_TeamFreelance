@@ -5,6 +5,13 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        while (true) {
+            mainLoop();
+        }
+
+    }
+
+    private static void mainLoop() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Would you like to log in as an employee or customer?");
         System.out.println("Type 1 for employee or 2 for customer");
@@ -66,6 +73,6 @@ public class Main {
                 cc.status();
             }
         }
-
     }
+
 }
