@@ -1,6 +1,6 @@
 package Code;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Ticket {
 	private Date date;
