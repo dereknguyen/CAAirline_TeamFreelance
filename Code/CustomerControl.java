@@ -47,7 +47,7 @@ public class CustomerControl{
       FlightManager fm = new FlightManager();
       Trip trip = fm.getTripFromUser();
 
-      System.out.println("Status" + db.getStatus(trip.getDest(), trip.getDate()));
+      System.out.println("Status = " + db.getStatus(trip.getDest(), trip.getDate()));
    }
 
 }
