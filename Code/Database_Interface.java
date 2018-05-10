@@ -1,8 +1,5 @@
-package com.company;
-import com.sun.tools.doclets.internal.toolkit.util.ClassUseMapper;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+package Code;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 /*
@@ -70,10 +67,11 @@ public class Database_Interface {
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
     private int getFlightId(int DestinationId, Date date)
     {
-        String query = "SELECT Id FROM flights WHERE DestinationId = ? AND Date = ?";
+        String query = "SELECT Id FROM flights WHERE DestinationId = " + DestinationId + " AND Date = " + date;
         int id = -1;
         try
         {
+
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
@@ -89,7 +87,7 @@ public class Database_Interface {
 
     // Returns the number of flights that occurred between two dates (inclusive)
     // If both dates are null, returns number of flights in database
-    private int getNumFlights(Date from, Date to)
+    public int getNumFlights(Date from, Date to)
     {
         String query = "SELECT COUNT(*) FROM (SELECT * FROM flights " +
                 "WHERE Date BETWEEN " + from + "AND" + to + ") AS count";
@@ -113,49 +111,10 @@ public class Database_Interface {
     }
 
     // Overload for simplicity
-    private int getNumFlights()
+    public int getNumFlights()
     {
         return getNumFlights(null, null);
     }
-
-    /*
-    //TODO remove this?
-    // Returns the number of customers (used to get the next customer ID) or -1 on error
-    private int getNumCustomers()
-    {
-        String query = "SELECT COUNT(*) FROM (SELECT * FROM customers) AS count";
-        int count = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            count = rs.getInt("count");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return count;
-    }
-
-    //TODO remove this?
-    // Returns the number of employees or -1 on error
-    private int getNumEmployees()
-    {
-        String query = "SELECT COUNT(*) FROM (SELECT * FROM employees) AS count";
-        int count = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            count = rs.getInt("count");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return count;
-    }*/
 
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
     public int getStatus(int DestinationId, Date date)
@@ -178,7 +137,7 @@ public class Database_Interface {
     }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String FirstName, String LastName, String Username)
+    public int addCustomerAccount(String Username, String FirstName, String LastName)
     {
         String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
         try
@@ -349,6 +308,26 @@ public class Database_Interface {
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, Status);
+            ps.setInt(2, Id);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Sets a flight's price. Returns 0 on success, 1 on error
+    public int setPrice(int DestinationId, Date date, double Price)
+    {
+        String query = "UPDATE flights SET Price = ? WHERE FlightId = ?";
+        int Id = getFlightId(DestinationId, date);
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1, Price);
             ps.setInt(2, Id);
             ps.execute();
         }
