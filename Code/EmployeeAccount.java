@@ -5,32 +5,29 @@ import java.sql.Date;
 
 public class EmployeeAccount extends Account {
 
-    private EmployeeControl controller;
 
     public EmployeeAccount(String firstName, String lastName, String userName, ArrayList<Ticket> ticket) {
         super(firstName, lastName, userName, ticket);
-
-        this.controller = new EmployeeControl();
     }
 
-    public void editFlightStatus() {
-        controller.editFlight();
+    public int editFlightStatus() {
+        return EmployeeControl.getInstance().editFlight();
     }
 
     public void scheduleFlight() {
-        controller.scheduleFlight();
+        EmployeeControl.getInstance().scheduleFlight();
     }
 
-    public void setPrice() {
-        controller.setPrice();
+    public int setPrice() {
+        return EmployeeControl.getInstance().setPrice();
     }
 
     public void editEmployee() {
-        controller.editEmployee();
+        return EmployeeControl.getInstance().editEmployee();
     }
 
     public void viewPrice() {
-        controller.viewPrice();
+        EmployeeControl.getInstance().viewPrice();
     }
 
 //    public int editFlightStatus(int destinationID, Date date, int status) {
