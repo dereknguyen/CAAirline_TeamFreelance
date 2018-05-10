@@ -294,7 +294,13 @@ public class Dummy_Database {
                 count ++;
             }
         }
-        return total / count;
+        if (count > 0) {
+            return total / count;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     // Attempts to reserve flight seat for user. Returns 0 on success, 1 on error
