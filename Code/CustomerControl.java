@@ -32,8 +32,9 @@ public class CustomerControl{
       int flightId = 0;
       System.out.println("What seat would you like? Enter a number 1-20");
       int seatNo = scan.nextInt();
-      db.reserveSeat(username, flightId, seatNo);
+      db.addTicket(username, flightId, seatNo);
    }
+
    // Checkin
    public void checkin(String username){
       FlightManager fm = new FlightManager();
@@ -44,6 +45,7 @@ public class CustomerControl{
       int flightId = 0;
       db.flightCheckIn(username, flightId);
    }
+
    // View status
    public void status(){
       FlightManager fm = new FlightManager();

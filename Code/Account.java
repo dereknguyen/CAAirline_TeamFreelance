@@ -49,10 +49,17 @@ public class Account {
         return null;
     }
 
-    // TODO: Need database to implement purchase ticket
     public boolean purchaseTicket(int DestinationID, Date date, Trip trip) {
         Database_Interface db = Database_Interface.getInstance();
         return false;
+    }
+
+    public int removeTicket() {
+        return 0;
+    }
+
+    public int checkIn() {
+        return 0;
     }
 
     /**
