@@ -27,7 +27,6 @@ public class CustomerControl{
    public void reserve(String username){
       FlightManager fm = new FlightManager();
       Scanner scan = new Scanner(System.in);
-      Database_Interface db = Database_Interface.getInstance();
       Trip trip = fm.getTripFromUser();
 
       int flightId = db.getFlightId(trip.getDest(), trip.getDate());
@@ -38,7 +37,6 @@ public class CustomerControl{
    // Checkin
    public void checkin(String username){
       FlightManager fm = new FlightManager();
-      Database_Interface db = Database_Interface.getInstance();
       Trip trip = fm.getTripFromUser();
 
       int flightId = db.getFlightId(trip.getDest(), trip.getDate());

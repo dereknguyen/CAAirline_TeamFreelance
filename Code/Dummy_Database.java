@@ -73,7 +73,7 @@ public class Dummy_Database {
     }
 
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
-    private int getFlightId(int DestinationId, Date date)
+    public int getFlightId(int DestinationId, Date date)
     {
         List<String> entry = new ArrayList<>();
         String line;
