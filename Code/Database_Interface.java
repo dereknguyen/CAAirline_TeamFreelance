@@ -1,6 +1,5 @@
 package Code;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import javax.jws.soap.SOAPBinding;
 import java.sql.*;
@@ -66,7 +65,7 @@ public class Database_Interface {
     }
 
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
-    private int getFlightId(int DestinationId, Date date)
+    public int getFlightId(int DestinationId, Date date)
     {
         String query = "SELECT Id FROM flights WHERE DestinationId = " + DestinationId + " AND Date = " + date;
         int id = -1;
