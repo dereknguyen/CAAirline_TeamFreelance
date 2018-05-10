@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.sql.Date;
 
 public class EmployeeControl{
-   private EmployeeControl uniqueinstance;
+   static private EmployeeControl uniqueinstance;
    private Database_Interface db;
    private Calendar cal;
    private Scanner reader;
@@ -19,7 +19,7 @@ public class EmployeeControl{
       reader = new Scanner(System.in);
    }
 
-   public EmployeeControl getInstance()
+   static public EmployeeControl getInstance()
    {
       if (uniqueinstance == null)
       {

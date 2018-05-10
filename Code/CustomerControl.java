@@ -4,12 +4,12 @@ import java.lang.System;
 import java.util.Scanner;
 
 public class CustomerControl{
-   private CustomerControl uniqueinstance;
+   static private CustomerControl uniqueinstance;
 
    private CustomerControl(){}
    // Flight Reserve
 
-   public CustomerControl getInstance()
+   static public CustomerControl getInstance()
    {
       if (uniqueinstance == null)
       {
