@@ -109,7 +109,8 @@ public class EmployeeControl{
       int destination = reader.nextInt();
 
       double avgEmpty = db.calculateAvgEmpty(destination);
-      int P = flight.baseprice(destination);
+      //int P = flight.baseprice(destination);
+      int P = 5;
       double p = P - ((avgEmpty/2)*P);
 
       System.out.println("Price recommendation: " + p);
