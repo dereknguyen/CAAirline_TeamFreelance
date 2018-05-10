@@ -298,6 +298,7 @@ public class Database_Interface {
         return 0;
     }
 
+    // Attempts to remove ticket from database. Returns 0 on success, 1 on error
     public int removeTicket(String Username, int FlightId)
     {
         String query = "DELETE FROM tickets WHERE Username = ? AND FlightId = ?";
