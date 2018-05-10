@@ -18,7 +18,8 @@ public class FlightManager{
       db.setStatus(trip.getDest() ,trip.getDate(), status);
    }
    public Trip getTripFromUser(){
-      System.out.println("Enter destination");
+      System.out.println("Enter Integer 0 - 5 for Destination:");
+      System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
       int destination = reader.nextInt();
       System.out.println("Enter year");
       int y = reader.nextInt();
