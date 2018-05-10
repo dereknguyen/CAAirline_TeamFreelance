@@ -1,6 +1,8 @@
 package com.company;
 
-import java.util.Arrylist;
+import java.util.ArrayList;
+import java.util.Date;
+//import java.util.HashMap;
 
 public class Account {
 
@@ -17,22 +19,28 @@ public class Account {
     }
 
     public String getName() {
+        return firstName;
+    }
+
+    public Ticket getTicket(int ticketNumber) {
+
+        for (Ticket current: this.ticket) {
+            if (current.getTicketNumber() == ticketNumber) {
+                return current;
+            }
+        }
+
         return null;
+
     }
 
-    public String getAccount() {
-        return null;
-    }
-
-    public Ticket getTicket(int confirmNum) {
-        return nill;
-    }
-
-    public FlightStatus viewFlightStatus(int flightNum) {
-        return nill;
-    }
+//    public FlightStatus viewFlightStatus(int flightNum) {
+//        return null;
+//    }
 
     public boolean purchaseTicket(Date date, Trip trip) {
+
+
         return false;
     }
 
