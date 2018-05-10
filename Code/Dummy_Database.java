@@ -74,7 +74,13 @@ public class Dummy_Database {
         return uniqueInstance;
     }
 
-    // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
+
+    /**
+     * Get flight identification number base on Destination ID (0 - 5) and Date of the flight.
+     * @param DestinationId (0 - 5) The specified location.
+     * @param date Sql Date.
+     * @return Flight id associated with DestinationId and Date, or a new id if it doesn't exist
+     */
     public int getFlightId(int DestinationId, Date date)
     {
         List<String> entry = new ArrayList<>();
@@ -98,9 +104,16 @@ public class Dummy_Database {
         return 1;
     }
 
-    // Returns the number of flights that occurred between two dates (inclusive)
-    // If both dates are null, returns number of flights in database
-    // NOTE: Dummy version does not check dates
+
+    /**
+     * Query for number of flight occur between the specified dates.
+     * NOTE: Dummy version does not check dates
+     *
+     * @param from Starting date.
+     * @param to Ending date.
+     * @return The number of flights that occurred between two dates (inclusive).
+     *         If both dates are null, returns number of flights in database
+     */
     private int getNumFlights(Date from, Date to)
     {
         String line;
@@ -115,13 +128,24 @@ public class Dummy_Database {
         return count;
     }
 
-    // Overload for simplicity
+    /**
+     * Overloading getNumFlight for simplicity.
+     * @return The number of flights that occurred between two dates (inclusive).
+     *         If both dates are null, returns number of flights in database
+     */
     private int getNumFlights()
     {
         return getNumFlights(null, null);
     }
+    
 
-    // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
+    /**
+     * Query for status of specific flight.
+     *
+     * @param DestinationId Location of landing.
+     * @param date Departure date.
+     * @return 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID.
+     */
     public int getStatus(int DestinationId, Date date)
     {
         List<String> entry;
