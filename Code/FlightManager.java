@@ -30,13 +30,10 @@ public class FlightManager{
       int h = reader.nextInt();
       System.out.println("Enter min");
 
-      int m = reader.nextInt();
-      Date date = new Date(y,m,d,h,m);
+      int min = reader.nextInt();
+      Date date = new Date(y,m,d);
       Trip trip = new Trip(date,destination);
 
-      int min = reader.nextInt();
-      Date date = new Date(y,m,d,h,min);
-      Trip trip = new Trip(date,destination);
       return trip;
    }
    public void viewStatus(){
@@ -48,7 +45,7 @@ public class FlightManager{
    public void scheduleFlight(){
       Database_Interface db = Database_Interface.getInstance();
       Trip trip = getTripFromUser();
-      Date date = trip.date;
+      Date date = trip.getDate();
       Date minH = new Date(date.getTime()-40*60*1000); //40 min in ms
       Date maxH = new Date(date.getTime()+40*60*1000);
       if(db.getNumFlights(minH, maxH)==0){
@@ -56,7 +53,7 @@ public class FlightManager{
          double price = reader.nextDouble();
          db.addFlight(trip.getDest(), trip.getDate(), 0, price);
          System.out.println("Success");
-         db.addFlight(trip.destination, trip.date);
+         db.addFlight(trip.getDest(), trip.getDate());
       }
       else
          System.out.println("Failure");
