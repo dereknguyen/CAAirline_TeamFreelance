@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;
+
 
 /*
 Temporary class that reads from a text file instead of a real database
@@ -31,10 +33,10 @@ tickets
 
 public class Dummy_Database {
     static private Dummy_Database uniqueInstance;
-    private String customersfile = "customers.txt";
-    private String employeesfile = "employees.txt";
-    private String flightsfile = "flights.txt";
-    private String ticketsfile = "tickets.txt";
+    private File customersfile = new File("customers.txt");
+    private File employeesfile = new File("employees.txt");
+    private File flightsfile = new File("flights.txt");
+    private File ticketsfile = new File("tickets.txt");
     private Scanner customers;
     private Scanner employees;
     private Scanner flights;
@@ -52,10 +54,10 @@ public class Dummy_Database {
             employees = new Scanner(new FileInputStream(employeesfile));
             flights = new Scanner(new FileInputStream(flightsfile));
             tickets = new Scanner(new FileInputStream(ticketsfile));
-            c_out = new PrintWriter(customersfile, "UTF-8");
-            e_out = new PrintWriter(employeesfile, "UTF-8");
-            f_out = new PrintWriter(flightsfile, "UTF-8");
-            t_out = new PrintWriter(ticketsfile, "UTF-8");
+            c_out = new PrintWriter(customersfile);
+            e_out = new PrintWriter(employeesfile);
+            f_out = new PrintWriter(flightsfile);
+            t_out = new PrintWriter(ticketsfile);
         }
         catch (Exception e)
         {
@@ -84,6 +86,7 @@ public class Dummy_Database {
         List<String> entry = new ArrayList<>();
         String line;
         flights.reset();
+        int lines = 0;
 
         while (flights.hasNextLine())
         {
@@ -93,8 +96,12 @@ public class Dummy_Database {
             {
                 return Integer.parseInt(entry.get(0));
             }
+            lines ++;
         }
-        return Integer.parseInt(entry.get(0))+1;
+        if (lines != 0) {
+            return Integer.parseInt(entry.get(0)) + 1;
+        }
+        return 1;
     }
 
 
