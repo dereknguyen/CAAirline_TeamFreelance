@@ -34,6 +34,7 @@ public class CustomerControl{
       int seatNo = scan.nextInt();
       db.addTicket(username, flightId, seatNo);
    }
+
    // Checkin
    public void checkin(String username){
       FlightManager fm = new FlightManager();
@@ -44,6 +45,7 @@ public class CustomerControl{
       int flightId = 0;
       db.flightCheckIn(username, flightId);
    }
+
    // View status
    public void status(){
       FlightManager fm = new FlightManager();
