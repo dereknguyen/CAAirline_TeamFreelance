@@ -171,6 +171,7 @@ public class Dummy_Database {
     {
         String line = Username + ", " + FirstName + ", " + LastName;
         c_out.println(line);
+        c_out.flush();
         return 0;
     }
 
@@ -180,6 +181,7 @@ public class Dummy_Database {
     {
         String line = Username + ", " + FirstName + ", " + LastName;
         e_out.println(line);
+        e_out.flush();
         return 0;
     }
 
@@ -189,7 +191,7 @@ public class Dummy_Database {
     {
         String line = Username + ", " + FlightId + ", " + SeatNumber + ", " + CheckedIn;
         t_out.println(line);
-        t_out.close();
+        t_out.flush();
         return 0;
     }
 
@@ -242,6 +244,7 @@ public class Dummy_Database {
         int id = getNumFlights();
         String line = id + ", " + DestinationId + ", " + date + ", " + FullSeats + ", " + Price + ", 0";
         c_out.println(line);
+        c_out.flush();
         return 0;
     }
 
