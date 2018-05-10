@@ -1,3 +1,5 @@
+package Code;
+
 import java.util.ArrayList;
 
 public class AccountManager {
@@ -17,10 +19,10 @@ public class AccountManager {
     }
     public void DeleteAccount(Account toDelete){
         if (toDelete instanceof EmployeeAccount) {
-            db.deleteEmployee(toDelete.getUserName());
+            db.removeEmployee(toDelete.getUserName());
         }
         else {
-            db.deleteCustomer(toDelete.getUserName());
+            db.removeCustomer(toDelete.getUserName());
         }
     }
 

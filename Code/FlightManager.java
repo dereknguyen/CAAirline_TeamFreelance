@@ -29,8 +29,13 @@ public class FlightManager{
       System.out.println("Enter hrs");
       int h = reader.nextInt();
       System.out.println("Enter min");
+
       int m = reader.nextInt();
       Date date = new Date(y,m,d,h,m);
+      Trip trip = new Trip(date,destination);
+
+      int min = reader.nextInt();
+      Date date = new Date(y,m,d,h,min);
       Trip trip = new Trip(date,destination);
       return trip;
    }
@@ -51,6 +56,7 @@ public class FlightManager{
          double price = reader.nextDouble();
          db.addFlight(trip.getDest(), trip.getDate(), 0, price);
          System.out.println("Success");
+         db.addFlight(trip.destination, trip.date);
       }
       else
          System.out.println("Failure");
