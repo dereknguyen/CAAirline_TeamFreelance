@@ -1,7 +1,6 @@
 package Code;
 
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.sql.Date;
@@ -9,14 +8,14 @@ import java.sql.Date;
 public class EmployeeControl{
    private static EmployeeControl uniqueinstance;
    //private SQL_Database db;
-   private Dummy_Database db;
+   private Text_Database db;
    private Calendar cal;
    private Scanner reader;
 
    private EmployeeControl()
    {
       //db = SQL_Database.getInstance();
-      db = Dummy_Database.getInstance();
+      db = Text_Database.getInstance();
       cal = Calendar.getInstance();
       reader = new Scanner(System.in);
    }
