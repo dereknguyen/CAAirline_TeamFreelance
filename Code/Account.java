@@ -50,7 +50,7 @@ public class Account {
     }
 
     public boolean purchaseTicket(int DestinationID, Date date, Trip trip) {
-        SQL_Database db = SQL_Database.getInstance();
+        Text_Database db = Text_Database.getInstance();
         return false;
     }
 
