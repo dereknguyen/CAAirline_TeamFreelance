@@ -33,7 +33,7 @@ tickets
 
 public class Text_Database implements Database {
     static private Text_Database uniqueInstance;
-    private BufferedReader customers_reader;
+    /*private BufferedReader customers_reader;
     private BufferedReader employees_reader;
     private BufferedReader flights_reader;
     private BufferedReader tickets_reader;
@@ -44,12 +44,22 @@ public class Text_Database implements Database {
             employees_reader = new BufferedReader(new FileReader("employees.txt"));
             flights_reader = new BufferedReader(new FileReader("flights.txt"));
             tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+
+            // NOTE: unpredictable result with text files over 2^16 chars (65536)
+            customers_reader.mark(65536);
+            employees_reader.mark(65536);
+            flights_reader.mark(65536);
+            tickets_reader.mark(65536);
         }
         catch (FileNotFoundException e)
         {
             System.out.println(e.getMessage());
         }
-    }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }*/
 
     static public Text_Database getInstance() {
         if (uniqueInstance == null) {
@@ -71,7 +81,7 @@ public class Text_Database implements Database {
         int id = -1;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List<String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -97,7 +107,7 @@ public class Text_Database implements Database {
         int count = 0;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -133,7 +143,7 @@ public class Text_Database implements Database {
         int status = -1;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -142,6 +152,7 @@ public class Text_Database implements Database {
                     status = Integer.parseInt(entry.get(5));
                 }
             }
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -152,29 +163,33 @@ public class Text_Database implements Database {
     }
 
     // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
-    //TODO all writes need testing
     public int setStatus(int FlightId, int Status)
     {
         String line;
         String newline;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            FileWriter writer = new FileWriter("flights.txt", true);
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (Integer.parseInt(entry.get(0)) == FlightId)
                 {
-                    FileWriter writer = new FileWriter("flights.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(entry.get(0)).add(entry.get(1)).add(entry.get(2))
                             .add(entry.get(3)).add(entry.get(4)).add(Integer.toString(Status));
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -188,12 +203,13 @@ public class Text_Database implements Database {
     // Defaults status to 0 (On-time)
     public int addFlight(int DestinationId, Date date, int FullSeats, double Price)
     {
+        String line;
         int id;
         try
         {
-            flights_reader.reset();
-            while (flights_reader.readLine() != null);
-            FileWriter writer = new FileWriter("flights.txt");
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            FileWriter writer = new FileWriter("flights.txt", true);
+            while ((line = flights_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             id = getNumFlights();
             joiner.add(Integer.toString(id)).add(Integer.toString(DestinationId))
@@ -202,6 +218,7 @@ public class Text_Database implements Database {
 
             writer.write(newline);
             writer.close();
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -224,13 +241,13 @@ public class Text_Database implements Database {
         String newline;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            FileWriter writer = new FileWriter("flights.txt", true);
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (Integer.parseInt(entry.get(0)) == FlightId)
                 {
-                    FileWriter writer = new FileWriter("flights.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(entry.get(0)).add(Integer.toString(DestinationId)).add(date.toString())
                             .add(Integer.toString(FullSeats)).add(Integer.toString(FullSeats))
@@ -238,9 +255,14 @@ public class Text_Database implements Database {
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -251,24 +273,27 @@ public class Text_Database implements Database {
     }
 
     // Attempts to remove flight from database. Returns 0 on success, 1 on error
-    //TODO find a way to delete a line or refactor other functions handle empty lines
     public int removeFlight(int FlightId)
     {
         String line;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            FileWriter writer = new FileWriter("flights.txt", true);
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (Integer.parseInt(entry.get(0)) == FlightId)
                 {
-                    FileWriter writer = new FileWriter("flights.txt");
-
                     writer.write("");
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -292,7 +317,7 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            flights_reader.reset();
+            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -303,6 +328,7 @@ public class Text_Database implements Database {
                     count ++;
                 }
             }
+            flights_reader.close();
         }
         catch (IOException e)
         {
@@ -323,15 +349,16 @@ public class Text_Database implements Database {
     {
         try
         {
-            customers_reader.reset();
+            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
+            FileWriter writer = new FileWriter("customers.txt", true);
             while (customers_reader.readLine() != null);
-            FileWriter writer = new FileWriter("customers.txt");
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(FirstName).add(LastName);
             String newline = joiner.toString() + System.lineSeparator();
 
             writer.write(newline);
             writer.close();
+            customers_reader.close();;
         }
         catch (IOException e)
         {
@@ -348,21 +375,26 @@ public class Text_Database implements Database {
         String newline;
         try
         {
-            customers_reader.reset();
+            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
+            FileWriter writer = new FileWriter("customers.txt", true);
             while ((line = customers_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username))
                 {
-                    FileWriter writer = new FileWriter("customers.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(Username).add(FirstName).add(LastName);
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            customers_reader.close();
         }
         catch (IOException e)
         {
@@ -378,18 +410,22 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            customers_reader.reset();
+            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
+            FileWriter writer = new FileWriter("customers.txt", true);
             while ((line = customers_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username))
                 {
-                    FileWriter writer = new FileWriter("customers.txt");
-
                     writer.write("");
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            customers_reader.close();
         }
         catch (IOException e)
         {
@@ -408,17 +444,19 @@ public class Text_Database implements Database {
     // Attempts to add employee account to database. Returns 0 on success, 1 on error
     public int addEmployeeAccount(String Username, String FirstName, String LastName)
     {
+        String line;
         try
         {
-            employees_reader.reset();
-            while (employees_reader.readLine() != null);
-            FileWriter writer = new FileWriter("employees.txt");
+            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
+            FileWriter writer = new FileWriter("employees.txt", true);
+            while ((line = employees_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(FirstName).add(LastName);
             String newline = joiner.toString() + System.lineSeparator();
 
             writer.write(newline);
             writer.close();
+            employees_reader.close();
         }
         catch (IOException e)
         {
@@ -435,21 +473,26 @@ public class Text_Database implements Database {
         String newline;
         try
         {
-            employees_reader.reset();
+            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
+            FileWriter writer = new FileWriter("employees.txt", true);
             while ((line = employees_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username))
                 {
-                    FileWriter writer = new FileWriter("employees.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(Username).add(FirstName).add(LastName);
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            employees_reader.close();
         }
         catch (IOException e)
         {
@@ -465,18 +508,22 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            employees_reader.reset();
+            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
+            FileWriter writer = new FileWriter("employees.txt", true);
             while ((line = employees_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username))
                 {
-                    FileWriter writer = new FileWriter("employees.txt");
-
                     writer.write("");
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            employees_reader.close();
         }
         catch (IOException e)
         {
@@ -495,11 +542,12 @@ public class Text_Database implements Database {
     // Adds a ticket to the database. Returns 0 on success, 1 on error
     public int addTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
     {
+        String line;
         try
         {
-            tickets_reader.reset();
-            while (tickets_reader.readLine() != null);
-            FileWriter writer = new FileWriter("tickets.txt");
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            FileWriter writer = new FileWriter("tickets.txt", true);
+            while ((line = tickets_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(Integer.toString(FlightId))
                     .add(Integer.toString(SeatNumber)).add(Boolean.toString(CheckedIn));
@@ -507,6 +555,7 @@ public class Text_Database implements Database {
 
             writer.write(newline);
             writer.close();
+            tickets_reader.close();
         }
         catch (IOException e)
         {
@@ -529,22 +578,27 @@ public class Text_Database implements Database {
         String newline;
         try
         {
-            tickets_reader.reset();
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            FileWriter writer = new FileWriter("tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username) && Integer.parseInt(entry.get(1)) == FlightId)
                 {
-                    FileWriter writer = new FileWriter("tickets.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(Username).add(Integer.toString(FlightId))
                             .add(Integer.toString(SeatNumber)).add(Boolean.toString(CheckedIn));
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            tickets_reader.close();
         }
         catch (IOException e)
         {
@@ -560,18 +614,22 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            tickets_reader.reset();
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            FileWriter writer = new FileWriter("tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username))
                 {
-                    FileWriter writer = new FileWriter("tickets.txt");
-
                     writer.write("");
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            tickets_reader.close();
         }
         catch (IOException e)
         {
@@ -588,22 +646,27 @@ public class Text_Database implements Database {
         String newline;
         try
         {
-            tickets_reader.reset();
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            FileWriter writer = new FileWriter("tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
                 if (entry.get(0).equals(Username) && Integer.parseInt(entry.get(1)) == FlightId)
                 {
-                    FileWriter writer = new FileWriter("tickets.txt");
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(Username).add(Integer.toString(FlightId))
                             .add(entry.get(2)).add(Boolean.toString(true));
                     newline = joiner.toString() + System.lineSeparator();
 
                     writer.write(newline);
-                    writer.close();
+                }
+                else
+                {
+                    writer.write(line);
                 }
             }
+            writer.close();
+            tickets_reader.close();
         }
         catch (IOException e)
         {
