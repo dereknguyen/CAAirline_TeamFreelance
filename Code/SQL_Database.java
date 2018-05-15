@@ -68,7 +68,7 @@ public class SQL_Database implements Database {
 
      */
 
-    // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
+    // Returns flight id associated with DestinationId and Date, or -1 on error
     public int getFlightId(int DestinationId, Date date)
     {
         String query = "SELECT Id FROM flights WHERE DestinationId = " + DestinationId + " AND Date = " + date;
@@ -81,15 +81,15 @@ public class SQL_Database implements Database {
             rs.next();
             id = rs.getInt("Id");
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
-            // No matching flight found, return a new ID
-            return getNumFlights(null, null);
+            e.getMessage();
+            return -1;
         }
         return id;
     }
 
-    // Returns the number of flights that occurred between two dates (inclusive)
+    // Returns the number of flights that occurred between two dates (inclusive) or -1 on error
     // If both dates are null, returns number of flights in database
     public int getNumFlights(Date from, Date to)
     {
@@ -107,9 +107,10 @@ public class SQL_Database implements Database {
             rs.next();
             NumFlights = rs.getInt("count");
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
+            return -1;
         }
         return NumFlights;
     }
@@ -131,7 +132,7 @@ public class SQL_Database implements Database {
             rs.next();
             status = rs.getInt("Status");
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return -1;
@@ -150,7 +151,7 @@ public class SQL_Database implements Database {
             ps.setInt(2, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -174,7 +175,7 @@ public class SQL_Database implements Database {
             ps.setDouble(5, Price);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return -1;
@@ -202,7 +203,7 @@ public class SQL_Database implements Database {
             ps.setInt(5, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -220,7 +221,7 @@ public class SQL_Database implements Database {
             ps.setInt(1, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -228,7 +229,7 @@ public class SQL_Database implements Database {
         return 0;
     }
 
-    // Calculates average number of empty seats using previous two weeks of flight information
+    // Calculates average number of empty seats using previous two weeks of flight information, returns -1 on error
     public double calculateAvgEmpty(int DestinationId)
     {
         String query = "SELECT * FROM flights WHERE Date BETWEEN DATESUB(CURDATE(), " +
@@ -244,10 +245,10 @@ public class SQL_Database implements Database {
             }
             count = rs.getRow();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            return 0.0;
+            return -1;
         }
         return total / count;
     }
@@ -271,7 +272,7 @@ public class SQL_Database implements Database {
             ps.setString(3, LastName);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -280,7 +281,7 @@ public class SQL_Database implements Database {
     }
 
     // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
-    public int editCustomer(String FirstName, String LastName, String Username)
+    public int editCustomer(String Username, String FirstName, String LastName)
     {
         String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Username = ?";
         try
@@ -291,7 +292,7 @@ public class SQL_Database implements Database {
             ps.setString(3, Username);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -308,7 +309,7 @@ public class SQL_Database implements Database {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -334,7 +335,7 @@ public class SQL_Database implements Database {
             ps.setString(3, LastName);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -354,7 +355,7 @@ public class SQL_Database implements Database {
             ps.setString(3, Username);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -371,7 +372,7 @@ public class SQL_Database implements Database {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -397,7 +398,7 @@ public class SQL_Database implements Database {
             ps.setInt(3, SeatNumber);
             ps.setBoolean(4, CheckedIn);
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -424,7 +425,7 @@ public class SQL_Database implements Database {
             ps.setInt(4, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -443,7 +444,7 @@ public class SQL_Database implements Database {
             ps.setInt(2, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;
@@ -463,7 +464,7 @@ public class SQL_Database implements Database {
             ps.setInt(3, FlightId);
             ps.execute();
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return 1;

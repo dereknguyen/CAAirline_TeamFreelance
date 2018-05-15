@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 public class CustomerControl{
    //private SQL_Database db;
-   private Dummy_Database db;
+   private Text_Database db;
    private static CustomerControl uniqueinstance;
 
    private  CustomerControl(){
       //db = SQL_Database.getInstance();
-      db = Dummy_Database.getInstance();
+      db = Text_Database.getInstance();
    }
 
    // Flight Reserve
