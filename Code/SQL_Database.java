@@ -1,7 +1,5 @@
 package Code;
 
-
-import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 
 /*
@@ -34,12 +32,12 @@ tickets
 
  */
 
-public class Database_Interface {
-    static private Database_Interface uniqueInstance;
+public class SQL_Database implements Database {
+    static private SQL_Database uniqueInstance;
     private Connection conn;
     private Statement st;
 
-    private Database_Interface(){
+    private SQL_Database(){
         String driver = "org.gjt.mm.mysql.Driver";
         String url = "database_url";
         try
@@ -55,14 +53,20 @@ public class Database_Interface {
 
     }
 
-    static public Database_Interface getInstance()
+    static public Database getInstance()
     {
         if (uniqueInstance == null)
         {
-            uniqueInstance = new Database_Interface();
+            uniqueInstance = new SQL_Database();
         }
         return uniqueInstance;
     }
+
+    /*
+
+    Flight methods
+
+     */
 
     // Returns flight id associated with DestinationId and Date, or a new id if it doesn't exist
     public int getFlightId(int DestinationId, Date date)
@@ -117,10 +121,9 @@ public class Database_Interface {
     }
 
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
-    public int getStatus(int DestinationId, Date date)
+    public int getStatus(int FlightId)
     {
-        int flightId = getFlightId(DestinationId, date);
-        String query = "SELECT Status FROM flights WHERE Id = " + flightId;
+        String query = "SELECT Status FROM flights WHERE Id = " + FlightId;
         int status;
         try
         {
@@ -136,175 +139,14 @@ public class Database_Interface {
         return status;
     }
 
-    // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String Username, String FirstName, String LastName)
+    // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
+    public int setStatus(int FlightId, int Status)
     {
-        String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
+        String query = "UPDATE flights SET Status = ? WHERE FlightId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
-            ps.setString(2, FirstName);
-            ps.setString(3, LastName);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Attempts to add employee account to database. Returns 0 on success, 1 on error
-    public int addEmployeeAccount(String Username, String FirstName, String LastName)
-    {
-        String query = "INSERT INTO employees (Username, FirstName, LastName) values (?,?,?)";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
-            ps.setString(2, FirstName);
-            ps.setString(3, LastName);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Adds a ticket to the database. Returns 0 on success, 1 on error
-    public int addTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
-    {
-        String query = "INSERT INTO tickets (Username, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
-            ps.setInt(2, FlightId);
-            ps.setInt(3, SeatNumber);
-            ps.setBoolean(4, CheckedIn);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Overload for simplicity
-    public int addTicket(String Username, int FlightId, int SeatNumber)
-    {
-        return addTicket(Username, FlightId, SeatNumber, false);
-    }
-
-    // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
-    public int editCustomer(String FirstName, String LastName, String Username)
-    {
-        String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Username = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setString(3, Username);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Edits existing customer and sets values to parameters passed (cannot change username). Return 1 on error
-    public int editEmployee(String Username, String FirstName, String LastName)
-    {
-        String query = "UPDATE employees SET FirstName = ?, LastName = ? WHERE Username = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setString(3, Username);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Edits existing customer and changes SeatNumber and CheckedIn
-    public int editTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
-    {
-        String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND FlightId = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, SeatNumber);
-            ps.setBoolean(2, CheckedIn);
-            ps.setString(3, Username);
-            ps.setInt(4, FlightId);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Attempts to remove customer account to database. Returns 0 on success, 1 on error
-    public int removeCustomer(String Username)
-    {
-        String query = "DELETE FROM customers WHERE Username = " + Username;
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Attempts to remove employee account to database. Returns 0 on success, 1 on error
-    public int removeEmployee(String Username)
-    {
-        String query = "DELETE FROM employees WHERE Username " + Username;
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Attempts to remove ticket from database. Returns 0 on success, 1 on error
-    public int removeTicket(String Username, int FlightId)
-    {
-        String query = "DELETE FROM tickets WHERE Username = ? AND FlightId = ?";
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
+            ps.setInt(1, Status);
             ps.setInt(2, FlightId);
             ps.execute();
         }
@@ -316,7 +158,7 @@ public class Database_Interface {
         return 0;
     }
 
-    // Attempts to add flight to database. Returns 0 on success, 1 on error
+    // Attempts to add flight to database. Returns the new flight id, or -1 on error
     // Defaults status to 0 (On-time)
     public int addFlight(int DestinationId, Date date, int FullSeats, double Price)
     {
@@ -335,9 +177,9 @@ public class Database_Interface {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            return 1;
+            return -1;
         }
-        return 0;
+        return Id;
     }
 
     // Defaults FullSeats to 0 and Price to 0
@@ -346,55 +188,36 @@ public class Database_Interface {
         return addFlight(DestinationId, date, 0, 0);
     }
 
+    // Changes flight's destination, date, fullseats, and price. Returns 0 on success, 1 on error
+    public int editFlight(int FlightId, int DestinationId, Date date, int FullSeats, double Price)
+    {
+        String query = "UPDATE flights SET DestinationId = ?, Date = ?, FullSeats = ?, Price = ? WHERE FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, DestinationId);
+            ps.setDate(2, date);
+            ps.setInt(3, FullSeats);
+            ps.setDouble(4, Price);
+            ps.setInt(5, FlightId);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
     // Attempts to remove flight from database. Returns 0 on success, 1 on error
-    public int removeFlight(int DestinationId, Date date)
+    public int removeFlight(int FlightId)
     {
         String query = "DELETE FROM flights WHERE Id = ?";
-        int Id = getFlightId(DestinationId, date);
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, Id);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Set status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, 1 on error
-    public int setStatus(int DestinationId, Date date, int Status)
-    {
-        String query = "UPDATE flights SET Status = ? WHERE FlightId = ?";
-        int Id = getFlightId(DestinationId, date);
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, Status);
-            ps.setInt(2, Id);
-            ps.execute();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-        return 0;
-    }
-
-    // Sets a flight's price. Returns 0 on success, 1 on error
-    public int setPrice(int DestinationId, Date date, double Price)
-    {
-        String query = "UPDATE flights SET Price = ? WHERE FlightId = ?";
-        int Id = getFlightId(DestinationId, date);
-        try
-        {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setDouble(1, Price);
-            ps.setInt(2, Id);
+            ps.setInt(1, FlightId);
             ps.execute();
         }
         catch (Exception e)
@@ -429,8 +252,207 @@ public class Database_Interface {
         return total / count;
     }
 
+
+    /*
+
+    Customer methods
+
+     */
+
+    // Attempts to add customer account to database. Returns 0 on success, 1 on error.
+    public int addCustomerAccount(String Username, String FirstName, String LastName)
+    {
+        String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setString(2, FirstName);
+            ps.setString(3, LastName);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
+    public int editCustomer(String FirstName, String LastName, String Username)
+    {
+        String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Username = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, FirstName);
+            ps.setString(2, LastName);
+            ps.setString(3, Username);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Attempts to remove customer account to database. Returns 0 on success, 1 on error
+    public int removeCustomer(String Username)
+    {
+        String query = "DELETE FROM customers WHERE Username = " + Username;
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    /*
+
+    Employee methods
+
+     */
+
+    // Attempts to add employee account to database. Returns 0 on success, 1 on error
+    public int addEmployeeAccount(String Username, String FirstName, String LastName)
+    {
+        String query = "INSERT INTO employees (Username, FirstName, LastName) values (?,?,?)";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setString(2, FirstName);
+            ps.setString(3, LastName);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Edits existing customer and sets values to parameters passed (cannot change username). Return 1 on error
+    public int editEmployee(String Username, String FirstName, String LastName)
+    {
+        String query = "UPDATE employees SET FirstName = ?, LastName = ? WHERE Username = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, FirstName);
+            ps.setString(2, LastName);
+            ps.setString(3, Username);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Attempts to remove employee account to database. Returns 0 on success, 1 on error
+    public int removeEmployee(String Username)
+    {
+        String query = "DELETE FROM employees WHERE Username " + Username;
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    /*
+
+    Ticket methods
+
+     */
+
+    // Adds a ticket to the database. Returns 0 on success, 1 on error
+    public int addTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
+    {
+        String query = "INSERT INTO tickets (Username, FlightId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setInt(2, FlightId);
+            ps.setInt(3, SeatNumber);
+            ps.setBoolean(4, CheckedIn);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Overload for simplicity
+    public int addTicket(String Username, int FlightId, int SeatNumber)
+    {
+        return addTicket(Username, FlightId, SeatNumber, false);
+    }
+
+    // Edits existing customer and changes SeatNumber and CheckedIn
+    public int editTicket(String Username, int FlightId, int SeatNumber, boolean CheckedIn)
+    {
+        String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, SeatNumber);
+            ps.setBoolean(2, CheckedIn);
+            ps.setString(3, Username);
+            ps.setInt(4, FlightId);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
+    // Attempts to remove ticket from database. Returns 0 on success, 1 on error
+    public int removeTicket(String Username, int FlightId)
+    {
+        String query = "DELETE FROM tickets WHERE Username = ? AND FlightId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ps.setInt(2, FlightId);
+            ps.execute();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
+        return 0;
+    }
+
     // Attempts to check user in for flight. Returns 0 on success, 1 on error
-    public int flightCheckIn(String Username, int FlightId)
+    public int checkIn(String Username, int FlightId)
     {
         String query = "UPDATE tickets SET CheckedIn = ? WHERE Username = ? AND FlightId = ?";
         try
