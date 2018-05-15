@@ -7,7 +7,7 @@ public class FlightManager{
    Scanner reader = new Scanner(System.in);
 
    public void editStatus(){
-      Database_Interface db = Database_Interface.getInstance();
+      SQL_Database db = SQL_Database.getInstance();
       Trip trip = getTripFromUser();
       int status;
       int flightID;
@@ -38,13 +38,13 @@ public class FlightManager{
       return trip;
    }
    public void viewStatus(){
-      Database_Interface db = Database_Interface.getInstance();
+      SQL_Database db = SQL_Database.getInstance();
       Trip trip = getTripFromUser();
       int status = db.getStatus(trip.getDest(), trip.getDate());
       System.out.println(status);
    }
    public void scheduleFlight(){
-      Database_Interface db = Database_Interface.getInstance();
+      SQL_Database db = SQL_Database.getInstance();
       Trip trip = getTripFromUser();
       Date date = trip.getDate();
       Date minH = new Date(date.getTime()-40*60*1000); //40 min in ms
