@@ -61,13 +61,13 @@ public class EmployeeControl{
       date = new Date(cal.getTime().getTime());
 
       if(action == 1)
-         if (db.removeFlight(destination, date) == 1)
+         if (db.removeFlight(db.getFlightId(destination, date)) == 1)
          {
             System.out.println("No matching flight found in database");
          }
       else
       {
-         if (db.removeFlight(destination, date) == 1)
+         if (db.removeFlight(db.getFlightId(destination, date)) == 1)
          {
             System.out.println("No matching flight found in database");
          }
