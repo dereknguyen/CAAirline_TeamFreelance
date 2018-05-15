@@ -53,7 +53,7 @@ public class SQL_Database implements Database {
 
     }
 
-    static public Database getInstance()
+    static public SQL_Database getInstance()
     {
         if (uniqueInstance == null)
         {
