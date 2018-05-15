@@ -1,5 +1,6 @@
 package Code;
 
+import javax.xml.soap.Text;
 import java.util.Scanner;
 import java.sql.*;
 
@@ -7,7 +8,7 @@ public class FlightManager{
    Scanner reader = new Scanner(System.in);
 
    public void editStatus(){
-      SQL_Database db = SQL_Database.getInstance();
+      Text_Database db = Text_Database.getInstance();
       Trip trip = getTripFromUser();
       int status;
       int flightID;
@@ -17,6 +18,7 @@ public class FlightManager{
       
       db.setStatus(trip.getDest() ,trip.getDate(), status);
    }
+
    public Trip getTripFromUser(){
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
@@ -37,14 +39,15 @@ public class FlightManager{
 
       return trip;
    }
+
    public void viewStatus(){
-      SQL_Database db = SQL_Database.getInstance();
+      Text_Database db = Text_Database.getInstance();
       Trip trip = getTripFromUser();
       int status = db.getStatus(trip.getDest(), trip.getDate());
       System.out.println(status);
    }
    public void scheduleFlight(){
-      SQL_Database db = SQL_Database.getInstance();
+      Text_Database db = Text_Database.getInstance();
       Trip trip = getTripFromUser();
       Date date = trip.getDate();
       Date minH = new Date(date.getTime()-40*60*1000); //40 min in ms

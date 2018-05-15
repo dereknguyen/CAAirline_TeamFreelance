@@ -3,10 +3,10 @@ package Code;
 import java.util.ArrayList;
 
 public class AccountManager {
-    SQL_Database db;
+    Text_Database db;
 
     public AccountManager() {
-        db = SQL_Database.getInstance();
+        db = Text_Database.getInstance();
     }
 
     public Account CreateEmployeeAccount(String firstName, String lastName, String username) {
