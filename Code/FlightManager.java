@@ -16,7 +16,7 @@ public class FlightManager{
       System.out.println("Enter status");
       status = reader.nextInt();
       
-      db.setStatus(trip.getDest() ,trip.getDate(), status);
+      db.setStatus(trip.getFlightId(), status);
    }
 
    public Trip getTripFromUser(){
@@ -43,7 +43,7 @@ public class FlightManager{
    public void viewStatus(){
       Text_Database db = Text_Database.getInstance();
       Trip trip = getTripFromUser();
-      int status = db.getStatus(trip.getDest(), trip.getDate());
+      int status = db.getStatus(trip.getFlightId());
       System.out.println(status);
    }
    public void scheduleFlight(){

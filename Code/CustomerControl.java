@@ -40,14 +40,14 @@ public class CustomerControl{
       Trip trip = fm.getTripFromUser();
 
       int flightId = db.getFlightId(trip.getDest(), trip.getDate());
-      db.flightCheckIn(username, flightId);
+      db.checkIn(username, flightId);
    }
    // View status
    public void status(){
       FlightManager fm = new FlightManager();
       Trip trip = fm.getTripFromUser();
 
-      System.out.println("Status = " + db.getStatus(trip.getDest(), trip.getDate()));
+      System.out.println("Status = " + db.getStatus(trip.getFlightId()));
    }
 
 }
