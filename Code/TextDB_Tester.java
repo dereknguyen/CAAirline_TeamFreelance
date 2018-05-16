@@ -36,12 +36,13 @@ public class TextDB_Tester
 
         db.setStatus(0, 1);
         System.out.println(db.getStatus(0)); // should be 1
-        //TODO db.editFlight(1, 0, d2, 5, 50.0);
-        //TODO db.editCustomer("nparra", "New", "Name");
-        //TODO db.editEmployee("emp2", "New", "Name");
-        //TODO db.editTicket("nparra2", 0, 17, true);
 
-        //TODO db.checkIn("nparra3", 1);
+        // TODO have to manually check edits for now, possibly add more getter functions in future
+        db.editFlight(1, 0, d2, 5, 50.0);
+        db.editCustomer("nparra", "New", "Name");
+        db.editEmployee("emp2", "New", "Name");
+        db.editTicket("nparra2", 0, 17, true);
+        db.checkIn("nparra3", 1);
 
         db.removeFlight(0);
         db.removeFlight(1);
