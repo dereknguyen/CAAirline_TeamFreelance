@@ -1,3 +1,0 @@
-nparra, Nick, Parra
-nparra2, Hi, World
-nparra3, Hello, Again
