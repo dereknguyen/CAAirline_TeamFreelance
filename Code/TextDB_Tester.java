@@ -32,6 +32,16 @@ public class TextDB_Tester
         System.out.println(db.getFlightId(3,d1)); // should be -1
         System.out.println(db.getNumFlights(null, null)); // should be 2
         System.out.println(db.getStatus(db.getFlightId(5, d1))); // should be 0
+        System.out.println(db.calculateAvgEmpty(5)); // should be 20.0
+
+        db.setStatus(0, 1);
+        System.out.println(db.getStatus(0)); // should be 1
+        //TODO db.editFlight(1, 0, d2, 5, 50.0);
+        //TODO db.editCustomer("nparra", "New", "Name");
+        //TODO db.editEmployee("emp2", "New", "Name");
+        //TODO db.editTicket("nparra2", 0, 17, true);
+
+        //TODO db.checkIn("nparra3", 1);
 
         db.removeFlight(0);
         db.removeFlight(1);

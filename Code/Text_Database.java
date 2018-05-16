@@ -167,10 +167,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
-            FileWriter writer = new FileWriter("flights.txt", true);
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -181,13 +181,15 @@ public class Text_Database implements Database {
                             .add(entry.get(3)).add(entry.get(4)).add(Integer.toString(Status));
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("flights.txt");
+            writer.write(output);
             writer.close();
             flights_reader.close();
         }
@@ -302,7 +304,6 @@ public class Text_Database implements Database {
     }
 
     // Calculates average number of empty seats using previous two weeks of flight information, returns -1 on error
-    //TODO test date comparison
     public double calculateAvgEmpty(int DestinationId)
     {
         double total = 0;
