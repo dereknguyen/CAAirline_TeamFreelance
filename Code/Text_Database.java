@@ -241,10 +241,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
-            FileWriter writer = new FileWriter("flights.txt", true);
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -252,17 +252,19 @@ public class Text_Database implements Database {
                 {
                     StringJoiner joiner = new StringJoiner(", ");
                     joiner.add(entry.get(0)).add(Integer.toString(DestinationId)).add(date.toString())
-                            .add(Integer.toString(FullSeats)).add(Integer.toString(FullSeats))
+                            .add(Integer.toString(FullSeats)).add(Double.toString(Price))
                             .add(entry.get(5));
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("flights.txt");
+            writer.write(output);
             writer.close();
             flights_reader.close();
         }
@@ -372,10 +374,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
-            FileWriter writer = new FileWriter("customers.txt", true);
             while ((line = customers_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -385,13 +387,15 @@ public class Text_Database implements Database {
                     joiner.add(Username).add(FirstName).add(LastName);
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("customers.txt");
+            writer.write(output);
             writer.close();
             customers_reader.close();
         }
@@ -468,10 +472,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
-            FileWriter writer = new FileWriter("employees.txt", true);
             while ((line = employees_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -481,13 +485,15 @@ public class Text_Database implements Database {
                     joiner.add(Username).add(FirstName).add(LastName);
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("employees.txt");
+            writer.write(output);
             writer.close();
             employees_reader.close();
         }
@@ -572,10 +578,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
-            FileWriter writer = new FileWriter("tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -586,13 +592,15 @@ public class Text_Database implements Database {
                             .add(Integer.toString(SeatNumber)).add(Boolean.toString(CheckedIn));
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("tickets.txt");
+            writer.write(output);
             writer.close();
             tickets_reader.close();
         }
@@ -638,10 +646,10 @@ public class Text_Database implements Database {
     {
         String line;
         String newline;
+        String output = "";
         try
         {
             BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
-            FileWriter writer = new FileWriter("tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -652,13 +660,15 @@ public class Text_Database implements Database {
                             .add(entry.get(2)).add(Boolean.toString(true));
                     newline = joiner.toString() + System.lineSeparator();
 
-                    writer.write(newline);
+                    output += newline;
                 }
                 else
                 {
-                    writer.write(line);
+                    output += line + System.lineSeparator();
                 }
             }
+            FileWriter writer = new FileWriter("tickets.txt");
+            writer.write(output);
             writer.close();
             tickets_reader.close();
         }
