@@ -1,5 +1,3 @@
-package Code;
-
 import java.lang.System;
 import java.util.Scanner;
 
