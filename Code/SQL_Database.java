@@ -26,7 +26,7 @@ flights
 
 tickets
     Username String
-    FlightId  int        -- (Username, FlightId) is unique
+    FlightId  int        -- (Username, FlightId, SeatNumber) is unique
     SeatNumber int
     CheckedIn boolean
 
