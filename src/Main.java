@@ -1,14 +1,27 @@
-package Code;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Application {
 
-    public static void main(String[] args) {
-        while (true) {
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("GetFlightStatus.fxml"));
+        primaryStage.setTitle("Check in");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+        while(true) {
             mainLoop();
         }
+    }
 
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     private static void mainLoop() {
@@ -85,5 +98,4 @@ public class Main {
             }
         }
     }
-
 }

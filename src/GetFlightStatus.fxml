@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="35.0" layoutY="142.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="Get Status" />
+      <TextField layoutX="35.0" layoutY="105.0" promptText="111111111" />
+      <Label layoutX="35.0" layoutY="85.0" text="Flight number" />
+      <Label layoutX="35.0" layoutY="46.0" text="Enter flight number">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="298.0" layoutY="46.0" text="Flight Status">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="465.0" layoutY="94.0" text="ON TIME" textFill="#0fb900">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="298.0" layoutY="103.0" text="SLO-&gt;LA">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="298.0" layoutY="128.0" text="Departure:" textFill="#0fb900">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="354.0" layoutY="128.0" text="8:00 am">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="402.0" layoutY="128.0" text="05/01/2018">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
+      <Separator layoutX="283.0" layoutY="7.0" orientation="VERTICAL" prefHeight="382.0" prefWidth="4.0" />
+      <Separator layoutX="302.0" layoutY="84.0" prefHeight="3.0" prefWidth="272.0" />
+   </children>
+</AnchorPane>
