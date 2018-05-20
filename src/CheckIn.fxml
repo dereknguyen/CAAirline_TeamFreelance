@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="32.0" layoutY="173.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="234.0" text="Check In" />
+      <TextField layoutX="32.0" layoutY="135.0" prefHeight="27.0" prefWidth="234.0" promptText="111111111" />
+      <Label layoutX="32.0" layoutY="116.0" text="Confirmation Number">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="32.0" layoutY="40.0" prefHeight="64.0" prefWidth="234.0" text="Enter Confirmation Number" wrapText="true">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Separator layoutX="286.0" layoutY="10.0" orientation="VERTICAL" prefHeight="377.0" prefWidth="4.0" />
+      <Label layoutX="311.0" layoutY="40.0" prefHeight="21.0" prefWidth="116.0" text="Baggage">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="311.0" layoutY="91.0" text="How many bags will you bring?">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="311.0" layoutY="123.0" text="Carry On">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <TextField layoutX="310.0" layoutY="136.0" prefHeight="27.0" prefWidth="234.0" promptText="0" />
+      <TextField layoutX="310.0" layoutY="192.0" prefHeight="27.0" prefWidth="234.0" promptText="0" />
+      <Label layoutX="311.0" layoutY="179.0" text="Checked">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Button layoutX="310.0" layoutY="236.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="234.0" text="Confirm" />
+   </children>
+</AnchorPane>

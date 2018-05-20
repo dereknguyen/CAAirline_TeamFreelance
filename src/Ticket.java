@@ -1,5 +1,3 @@
-package Code;
-
 import java.sql.Date;
 
 public class Ticket {
