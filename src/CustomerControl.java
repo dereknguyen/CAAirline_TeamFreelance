@@ -1,3 +1,5 @@
+package src;
+
 import java.lang.System;
 import java.util.Scanner;
 
