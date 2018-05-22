@@ -10,13 +10,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("GetFlightStatus.fxml"));
-        primaryStage.setTitle("Check in");
-        primaryStage.setScene(new Scene(root, 300, 275));
+       Parent root = FXMLLoader.load(getClass().getResource("Views/LoginCustomer.fxml"));
+       primaryStage.setTitle("California System");
+       primaryStage.setScene(new Scene(root, 1600, 900));
         primaryStage.show();
-        while(true) {
-            mainLoop();
-        }
+//        while(true) {
+//            mainLoop();
+//        }
     }
 
 
