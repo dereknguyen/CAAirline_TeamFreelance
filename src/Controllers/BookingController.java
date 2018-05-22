@@ -1,4 +1,4 @@
-package Controllers;
+package src.Controllers;
 
 public class BookingController {
 }
