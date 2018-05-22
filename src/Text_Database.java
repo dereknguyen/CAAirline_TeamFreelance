@@ -1,5 +1,3 @@
-package src;
-
 import com.sun.tools.javac.comp.Check;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
