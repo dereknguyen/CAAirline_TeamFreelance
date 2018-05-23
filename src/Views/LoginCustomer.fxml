@@ -19,30 +19,30 @@
         </ImageView>
         <AnchorPane layoutX="1106.0" prefHeight="900.0" prefWidth="450.0" style="-fx-background-color: #000000;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <VBox alignment="CENTER" layoutX="1.0" layoutY="1.0" prefHeight="899.0" prefWidth="448.0">
+            <VBox fx:id="virtualbox" alignment="BASELINE_CENTER" layoutX="1.0" layoutY="1.0" prefHeight="899.0" prefWidth="448.0">
                <children>
-                      <ImageView fitHeight="205.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true" translateY="-100.0">
+                      <ImageView fitHeight="205.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true" translateY="100.0">
                           <image>
                               <Image url="@../Assets/CaliforniaAirline_Logo.png" />
                           </image>
                       </ImageView>
-                      <JFXTextField fx:id="customerUsername" alignment="CENTER" focusColor="#b5a369" prefHeight="35.0" prefWidth="310.0" promptText="Username" style="-fx-border-width: 0px; -fx-prompt-text-fill: #C0C0C0; -fx-text-fill: #FFFFFF; -fx-font-size: 13px;" translateY="-20.0" unFocusColor="SILVER">
+                      <JFXTextField fx:id="customerUsername" alignment="CENTER" focusColor="#b5a369" prefHeight="35.0" prefWidth="310.0" promptText="Username" style="-fx-border-width: 0px; -fx-prompt-text-fill: #C0C0C0; -fx-text-fill: #FFFFFF; -fx-font-size: 13px;" translateY="180.0" unFocusColor="SILVER">
                           <font>
                               <Font name="Avenir Book" size="20.0" />
                           </font>
                       </JFXTextField>
-                      <JFXPasswordField fx:id="customerPassword" alignment="CENTER" focusColor="#b5a369" prefHeight="35.0" prefWidth="310.0" promptText="Password" style="-fx-border-width: 0px; -fx-prompt-text-fill: #C0C0C0; -fx-text-fill: #FFFFFF; -fx-font-size: 13px;" translateY="-10.0" unFocusColor="SILVER">
+                      <JFXPasswordField fx:id="customerPassword" alignment="CENTER" focusColor="#b5a369" prefHeight="35.0" prefWidth="310.0" promptText="Password" style="-fx-border-width: 0px; -fx-prompt-text-fill: #C0C0C0; -fx-text-fill: #FFFFFF; -fx-font-size: 13px;" translateY="190.0" unFocusColor="SILVER">
                           <font>
                               <Font size="15.0" />
                           </font>
                       </JFXPasswordField>
-                      <JFXButton fx:id="customerLoginButton" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #046A38; -fx-background-radius: 5px, 5px, 5px, 5px; -fx-font-size: 18px; -fx-text-fill: #FFFFFF;" text="Log In">
+                      <JFXButton fx:id="customerLoginButton" onAction="#HandleLoginClick" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #046A38; -fx-background-radius: 5px, 5px, 5px, 5px; -fx-font-size: 18px; -fx-text-fill: #FFFFFF;" text="Log In" translateY="200.0">
                           <font>
                               <Font size="19.0" />
                           </font>
                       </JFXButton>
-                      <Label prefHeight="29.0" prefWidth="95.0" style="-fx-text-fill: #FFFFFF;" text="Not a Member?" textFill="WHITE" translateX="-40.0" />
-                      <JFXButton fx:id="customerSignupButton" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-text-fill: #B5A369; -fx-font-size: 15px;" text="Join Us" textFill="#b5a369" translateX="40.0" translateY="-30.0">
+                      <Label prefHeight="29.0" prefWidth="95.0" style="-fx-text-fill: #FFFFFF;" text="Not a Member?" textFill="WHITE" translateX="-40.0" translateY="200.0" />
+                      <JFXButton fx:id="customerSignupButton" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-text-fill: #B5A369; -fx-font-size: 15px;" text="Join Us" textFill="#b5a369" translateX="40.0" translateY="170.0">
                           <font>
                               <Font name="System Bold" size="13.0" />
                           </font>
