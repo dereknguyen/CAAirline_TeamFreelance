@@ -1,14 +1,18 @@
 package Tests;
 
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 import src.MD5Password;
 import src.Text_Database;
 
 import java.sql.Date;
 import java.util.Calendar;
 
-public class TextDB_Tester
+
+public class TestTextDB
 {
-    public static void main(String[] args)
+    @Test
+    public void testAll()
     {
         Text_Database db = Text_Database.getInstance();
         Calendar c = Calendar.getInstance();
@@ -33,14 +37,14 @@ public class TextDB_Tester
         db.addTicket("nparra2", db.getFlightId(5, d1), 16);
         db.addTicket("nparra3", db.getFlightId(3, d2), 2);
 
-        System.out.println(db.getFlightId(5, d1)); // should be 0
-        System.out.println(db.getFlightId(3,d1)); // should be -1
-        System.out.println(db.getNumFlights(null, null)); // should be 2
-        System.out.println(db.getStatus(db.getFlightId(5, d1))); // should be 0
-        System.out.println(db.calculateAvgEmpty(5)); // should be 20.0
+        assertEquals(db.getFlightId(5, d1), 0);
+        assertEquals(db.getFlightId(3, d1), -1);
+        assertEquals(db.getNumFlights(null, null), 2);
+        assertEquals(db.getStatus(db.getFlightId(5, d1)), 0);
+        assertEquals(db.calculateAvgEmpty(5), 20.0, 0.001);
 
         db.setStatus(0, 1);
-        System.out.println(db.getStatus(0)); // should be 1
+        assertEquals(db.getStatus(0), 1);
 
         // TODO have to manually check edits for now, possibly add more getter functions in future
         db.editFlight(1, 0, d2, 5, 50.0);
