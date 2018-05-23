@@ -1,6 +1,7 @@
 package src;
 
 import java.sql.*;
+import java.util.List;
 
 public interface Database
 {
@@ -15,6 +16,7 @@ public interface Database
     public double calculateAvgEmpty(int DestinationId);
 
     /* Customer methods */
+    public List<String> getCustomerInfo(String Username);
     public int addCustomerAccount(String Username, String FirstName, String LastName);
     public int editCustomer(String Username, String FirstName, String LastName);
     public int removeCustomer(String Username);

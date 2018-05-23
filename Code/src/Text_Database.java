@@ -30,33 +30,8 @@ tickets
 
 public class Text_Database implements Database {
     static private Text_Database uniqueInstance;
-    /*private BufferedReader customers_reader;
-    private BufferedReader employees_reader;
-    private BufferedReader flights_reader;
-    private BufferedReader tickets_reader;
 
-    private Text_Database() {
-        try {
-            customers_reader = new BufferedReader(new FileReader("customers.txt"));
-            employees_reader = new BufferedReader(new FileReader("employees.txt"));
-            flights_reader = new BufferedReader(new FileReader("flights.txt"));
-            tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
-
-            // NOTE: unpredictable result with text files over 2^16 chars (65536)
-            customers_reader.mark(65536);
-            employees_reader.mark(65536);
-            flights_reader.mark(65536);
-            tickets_reader.mark(65536);
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }*/
+    private Text_Database(){};
 
     static public Text_Database getInstance() {
         if (uniqueInstance == null) {
@@ -341,6 +316,30 @@ public class Text_Database implements Database {
     Customer methods
 
      */
+
+    /* returns customer info associated with username or null if not found */
+    public List<String> getCustomerInfo(String Username)
+    {
+        String line;
+        try
+        {
+            BufferedReader customers_reader = new BufferedReader(new FileReader("src/customers.txt"));
+            while ((line = customers_reader.readLine()) != null)
+            {
+                List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
+                if (entry.get(0).equals(Username))
+                {
+                    return entry;
+                }
+            }
+            return null;
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
     public int addCustomerAccount(String Username, String FirstName, String LastName)

@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import src.Text_Database;
 
 public class LoginCustomerController {
    
@@ -71,7 +72,7 @@ public class LoginCustomerController {
          virtualbox.getChildren().removeAll(passwordErr, usernameErr);
          usernameErr = null;
          passwordErr = null;
-         //todo database check input
+         src.Database db = Text_Database.getInstance();
       }
    }
 }

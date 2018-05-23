@@ -1,6 +1,8 @@
 package src;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 
@@ -259,6 +261,30 @@ public class SQL_Database implements Database {
     Customer methods
 
      */
+
+    /* returns customer info associated with username or null if not found */
+    public List<String> getCustomerInfo(String Username)
+    {
+        String query = "SELECT * FROM customers WHERE Username = " + Username;
+        List<String> entry = new ArrayList<>();
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.next())
+            {
+                return null;
+            }
+            entry.add(rs.getString("Username"));
+            entry.add(rs.getString("FirstName"));
+            entry.add(rs.getString("LastName"));
+            return entry;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
     public int addCustomerAccount(String Username, String FirstName, String LastName)
