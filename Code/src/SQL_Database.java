@@ -10,6 +10,7 @@ Tables:
 
 customers
     Username (unique) String
+    EncryptedPassword String
     FirstName String
     LastName String
 
@@ -287,15 +288,16 @@ public class SQL_Database implements Database {
     }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String Username, String FirstName, String LastName)
+    public int addCustomerAccount(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
-        String query = "INSERT INTO customers (Username, FirstName, LastName) values (?,?,?)";
+        String query = "INSERT INTO customers (Username, EncryptedPassword, FirstName, LastName) values (?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
-            ps.setString(2, FirstName);
-            ps.setString(3, LastName);
+            ps.setString(2, EncryptedPassword);
+            ps.setString(3, FirstName);
+            ps.setString(4, LastName);
             ps.execute();
         }
         catch (SQLException e)
@@ -307,15 +309,16 @@ public class SQL_Database implements Database {
     }
 
     // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
-    public int editCustomer(String Username, String FirstName, String LastName)
+    public int editCustomer(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
-        String query = "UPDATE customers SET FirstName = ?, LastName = ? WHERE Username = ?";
+        String query = "UPDATE customers SET EncryptedPassword = ?, FirstName = ?, LastName = ? WHERE Username = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, FirstName);
-            ps.setString(2, LastName);
-            ps.setString(3, Username);
+            ps.setString(2, EncryptedPassword);
+            ps.setString(3, LastName);
+            ps.setString(4, Username);
             ps.execute();
         }
         catch (SQLException e)

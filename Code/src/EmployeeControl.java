@@ -145,13 +145,15 @@ public class EmployeeControl{
       int level = reader.nextInt();
       System.out.println("What is your username?");
       String username = reader.next();
+      System.out.println("What is your password?");
+      String password = reader.next();
       if (action == 0) {
          System.out.println("What is your first name?");
          String firstname = reader.next();
          System.out.println("What is your last name?");
          String lastname = reader.next();
          if (level == 0) {
-            am.CreateUserAccount(firstname, lastname, username);
+            am.CreateUserAccount(firstname, lastname, username, password);
          }
          else if (level == 1) {
             am.CreateEmployeeAccount(firstname, lastname, username);

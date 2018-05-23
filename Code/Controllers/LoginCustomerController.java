@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -39,7 +40,7 @@ public class LoginCustomerController {
    void HandleLoginClick(ActionEvent event) throws IOException
    {
       String username = customerUsername.getText().trim();
-      String password = customerPassword.getText().trim();
+      String password = src.MD5Password.encodePassword(customerPassword.getText().trim());
       if (username.length() == 0)
       {
          virtualbox.getChildren().removeAll(passwordErr);
@@ -54,7 +55,7 @@ public class LoginCustomerController {
             virtualbox.getChildren().add(usernameErr);
          }
       }
-      else if (password.length() == 0)
+      else if (password == null)
       {
          virtualbox.getChildren().removeAll(usernameErr);
          usernameErr = null;
@@ -73,6 +74,27 @@ public class LoginCustomerController {
          usernameErr = null;
          passwordErr = null;
          src.Database db = Text_Database.getInstance();
+         List<String> entry = db.getCustomerInfo(username);
+         if (entry == null)
+         {
+            usernameErr = new Label("Invalid username/password");
+            usernameErr.applyCss();
+            usernameErr.setId("errmsg");
+            usernameErr.setTextFill(Color.web("#C32820"));
+            virtualbox.getChildren().add(usernameErr);
+         }
+         else if (entry.get(1) != null && !entry.get(1).equals(password))
+         {
+            passwordErr = new Label("Invalid username/password");
+            passwordErr.applyCss();
+            passwordErr.setId("errmsg");
+            passwordErr.setTextFill(Color.web("#C32820"));
+         }
+         else
+         {
+            //todo login successful, for testing, the database contains an account for "user" , "password"
+            System.out.println("Login successful");
+         }
       }
    }
 }

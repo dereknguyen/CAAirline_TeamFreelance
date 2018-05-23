@@ -17,8 +17,8 @@ public interface Database
 
     /* Customer methods */
     public List<String> getCustomerInfo(String Username);
-    public int addCustomerAccount(String Username, String FirstName, String LastName);
-    public int editCustomer(String Username, String FirstName, String LastName);
+    public int addCustomerAccount(String Username, String EncryptedPassword, String FirstName, String LastName);
+    public int editCustomer(String Username, String EncryptedPassword, String FirstName, String LastName);
     public int removeCustomer(String Username);
 
     /* Employee methods */

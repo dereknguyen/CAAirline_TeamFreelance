@@ -10,11 +10,11 @@ public class AccountManager {
     }
 
     public Account CreateEmployeeAccount(String firstName, String lastName, String username) {
-        db.addEmployeeAccount(firstName, lastName, username);
+        db.addEmployeeAccount(username, firstName, lastName);
         return new EmployeeAccount(firstName, lastName, username, new ArrayList<>());
     }
-    public Account CreateUserAccount(String firstName, String lastName, String username) {
-        db.addCustomerAccount(firstName, lastName, username);
+    public Account CreateUserAccount(String firstName, String lastName, String username, String encryptedPassword) {
+        db.addCustomerAccount(username, encryptedPassword, firstName, lastName);
         return new Account(firstName, lastName, username, new ArrayList<>());
     }
     public void DeleteUserAccount(String toDelete){

@@ -15,7 +15,7 @@ Only supports adding new entries and reading existing ones
 file format:
 
 customers
-    Username, FirstName, LastName
+    Username, EncryptedPassword, FirstName, LastName
 
 employees
     Username, FirstName, LastName
@@ -53,7 +53,7 @@ public class Text_Database implements Database {
         int id = -1;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List<String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -79,7 +79,7 @@ public class Text_Database implements Database {
         int count = 0;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -115,7 +115,7 @@ public class Text_Database implements Database {
         int status = -1;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -142,7 +142,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -160,7 +160,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("src/flights.txt");
+            FileWriter writer = new FileWriter("./src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -181,8 +181,8 @@ public class Text_Database implements Database {
         int id;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
-            FileWriter writer = new FileWriter("src/flights.txt", true);
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
+            FileWriter writer = new FileWriter("./src/flights.txt", true);
             while ((line = flights_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             id = getNumFlights();
@@ -216,7 +216,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -235,7 +235,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("src/flights.txt");
+            FileWriter writer = new FileWriter("./src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -255,7 +255,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -264,7 +264,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("src/flights.txt");
+            FileWriter writer = new FileWriter("./src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -290,7 +290,7 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("./src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -342,7 +342,7 @@ public class Text_Database implements Database {
     }
 
     // Attempts to add customer account to database. Returns 0 on success, 1 on error.
-    public int addCustomerAccount(String Username, String FirstName, String LastName)
+    public int addCustomerAccount(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
         try
         {
@@ -350,7 +350,7 @@ public class Text_Database implements Database {
             FileWriter writer = new FileWriter("src/customers.txt", true);
             while (customers_reader.readLine() != null);
             StringJoiner joiner = new StringJoiner(", ");
-            joiner.add(Username).add(FirstName).add(LastName);
+            joiner.add(Username).add(EncryptedPassword).add(FirstName).add(LastName);
             String newline = joiner.toString() + System.lineSeparator();
 
             writer.write(newline);
@@ -366,7 +366,7 @@ public class Text_Database implements Database {
     }
 
     // Edits existing customer and sets values to parameters passed (cannot change username). Returns 1 on error
-    public int editCustomer(String Username, String FirstName, String LastName)
+    public int editCustomer(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
         String line;
         String newline;
@@ -380,7 +380,7 @@ public class Text_Database implements Database {
                 if (entry.get(0).equals(Username))
                 {
                     StringJoiner joiner = new StringJoiner(", ");
-                    joiner.add(Username).add(FirstName).add(LastName);
+                    joiner.add(Username).add(EncryptedPassword).add(FirstName).add(LastName);
                     newline = joiner.toString() + System.lineSeparator();
 
                     output += newline;

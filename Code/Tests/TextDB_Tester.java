@@ -1,3 +1,6 @@
+package Tests;
+
+import src.MD5Password;
 import src.Text_Database;
 
 import java.sql.Date;
@@ -17,9 +20,11 @@ public class TextDB_Tester
         db.addFlight(5, d1);
         db.addFlight(3, d2);
 
-        db.addCustomerAccount("nparra", "Nick", "Parra");
-        db.addCustomerAccount("nparra2", "Hi", "World");
-        db.addCustomerAccount("nparra3", "Hello", "Again");
+        db.addCustomerAccount("nparra", "abc", "Nick", "Parra");
+        db.addCustomerAccount("nparra2", "def", "Hi", "World");
+        db.addCustomerAccount("nparra3", "hij", "Hello", "Again");
+
+        db.addCustomerAccount("user", MD5Password.encodePassword("password"), "Tester", "User");
 
         db.addEmployeeAccount("emp1", "Joe", "Smith");
         db.addEmployeeAccount("emp2", "Bryan", "Jones");
@@ -39,7 +44,7 @@ public class TextDB_Tester
 
         // TODO have to manually check edits for now, possibly add more getter functions in future
         db.editFlight(1, 0, d2, 5, 50.0);
-        db.editCustomer("nparra", "New", "Name");
+        db.editCustomer("nparra", "newpass", "New", "Name");
         db.editEmployee("emp2", "New", "Name");
         db.editTicket("nparra2", 0, 17, true);
         db.checkIn("nparra3", 1);
