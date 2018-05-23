@@ -4,7 +4,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -13,9 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
        Parent root = FXMLLoader.load(getClass().getResource("Views/LoginCustomer.fxml"));
        primaryStage.setTitle("California System");
-       //primaryStage.setScene(new Scene(root, 1600, 900));
-        primaryStage.setScene( new Scene(root, Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height));
+       primaryStage.setScene(new Scene(root, 1600, 900));
         primaryStage.show();
 //        while(true) {
 //            mainLoop();
