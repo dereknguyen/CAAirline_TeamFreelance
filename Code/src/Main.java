@@ -1,3 +1,5 @@
+package src;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-       Parent root = FXMLLoader.load(getClass().getResource("Views/LoginCustomer.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("../Views/LoginCustomer.fxml"));
        primaryStage.setTitle("California System");
        //primaryStage.setScene(new Scene(root, 1600, 900));
         primaryStage.setScene( new Scene(root, Toolkit.getDefaultToolkit().getScreenSize().width,

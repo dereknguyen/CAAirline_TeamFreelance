@@ -1,4 +1,5 @@
-import javax.xml.soap.Text;
+package src;
+
 import java.sql.Date;
 
 public class Trip {

@@ -1,5 +1,4 @@
-import com.sun.tools.javac.comp.Check;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+package src;
 
 import java.io.*;
 import java.sql.*;
@@ -79,7 +78,7 @@ public class Text_Database implements Database {
         int id = -1;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List<String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -105,7 +104,7 @@ public class Text_Database implements Database {
         int count = 0;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -141,7 +140,7 @@ public class Text_Database implements Database {
         int status = -1;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*,\\s*"));
@@ -168,7 +167,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -186,7 +185,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("flights.txt");
+            FileWriter writer = new FileWriter("src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -207,8 +206,8 @@ public class Text_Database implements Database {
         int id;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
-            FileWriter writer = new FileWriter("flights.txt", true);
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
+            FileWriter writer = new FileWriter("src/flights.txt", true);
             while ((line = flights_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             id = getNumFlights();
@@ -242,7 +241,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -261,7 +260,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("flights.txt");
+            FileWriter writer = new FileWriter("src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -281,7 +280,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -290,7 +289,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("flights.txt");
+            FileWriter writer = new FileWriter("src/flights.txt");
             writer.write(output);
             writer.close();
             flights_reader.close();
@@ -316,7 +315,7 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            BufferedReader flights_reader = new BufferedReader(new FileReader("flights.txt"));
+            BufferedReader flights_reader = new BufferedReader(new FileReader("src/flights.txt"));
             while ((line = flights_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -348,8 +347,8 @@ public class Text_Database implements Database {
     {
         try
         {
-            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
-            FileWriter writer = new FileWriter("customers.txt", true);
+            BufferedReader customers_reader = new BufferedReader(new FileReader("src/customers.txt"));
+            FileWriter writer = new FileWriter("src/customers.txt", true);
             while (customers_reader.readLine() != null);
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(FirstName).add(LastName);
@@ -375,7 +374,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
+            BufferedReader customers_reader = new BufferedReader(new FileReader("src/customers.txt"));
             while ((line = customers_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -392,7 +391,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("customers.txt");
+            FileWriter writer = new FileWriter("src/customers.txt");
             writer.write(output);
             writer.close();
             customers_reader.close();
@@ -412,7 +411,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader customers_reader = new BufferedReader(new FileReader("customers.txt"));
+            BufferedReader customers_reader = new BufferedReader(new FileReader("src/customers.txt"));
             while ((line = customers_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -421,7 +420,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("customers.txt");
+            FileWriter writer = new FileWriter("src/customers.txt");
             writer.write(output);
             writer.close();
             customers_reader.close();
@@ -446,8 +445,8 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
-            FileWriter writer = new FileWriter("employees.txt", true);
+            BufferedReader employees_reader = new BufferedReader(new FileReader("src/employees.txt"));
+            FileWriter writer = new FileWriter("src/employees.txt", true);
             while ((line = employees_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(FirstName).add(LastName);
@@ -473,7 +472,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
+            BufferedReader employees_reader = new BufferedReader(new FileReader("src/employees.txt"));
             while ((line = employees_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -490,7 +489,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("employees.txt");
+            FileWriter writer = new FileWriter("src/employees.txt");
             writer.write(output);
             writer.close();
             employees_reader.close();
@@ -510,7 +509,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader employees_reader = new BufferedReader(new FileReader("employees.txt"));
+            BufferedReader employees_reader = new BufferedReader(new FileReader("src/employees.txt"));
             while ((line = employees_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -520,7 +519,7 @@ public class Text_Database implements Database {
                 }
             }
 
-            FileWriter writer = new FileWriter("employees.txt");
+            FileWriter writer = new FileWriter("src/employees.txt");
             writer.write(output);
             writer.close();
             employees_reader.close();
@@ -545,8 +544,8 @@ public class Text_Database implements Database {
         String line;
         try
         {
-            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
-            FileWriter writer = new FileWriter("tickets.txt", true);
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("src/tickets.txt"));
+            FileWriter writer = new FileWriter("src/tickets.txt", true);
             while ((line = tickets_reader.readLine()) != null);
             StringJoiner joiner = new StringJoiner(", ");
             joiner.add(Username).add(Integer.toString(FlightId))
@@ -579,7 +578,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("src/tickets.txt"));
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -597,7 +596,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("tickets.txt");
+            FileWriter writer = new FileWriter("src/tickets.txt");
             writer.write(output);
             writer.close();
             tickets_reader.close();
@@ -617,7 +616,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("src/tickets.txt"));
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -626,7 +625,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("tickets.txt");
+            FileWriter writer = new FileWriter("src/tickets.txt");
             writer.write(output);
             writer.close();
             tickets_reader.close();
@@ -647,7 +646,7 @@ public class Text_Database implements Database {
         String output = "";
         try
         {
-            BufferedReader tickets_reader = new BufferedReader(new FileReader("tickets.txt"));
+            BufferedReader tickets_reader = new BufferedReader(new FileReader("src/tickets.txt"));
             while ((line = tickets_reader.readLine()) != null)
             {
                 List <String> entry = Arrays.asList(line.split("\\s*, \\s*"));
@@ -665,7 +664,7 @@ public class Text_Database implements Database {
                     output += line + System.lineSeparator();
                 }
             }
-            FileWriter writer = new FileWriter("tickets.txt");
+            FileWriter writer = new FileWriter("src/tickets.txt");
             writer.write(output);
             writer.close();
             tickets_reader.close();
