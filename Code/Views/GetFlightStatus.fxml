@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FlightStatusController">
    <children>
       <Button layoutX="35.0" layoutY="142.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="Get Status" />
-      <TextField layoutX="35.0" layoutY="105.0" promptText="111111111" />
+      <TextField fx:id="flightNo" layoutX="35.0" layoutY="105.0" promptText="111111111" />
       <Label layoutX="35.0" layoutY="85.0" text="Flight number" />
       <Label layoutX="35.0" layoutY="46.0" text="Enter flight number">
          <font>
