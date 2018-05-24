@@ -6,6 +6,23 @@ import java.util.List;
 
 /*
 
+Queries:
+
+SELECT EncryptedPassword
+  FROM customers WHERE Username = "nparra";
+
+SELECT flights.FlightId FROM flights INNER JOIN trips
+ WHERE trips.FlightId = flights.FlightId AND flights.Destination = "Phoenix"
+ AND trips.Date < date('now', '+2 week') AND trips.Date >= date('now');
+
+SELECT customers.LastName, customers.FirstName FROM customers INNER JOIN tickets INNER JOIN trips
+WHERE tickets.Username = customers.Username AND tickets.TripId = 0 AND tickets.CheckedIn = 'false';
+
+SELECT tickets.SeatNumber from customers INNER JOIN tickets INNER JOIN flights INNER JOIN trips
+WHERE customers.LastName = 'Parra' AND customers.FirstName = 'Nicolas' AND customers.Username = tickets.Username
+AND tickets.TripId = trips.TripId AND trips.FlightId = flights.FlightId AND flights.Destination = 'Phoenix';
+
+
 Tables:
 
 customers
