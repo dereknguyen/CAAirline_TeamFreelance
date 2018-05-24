@@ -38,7 +38,8 @@ public class Main extends Application {
 
         if(resp == 1) {
             System.out.println("Type 1 for purchase ticket, 2 for checkin, 3 for view flight status");
-            System.out.println("Type 4 for Edit employee, 5 for add flight, 6 for edit flight status, 7 for get price recommendation");
+            System.out.println("Type 4 for Edit employee, 5 for add flight, " +
+                    "6 for edit flight status, 7 for get price recommendation");
             resp = scan.nextInt();
             CustomerControl cc = CustomerControl.getInstance();
             EmployeeControl ec = EmployeeControl.getInstance();
