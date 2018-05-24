@@ -19,9 +19,14 @@ employees
     FirstName String
     LastName String
 
+
 flights
-    Id (unique) int
-    DestinationId int    -- (DestinationId, Date) is unique
+    FlightId Int -- unique
+    Source String
+    Destination String
+
+trips
+    FlightId int   -- (FlightId, Date) is unique
     Date (mysql Date type)
     FullSeats int
     Price double
@@ -29,7 +34,8 @@ flights
 
 tickets
     Username String
-    FlightId  int        -- (Username, FlightId, SeatNumber) is unique
+    FlightId  int        -- (FlightId, Date, SeatNumber) is unique
+    Date DATETIME
     SeatNumber int
     CheckedIn boolean
 
