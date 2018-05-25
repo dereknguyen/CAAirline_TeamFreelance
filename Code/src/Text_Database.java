@@ -28,6 +28,8 @@ tickets
 
  */
 
+
+//NOTE: deprecated, no longer extends database interface
 public class Text_Database {
     static private Text_Database uniqueInstance;
 
