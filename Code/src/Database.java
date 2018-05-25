@@ -35,6 +35,6 @@ public interface Database
     /* Ticket methods */
     public int addTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn);
     public int editTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn);
-    public int removeTicket(String Username, int TripId);
+    public int removeTicket(String Username, int TripId, int SeatNumber);
     public int checkIn(String Username, int TripId);
 }

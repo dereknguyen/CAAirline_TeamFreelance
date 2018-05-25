@@ -98,6 +98,7 @@ public class SQL_Database implements Database {
 
     public int getTripId(int FlightId, Calendar date)
     {
+        if (FlightId < 0) return -1;
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + " AND Date = '" +
                 f.format(date.getTime()) + "'";
@@ -158,6 +159,7 @@ public class SQL_Database implements Database {
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
     public int getStatus(int TripId)
     {
+        if (TripId < 0) return -1;
         String query = "SELECT Status FROM trips WHERE TripId = " + TripId;
         int status;
         try
@@ -177,6 +179,7 @@ public class SQL_Database implements Database {
     // Set status of trip by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, -1 on error
     public int setStatus(int TripId, int Status)
     {
+        if (TripId < 0 || (Status != 0 && Status != 1 && Status != 2)) return -1;
         String query = "UPDATE trips SET Status = ? WHERE TripId = ?";
         try
         {
@@ -197,6 +200,7 @@ public class SQL_Database implements Database {
     // Defaults status to 0 (On-time)
     public int addTrip(int FlightId, Calendar date, double Price)
     {
+        if (FlightId < 0 || Price < 0) return -1;
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "INSERT INTO trips (FlightId, Date, Price, Status) values (?,?,?,0)";
         // TripId should be autoincremented and filled in by database
@@ -230,6 +234,7 @@ public class SQL_Database implements Database {
     // Changes trips's destination, date, fullseats, and price. Returns 0 on success, -1 on error
     public int editTrip(int TripId, int FlightId, Calendar date, double Price, int Status)
     {
+        if (TripId < 0 || FlightId < 0 || Price < 0) return -1;
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "UPDATE trips SET FlightId = ?, Date = ?, Price = ?, Status = ? WHERE TripId = ?";
         try
@@ -253,6 +258,7 @@ public class SQL_Database implements Database {
     // Attempts to remove flight from database. Returns 0 on success, 1 on error
     public int removeTrip(int TripId)
     {
+        if (TripId < 0) return -1;
         String query = "DELETE FROM trips WHERE TripId = ?";
         try
         {
@@ -272,18 +278,18 @@ public class SQL_Database implements Database {
     public double calculateAvgEmpty(String Destination)
     {
         int id = getFlightId("San Luis Obispo", Destination);
-        String query = "SELECT NumFlights FROM NumberOfFlightsPerDestination WHERE FlightId = " + id;
-        String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId WHERE FlightId = " + id;
+        String query = "SELECT NumFlights FROM NumberOfTripsPerDestination WHERE FlightId = " + id;
+        String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId HAVING FlightId = " + id;
         double numtrips;
         double numempty;
         try
         {
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            numtrips = rs.getInt(0);
+            numtrips = rs.getInt(1);
             rs = st.executeQuery(query2);
             rs.next();
-            numempty = rs.getInt(0);
+            numempty = rs.getInt(1);
             if (numtrips == 0)
             {
                 return 20.0;
@@ -350,6 +356,7 @@ public class SQL_Database implements Database {
     // Removes flight from database, returns 0 on success, or -1 on error
     public int removeFlight(int FlightId)
     {
+        if (FlightId < 0) return -1;
         String query = "DELETE FROM flights WHERE FlightId = ?";
         try
         {
@@ -464,7 +471,7 @@ public class SQL_Database implements Database {
     // Attempts to add employee account to database. Returns 0 on success, -1 on error
     public int addEmployeeAccount(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
-        String query = "INSERT INTO employees (Username, FirstName, LastName) values (?,?,?,?)";
+        String query = "INSERT INTO employees (Username, EncryptedPassword, FirstName, LastName) values (?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -485,7 +492,7 @@ public class SQL_Database implements Database {
     // Edits existing customer and sets values to parameters passed (cannot change username). Return -1 on error
     public int editEmployee(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
-        String query = "UPDATE employees SET EncrypedPassword = ?, FirstName = ?, LastName = ? WHERE Username = ?";
+        String query = "UPDATE employees SET EncryptedPassword = ?, FirstName = ?, LastName = ? WHERE Username = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -506,7 +513,7 @@ public class SQL_Database implements Database {
     // Attempts to remove employee account to database. Returns 0 on success, 1 on error
     public int removeEmployee(String Username)
     {
-        String query = "DELETE FROM employees WHERE Username '" + Username + "'";
+        String query = "DELETE FROM employees WHERE Username = '" + Username + "'";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -529,6 +536,7 @@ public class SQL_Database implements Database {
     // Adds a ticket to the database. Returns 0 on success, -1 on error
     public int addTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
     {
+        if (TripId < 0 || SeatNumber < 0 || SeatNumber > 19) return -1;
         String query = "INSERT INTO tickets (Username, TripId, SeatNumber, CheckedIn) values (?,?,?,?)";
         try
         {
@@ -556,6 +564,7 @@ public class SQL_Database implements Database {
     // Edits existing customer and changes SeatNumber and CheckedIn
     public int editTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
     {
+        if (TripId < 0 || SeatNumber > 19 || SeatNumber < 0) return -1;
         String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND TripId = ?";
         try
         {
@@ -575,14 +584,16 @@ public class SQL_Database implements Database {
     }
 
     // Attempts to remove ticket from database. Returns 0 on success, -1 on error
-    public int removeTicket(String Username, int FlightId)
+    public int removeTicket(String Username, int FlightId, int SeatNumber)
     {
-        String query = "DELETE FROM tickets WHERE Username = ? AND FlightId = ?";
+        if (FlightId < 0) return -1;
+        String query = "DELETE FROM tickets WHERE Username = ? AND TripId = ? AND SeatNumber = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
             ps.setInt(2, FlightId);
+            ps.setInt(3, SeatNumber);
             ps.executeUpdate();
         }
         catch (SQLException e)
@@ -596,6 +607,7 @@ public class SQL_Database implements Database {
     // Attempts to check user in for flight. Returns 0 on success, -1 on error
     public int checkIn(String Username, int TripId)
     {
+        if (TripId < 0) return -1;
         String query = "UPDATE tickets SET CheckedIn = ? WHERE Username = ? AND TripId = ?";
         try
         {
