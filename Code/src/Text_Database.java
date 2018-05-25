@@ -28,7 +28,7 @@ tickets
 
  */
 
-public class Text_Database implements Database {
+public class Text_Database {
     static private Text_Database uniqueInstance;
 
     private Text_Database(){};

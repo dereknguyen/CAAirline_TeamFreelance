@@ -7,7 +7,7 @@ public class FlightManager{
    Scanner reader = new Scanner(System.in);
 
    public void editStatus(){
-      Text_Database db = Text_Database.getInstance();
+      Database db = SQL_Database.getInstance();
       Trip trip = getTripFromUser();
       int status;
       int flightID;

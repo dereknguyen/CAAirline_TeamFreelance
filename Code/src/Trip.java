@@ -8,10 +8,10 @@ public class Trip {
 	private int FlightId;
 	
 	public Trip(Date d, int f) {
-	    Database db = Text_Database.getInstance();
+	    Database db = SQL_Database.getInstance();
 		date = d;
 		destination = f;
-		FlightId = db.getFlightId(f, d);
+		//FlightId = db.getFlightId(f, d);
 	}
    public Date getDate(){
       return date;

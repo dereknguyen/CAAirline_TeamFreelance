@@ -1,7 +1,9 @@
 package src;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /*
@@ -45,7 +47,7 @@ flights
 trips
     TripId int -- primary key
     FlightId int   -- (FlightId, Date) is unique
-    Date (sql DATETIME type)
+    Date (DATETIME type)
     Price double
     Status int
 
@@ -63,10 +65,10 @@ public class SQL_Database implements Database {
     private Statement st;
 
     private SQL_Database(){
-        String url = "jdbc:sqlite:CAIDatabase.db";
         try
         {
-            conn = DriverManager.getConnection(url);
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:Code/src/CAIDatabase.db");
             if (conn != null)
             {
                 st = conn.createStatement();
@@ -94,9 +96,11 @@ public class SQL_Database implements Database {
 
      */
 
-    public int getTripId(int FlightId, Date date)
+    public int getTripId(int FlightId, Calendar date)
     {
-        String query = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + "AND Date = " + date;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        String query = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + " AND Date = '" +
+                f.format(date.getTime()) + "'";
         int id = -1;
         try
         {
@@ -115,12 +119,19 @@ public class SQL_Database implements Database {
 
     // Returns the number of trips that occurred between two dates (inclusive) or -1 on error
     // If both dates are null, returns number of trips in database
-    public int getNumTrips(Date from, Date to)
+    public int getNumTrips(Calendar from, Calendar to)
     {
-        String query = "SELECT COUNT(*) FROM trips WHERE Date BETWEEN " + from + "AND" + to;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        String query;
         if (from == null && to == null)
         {
             query = "SELECT COUNT(*) FROM trips";
+        }
+        else if (from == null || to == null) return -1;
+        else
+        {
+            query = "SELECT COUNT(*) FROM trips WHERE Date BETWEEN '" +
+                    f.format(from.getTime()) + "' AND '" + f.format(to.getTime()) + "'";
         }
         int NumFlights = 0;
         try
@@ -184,19 +195,21 @@ public class SQL_Database implements Database {
 
     // Attempts to add trip to database. Returns the new trip id, or -1 on error
     // Defaults status to 0 (On-time)
-    public int addTrip(int FlightId, Date date, double Price)
+    public int addTrip(int FlightId, Calendar date, double Price)
     {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "INSERT INTO trips (FlightId, Date, Price, Status) values (?,?,?,0)";
         // TripId should be autoincremented and filled in by database
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, FlightId);
-            ps.setDate(2, date);
+            ps.setString(2, f.format(date.getTime()));
             ps.setDouble(3, Price);
-            ps.execute();
+            ps.executeUpdate();
 
-            String query2 = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + " AND Date = " + date;
+            String query2 = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + " AND Date = '"
+                    + f.format(date.getTime()) + "'";
             ResultSet rs = st.executeQuery(query2);
             rs.next();
             return rs.getInt("TripId");
@@ -209,20 +222,21 @@ public class SQL_Database implements Database {
     }
 
     // Defaults FullSeats to 0 and Price to 0
-    public int addTrip(int FlightId, Date date)
+    public int addTrip(int FlightId, Calendar date)
     {
         return addTrip(FlightId, date, 0);
     }
 
     // Changes trips's destination, date, fullseats, and price. Returns 0 on success, -1 on error
-    public int editTrip(int TripId, int FlightId, Date date, double Price, int Status)
+    public int editTrip(int TripId, int FlightId, Calendar date, double Price, int Status)
     {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "UPDATE trips SET FlightId = ?, Date = ?, Price = ?, Status = ? WHERE TripId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, FlightId);
-            ps.setDate(2, date);
+            ps.setString(2, f.format(date.getTime()));
             ps.setDouble(3, Price);
             ps.setInt(4, Status);
             ps.setInt(5, TripId);
@@ -292,7 +306,7 @@ public class SQL_Database implements Database {
     // Returns flight id associated with Source and Destination cities, or -1 on error
     public int getFlightId(String Source, String Destination)
     {
-        String query = "SELECT FlightId FROM flights WHERE Source = " + Source + "AND Destination = " + Destination;
+        String query = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
         int id = -1;
         try
         {
@@ -319,9 +333,9 @@ public class SQL_Database implements Database {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Source);
             ps.setString(2, Destination);
-            ps.execute();
+            ps.executeUpdate();
 
-            String query2 = "SELECT FlightId FROM flights WHERE Source = " + Source + " AND Destination = " + Destination;
+            String query2 = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
             ResultSet rs = st.executeQuery(query2);
             rs.next();
             return rs.getInt("FlightId");
@@ -360,7 +374,7 @@ public class SQL_Database implements Database {
     /* returns customer info associated with username or null if not found */
     public List<String> getCustomerInfo(String Username)
     {
-        String query = "SELECT * FROM customers WHERE Username = " + Username;
+        String query = "SELECT * FROM customers WHERE Username = '" + Username + "'";
         List<String> entry = new ArrayList<>();
         try
         {
@@ -427,7 +441,7 @@ public class SQL_Database implements Database {
     // Attempts to remove customer account to database. Returns 0 on success, -1 on error
     public int removeCustomer(String Username)
     {
-        String query = "DELETE FROM customers WHERE Username = " + Username;
+        String query = "DELETE FROM customers WHERE Username = '" + Username + "'";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -492,7 +506,7 @@ public class SQL_Database implements Database {
     // Attempts to remove employee account to database. Returns 0 on success, 1 on error
     public int removeEmployee(String Username)
     {
-        String query = "DELETE FROM employees WHERE Username " + Username;
+        String query = "DELETE FROM employees WHERE Username '" + Username + "'";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);

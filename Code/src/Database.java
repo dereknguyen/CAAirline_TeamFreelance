@@ -1,17 +1,18 @@
 package src;
 
-import java.sql.*;
+import java.util.Calendar;
+import java.util.Calendar;
 import java.util.List;
 
 public interface Database
 {
     /* Trip methods */
-    public int getTripId(int FlightId, Date date);
-    public int getNumTrips(Date from, Date to);
+    public int getTripId(int FlightId, Calendar Date);
+    public int getNumTrips(Calendar from, Calendar to);
     public int getStatus(int TripId);
     public int setStatus(int TripId, int Status);
-    public int addTrip(int FlightId, Date date, double Price);
-    public int editTrip(int TripId, int FlightId, Date date, double Price, int Status);
+    public int addTrip(int FlightId, Calendar Date, double Price);
+    public int editTrip(int TripId, int FlightId, Calendar Date, double Price, int Status);
     public int removeTrip(int TripId);
     public double calculateAvgEmpty(String Destination);
 
