@@ -391,7 +391,7 @@ public class SQL_Database implements Database {
                 return null;
             }
             entry.add(rs.getString("Username"));
-            entry.add(rs.getString("EncrypedPassword"));
+            entry.add(rs.getString("EncryptedPassword"));
             entry.add(rs.getString("FirstName"));
             entry.add(rs.getString("LastName"));
             return entry;
