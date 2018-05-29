@@ -329,6 +329,26 @@ public class SQL_Database implements Database {
         return id;
     }
 
+    //Returns flight id associated with trip, or -1 on error
+    public int getFlightIdFromTrip(int tripId)
+    {
+        String query = "SELECT FlightId FROM trips WHERE TripId = '" + new Integer(tripId).toString() +  "'";
+        int id = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            id = rs.getInt("FlightId");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return -1;
+        }
+        return id;
+    }
+
     // Adds new flight from source to destination, returns flight ID on success, or -1 on error
     public int addFlight(String Source, String Destination)
     {
