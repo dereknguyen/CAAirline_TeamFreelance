@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FlightSearchController">
    <children>
       <TextField fx:id="flightDestination" layoutX="217.0" layoutY="118.0" promptText="Flight Destination" />
-      <Button layoutX="270.0" layoutY="287.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="270.0" layoutY="287.0" mnemonicParsing="false" onAction="#HandleSearchAction" text="Search" />
       <DatePicker fx:id="flightDate" layoutX="203.0" layoutY="225.0" promptText="Flight Date" />
       <TextArea layoutX="145.0" layoutY="60.0" prefHeight="49.0" prefWidth="311.0" text="                   Enter a flight destination ID&#10;(0-LA, 1-SF, 2-SD, 3-Phoenix, 4-SEA, 5-Dallas)" />
       <TextArea layoutX="232.0" layoutY="167.0" prefHeight="43.0" prefWidth="136.0" text="Select a flight date" />
