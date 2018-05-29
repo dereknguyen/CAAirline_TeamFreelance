@@ -69,6 +69,7 @@ public class LoginCustomerController {
             System.out.println("Login successful");
             //todo login successful, for testing, the database contains an account for "user" , "password"
          }
+
       }
    }
 }
