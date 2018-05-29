@@ -3,10 +3,15 @@ package Controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import src.SQL_Database;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.sql.SQLData;
+import java.sql.SQLException;
 
 public class CreateCustomerAccountController
 {
@@ -26,6 +31,12 @@ public class CreateCustomerAccountController
     private JFXButton createAccountButton;
 
     @FXML
+    private VBox vbox;
+
+    @FXML
+    private Label errMsg;
+
+    @FXML
     void HandleCreateClick(ActionEvent event) throws IOException
     {
         String username = newUsername.getText().trim();
@@ -33,6 +44,40 @@ public class CreateCustomerAccountController
         String firstname = newFirstname.getText().trim();
         String lastname = newLastname.getText().trim();
 
-
+        if (username.length() == 0)
+        {
+            errMsg.setText("Please enter a username");
+            errMsg.setVisible(true);
+        }
+        else if (firstname.length() == 0)
+        {
+            errMsg.setText("Please enter a first name");
+            errMsg.setVisible(true);
+        }
+        else if (lastname.length() == 0)
+        {
+            errMsg.setText("Please enter a last name");
+            errMsg.setVisible(true);
+        }
+        else if (password == null)
+        {
+            errMsg.setText("Please enter a password");
+            errMsg.setVisible(true);
+        }
+        else
+        {
+            errMsg.setVisible(false);
+            src.Database db = SQL_Database.getInstance();
+            if (db.addCustomerAccount(username, password, firstname, lastname) == -1)
+            {
+                errMsg.setText("Username already in use");
+                errMsg.setVisible(true);
+            }
+            else
+            {
+                System.out.println("New customer account created");
+                //todo go to home page, etc
+            }
+        }
     }
 }
