@@ -21,9 +21,9 @@ public class PriceRecommendController {
         int dest = Integer.parseInt(destination.getText());
         src.Database db = src.SQL_Database.getInstance();
 
-        double avgEmpty = db.calculateAvgEmpty(dest);
-        Double p = P - ((avgEmpty/2)*P);
-        String price = p.toString();
-        recommendation.setText(price);
+        //double avgEmpty = db.calculateAvgEmpty(dest);
+        //Double p = P - ((avgEmpty/2)*P);
+        //String price = p.toString();
+        //recommendation.setText(price);
     }
 }

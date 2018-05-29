@@ -6,7 +6,6 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXTextField;
-<<<<<<< HEAD
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -35,23 +34,27 @@ public class FlightStatusController {
         src.Database db = SQL_Database.getInstance();
 
         //TODO: fill date and time using tripId
+        
 
         int flightId = ((SQL_Database) db).getFlightIdFromTrip(tripId);
-        //TODO: fill src_dest using flightId
+        //fill src_dest using flightId
+        String src = ((SQL_Database) db).getFlightSrc(flightId);
+        String dest = ((SQL_Database) db).getFlightDest(flightId);
+        src_dest.setText(src + " -> " + dest);
 
         int status = db.getStatus(tripId);
-        StringProperty new_status = new SimpleStringProperty("");
+        String new_status = "";
         //0 = On-time, 1 = Delayed, 2 = Cancelled, Return 0 on success, -1 on error
         if (status == 0) {
-            new_status = new SimpleStringProperty("ON TIME");
+            new_status = "ON TIME";
         }
         else if (status == 1) {
-            new_status = new SimpleStringProperty("DELAYED");
+            new_status = "DELAYED";
         }
         else if (status == 2) {
-            new_status = new SimpleStringProperty("CANCELED");
+            new_status = "CANCELED";
         }
 
-        statusDisplay.textProperty().bind(new_status);
+        statusDisplay.setText(new_status);
     }
 }

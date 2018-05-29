@@ -392,6 +392,49 @@ public class SQL_Database implements Database {
         return 0;
     }
 
+    public String getFlightSrc(int FlightId) {
+        if (FlightId < 0) return "";
+
+        String src;
+
+        String query = "SELECT Source FROM flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            src = rs.getString("Source");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return "";
+        }
+        return src;
+    }
+
+    public String getFlightDest(int FlightId) {
+        if (FlightId < 0) return "";
+
+        String dest;
+
+        String query = "SELECT Destination from flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            dest = rs.getString("Destination");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return "";
+        }
+        return dest;
+
+    }
+
     /*
 
     Customer methods
