@@ -35,7 +35,7 @@ public class CreateCustomerAccountController
     private Label errMsg;
 
     @FXML
-    void HandleCreateClick(ActionEvent event) throws IOException
+    void HandleCreateClick(ActionEvent event)
     {
         String username = newUsername.getText().trim();
         String password = src.MD5Password.encodePassword(newPassword.getText().trim());
