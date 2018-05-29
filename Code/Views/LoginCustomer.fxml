@@ -26,6 +26,7 @@
                               <Image url="@../Assets/CaliforniaAirline_Logo.png" />
                           </image>
                       </ImageView>
+                  <Label fx:id="errMsg" alignment="CENTER" style="-fx-text-fill: red;" translateY="180.0" />
                       <JFXTextField fx:id="customerUsername" alignment="CENTER" focusColor="#b5a369" prefHeight="35.0" prefWidth="310.0" promptText="Username" style="-fx-border-width: 0px; -fx-prompt-text-fill: #C0C0C0; -fx-text-fill: #FFFFFF; -fx-font-size: 13px;" translateY="180.0" unFocusColor="SILVER">
                           <font>
                               <Font name="Avenir Book" size="20.0" />
