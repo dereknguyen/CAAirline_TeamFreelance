@@ -10,8 +10,6 @@ import javafx.scene.layout.VBox;
 import src.SQL_Database;
 
 import java.io.IOException;
-import java.sql.SQLData;
-import java.sql.SQLException;
 
 public class CreateCustomerAccountController
 {
@@ -66,7 +64,6 @@ public class CreateCustomerAccountController
         }
         else
         {
-            errMsg.setVisible(false);
             src.Database db = SQL_Database.getInstance();
             if (db.addCustomerAccount(username, password, firstname, lastname) == -1)
             {
@@ -75,6 +72,7 @@ public class CreateCustomerAccountController
             }
             else
             {
+                errMsg.setVisible(false);
                 System.out.println("New customer account created");
                 //todo go to home page, etc
             }
