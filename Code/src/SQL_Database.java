@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -301,6 +302,26 @@ public class SQL_Database implements Database {
             return -1;
         }
         return numempty / numtrips;
+    }
+
+    public Date getDate(int TripId)
+    {
+        //TODO: error check this
+        //if (TripId < 0) return -1;
+        String query = "SELECT Date FROM trips WHERE TripId = " + TripId;
+        Date date = new Date();
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            date = rs.getDate("Date");
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            //return -1;
+        }
+        return date;
     }
 
     /*
