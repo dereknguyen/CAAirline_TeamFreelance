@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import src.SQL_Database;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class FlightStatusController {
     @FXML
@@ -29,12 +30,12 @@ public class FlightStatusController {
 
     @FXML
     void HandleGetStatusClick(ActionEvent event) throws IOException {
-        //TODO: use flight number and figure out date
         Integer tripId = Integer.parseInt(flightNo.getText().trim());
         src.Database db = SQL_Database.getInstance();
 
-        //TODO: fill date and time using tripId
-
+        //fill date using tripId
+        Date dateobj= ((SQL_Database) db).getDate(tripId);
+        date.setText(dateobj.toString());
 
         int flightId = ((SQL_Database) db).getFlightIdFromTrip(tripId);
         //fill src_dest using flightId
@@ -53,6 +54,9 @@ public class FlightStatusController {
         }
         else if (status == 2) {
             new_status = "CANCELED";
+        }
+        else {
+            new_status = "ERROR";
         }
 
         statusDisplay.setText(new_status);
