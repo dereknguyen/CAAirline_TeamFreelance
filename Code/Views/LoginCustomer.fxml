@@ -34,7 +34,7 @@
                   <JFXPasswordField fx:id="customerPassword" alignment="CENTER" focusColor="#b5a369" prefHeight="40.0" promptText="Password" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-text-font-size: 12pt;" unFocusColor="#a0a0a0" />
                   <AnchorPane layoutX="10.0" layoutY="183.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" />
                   <JFXButton fx:id="customerLoginButton" onAction="#HandleLoginClick" prefHeight="34.0" prefWidth="216.0" style="-fx-background-radius: 3px; -fx-background-color: #046A38; -fx-font-size: 15; -fx-text-fill: #FFFFFF;" text="Log In" />
-                  <JFXButton fx:id="customerSignupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="37.0" prefHeight="22.0" prefWidth="77.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-font-size: 10; -fx-padding: 0mm; -fx-text-fill: #B5A369;" text="Create Account" />
+                  <JFXButton fx:id="customerSignupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="37.0" onAction="#HandleToCreateAccount" prefHeight="22.0" prefWidth="77.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-font-size: 10; -fx-padding: 0mm; -fx-text-fill: #B5A369;" text="Create Account" />
                </children>
             </VBox>
          </children>
