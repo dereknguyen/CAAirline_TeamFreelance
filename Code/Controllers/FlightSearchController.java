@@ -3,6 +3,7 @@ package Controllers;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 
 public class FlightSearchController {
     @FXML
@@ -10,4 +11,9 @@ public class FlightSearchController {
 
     @FXML
     private JFXDatePicker flightDate;
+
+    @FXML
+    void HandlePriceClick(ActionEvent event) {
+
+    }
 }

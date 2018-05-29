@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXTextField;
+<<<<<<< HEAD
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,7 +20,7 @@ public class FlightStatusController {
     @FXML
     private Button get_status;
     @FXML
-    private Label status_indicator;
+    private Label statusDisplay;
     @FXML
     private Label src_dest;
     @FXML
@@ -51,6 +52,6 @@ public class FlightStatusController {
             new_status = new SimpleStringProperty("CANCELED");
         }
 
-        status_indicator.textProperty().bind(new_status);
+        statusDisplay.textProperty().bind(new_status);
     }
 }
