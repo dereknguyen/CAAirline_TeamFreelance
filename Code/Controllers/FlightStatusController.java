@@ -34,7 +34,7 @@ public class FlightStatusController {
         src.Database db = SQL_Database.getInstance();
 
         //TODO: fill date and time using tripId
-        
+
 
         int flightId = ((SQL_Database) db).getFlightIdFromTrip(tripId);
         //fill src_dest using flightId
