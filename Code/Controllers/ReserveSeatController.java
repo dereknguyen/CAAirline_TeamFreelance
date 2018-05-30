@@ -4,17 +4,18 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 public class ReserveSeatController {
 
     @FXML
-    private JFXTextField user;
+    private TextField user;
 
     @FXML
-    private JFXTextField tripID;
+    private TextField tripID;
 
     @FXML
-    private JFXTextField seatNo;
+    private TextField seatNo;
 
     @FXML
     void HandleSeatSelect(ActionEvent event){
