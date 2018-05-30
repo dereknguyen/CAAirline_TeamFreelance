@@ -77,23 +77,22 @@ public class LoginCustomerController {
       }
    }
 
-   @FXML
-   void HandleToCreateAccount(ActionEvent event)
-   {
-      customerSignupButton.getScene().getWindow().hide();
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/Views/CreateAccount.fxml"));
+    @FXML
+    void HandleToCreateAccount(ActionEvent event) {
+        customerSignupButton.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Views/CreateAccount.fxml"));
 
-      try {
-         loader.load();
-      }
-      catch (IOException e) {
-         e.printStackTrace();
-      }
+        try {
+            loader.load();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-      Parent root = loader.getRoot();
-      Stage stage = new Stage();
-      stage.setScene(new Scene(root));
-      stage.showAndWait();
-   }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.BookingPayment">
+   <children>
+      <HBox layoutX="166.0" layoutY="226.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fitWidth="147.0" layoutX="45.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0">
+                     <image>
+                        <Image url="@../Assets/CaliforniaAirline_Logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="600.0" prefWidth="299.0" spacing="15.0">
+               <children>
+                  <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Payment Information">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox spacing="10.0">
+                     <children>
+                        <JFXTextField focusColor="#046a38" prefHeight="40.0" prefWidth="221.0" promptText="Credit Card Number" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                        <JFXTextField focusColor="#046a38" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="81.0" promptText="CSV" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: gray; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="247.0">
+                     <children>
+                        <JFXDatePicker defaultColor="#046a38" prefHeight="34.0" prefWidth="242.0" promptText="Expiration Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <JFXTextField focusColor="#046a38" prefHeight="40.0" prefWidth="221.0" promptText="Full Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                  <JFXTextField focusColor="#046a38" layoutX="10.0" layoutY="218.0" prefHeight="40.0" prefWidth="221.0" promptText="Billing Address" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                  <HBox spacing="10.0">
+                     <children>
+                        <JFXTextField focusColor="#046a38" prefHeight="40.0" prefWidth="221.0" promptText="City" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                        <JFXTextField focusColor="#046a38" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="81.0" promptText="State" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: gray; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                     </children>
+                  </HBox>
+                  <JFXTextField focusColor="#046a38" layoutX="10.0" layoutY="273.0" prefHeight="40.0" prefWidth="178.0" promptText="Zip Code" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                  <AnchorPane prefHeight="11.0" prefWidth="299.0" />
+                  <HBox>
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Total" />
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: regular; -fx-font-size: 20pt; -fx-text-fill: white;" text="\$150.00" />
+                     </children>
+                  </HBox>
+                  <JFXButton prefHeight="36.0" prefWidth="303.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-text-fill: white; -fx-font-weight: bold;" text="Confirm Payment" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

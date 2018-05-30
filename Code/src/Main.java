@@ -16,8 +16,7 @@ public class Main extends Application {
        Parent root = FXMLLoader.load(getClass().getResource("../Views/LoginCustomer.fxml"));
        primaryStage.setTitle("California System");
        //primaryStage.setScene(new Scene(root, 1600, 900));
-        primaryStage.setScene( new Scene(root, Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height));
+        primaryStage.setScene( new Scene(root, 1000, 600));
         primaryStage.show();
 //        while(true) {
 //            mainLoop();
