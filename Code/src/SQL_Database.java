@@ -1,9 +1,6 @@
 package src;
 
-import sun.java2d.pipe.SpanShapeRenderer;
-
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
