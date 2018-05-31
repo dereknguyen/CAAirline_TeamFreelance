@@ -9,7 +9,7 @@ public class TestDriver
     public static void main(String[] args)
     {
         Result r = JUnitCore.runClasses(TestTextDB.class, TestSQLDB.class,
-                TestFlightStatus.class, TestCustomerAccount.class);
+                TestFlightStatus.class, TestCustomerAccount.class, IntegrationTestA.class);
 
         for (Failure f : r.getFailures())
         {
