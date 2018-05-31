@@ -6,7 +6,7 @@ import java.sql.*;
 public class FlightManager{
    Scanner reader = new Scanner(System.in);
 
-   public void editStatus(){
+   /*public void editStatus(){
       Database db = SQL_Database.getInstance();
       Trip trip = getTripFromUser();
       int status;
@@ -16,9 +16,9 @@ public class FlightManager{
       status = reader.nextInt();
       
       db.setStatus(trip.getFlightId(), status);
-   }
+   }*/
 
-   public Trip getTripFromUser(){
+   /*public Trip getTripFromUser(){
       System.out.println("Enter Integer 0 - 5 for Destination:");
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
       int destination = reader.nextInt();
@@ -37,9 +37,9 @@ public class FlightManager{
       Trip trip = new Trip(date,destination);
 
       return trip;
-   }
+   }*/
 
-   public void viewStatus(){
+   /*public void viewStatus(){
       Text_Database db = Text_Database.getInstance();
       Trip trip = getTripFromUser();
       int status = db.getStatus(trip.getFlightId());
@@ -60,5 +60,5 @@ public class FlightManager{
       }
       else
          System.out.println("Failure");
-   }
+   }*/
 }
