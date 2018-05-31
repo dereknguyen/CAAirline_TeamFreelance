@@ -3,14 +3,24 @@ package Tests;
 import org.junit.Test;
 import src.Database;
 import src.SQL_Database;
+import src.Trip;
+import java.util.ArrayList;
 
 import java.util.Calendar;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestSQLDB
 {
     private Database db = SQL_Database.getInstance();
 
+    @Test
+    public void testGetAllFlights(){
+        ArrayList<Trip> trips = db.getAllFlights();
+        for(int i = 0; i < trips.size(); i++){
+            assertNotNull(trips.get(i));
+        }
+
+    }
     @Test
     public void testFlightMods()
     {
