@@ -56,8 +56,8 @@ tickets
     Username String
     TripId int  -- (TripId, SeatNumber) primary key
     SeatNumber int
+    NumBags int
     CheckedIn boolean
-
  */
 
 public class SQL_Database implements Database {
@@ -79,7 +79,6 @@ public class SQL_Database implements Database {
         {
             System.out.println(e.getMessage());
         }
-
     }
 
     static public SQL_Database getInstance()
@@ -641,21 +640,23 @@ public class SQL_Database implements Database {
     /*
 
     Ticket methods
+    //todo add NumBags to everything
 
      */
 
     // Adds a ticket to the database. Returns 0 on success, -1 on error
-    public int addTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
+    public int addTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn)
     {
         if (TripId < 0 || SeatNumber < 0 || SeatNumber > 19) return -1;
-        String query = "INSERT INTO tickets (Username, TripId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        String query = "INSERT INTO tickets (Username, TripId, SeatNumber, NumBags, CheckedIn) values (?,?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
             ps.setInt(2, TripId);
             ps.setInt(3, SeatNumber);
-            ps.setBoolean(4, CheckedIn);
+            ps.setInt(4, NumBags);
+            ps.setBoolean(5, CheckedIn);
             ps.executeUpdate();
         }
         catch (SQLException e)
@@ -669,21 +670,22 @@ public class SQL_Database implements Database {
     // Overload for simplicity
     public int addTicket(String Username, int TripId, int SeatNumber)
     {
-        return addTicket(Username, TripId, SeatNumber, false);
+        return addTicket(Username, TripId, SeatNumber, 0, false);
     }
 
-    // Edits existing customer and changes SeatNumber and CheckedIn
-    public int editTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
+    // Edits existing customer and changes SeatNumber and CheckedIn, returns -1 on error
+    public int editTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn)
     {
         if (TripId < 0 || SeatNumber > 19 || SeatNumber < 0) return -1;
-        String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND TripId = ?";
+        String query = "UPDATE tickets SET SeatNumber = ?, NumBags = ?, CheckedIn = ? WHERE Username = ? AND TripId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, SeatNumber);
-            ps.setBoolean(2, CheckedIn);
-            ps.setString(3, Username);
-            ps.setInt(4, TripId);
+            ps.setInt(2, NumBags);
+            ps.setBoolean(3, CheckedIn);
+            ps.setString(4, Username);
+            ps.setInt(5, TripId);
             ps.executeUpdate();
         }
         catch (SQLException e)
@@ -729,6 +731,27 @@ public class SQL_Database implements Database {
             ps.executeUpdate();
         }
         catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+    // Set number of bags for customer's ticket. Returns 0 on success, -1 on error
+    public int setBags(String Username, int TripId, int NumBags)
+    {
+        if (TripId < 0) return -1;
+        String query = "UPDATE tickets SET NumBags = ? WHERE Username = ? AND TripId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, NumBags);
+            ps.setString(2, Username);
+            ps.setInt(3, TripId);
+            ps.executeUpdate();
+
+        } catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return -1;
