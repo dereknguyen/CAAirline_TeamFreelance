@@ -2,6 +2,7 @@ package Controllers;
 
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class BookingController {
@@ -29,6 +30,7 @@ public class BookingController {
 
         @FXML
         private JFXDatePicker date;
+
 
     }
 }

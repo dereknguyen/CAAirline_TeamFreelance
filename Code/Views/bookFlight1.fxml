@@ -32,7 +32,7 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b6118" height="43.0" layoutX="35.0" layoutY="82.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b6118" height="43.0" layoutX="35.0" layoutY="135.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b6118" height="43.0" layoutX="35.0" layoutY="188.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
-                  <Label layoutX="52.0" layoutY="95.0" text="8:00 to 10:01 $103.30" textFill="#fcfafa" />
+                  <Label fx:id="option1" layoutX="52.0" layoutY="95.0" text="8:00 to 10:01 $103.30" textFill="#fcfafa" />
                   <Label layoutX="52.0" layoutY="201.0" text="6:50 to 8:00: $83.30" textFill="#fcfafa" />
                   <Label layoutX="53.0" layoutY="148.0" text="3:00 to 5:50: $103.55" textFill="#fcfafa" />
                </children>
