@@ -15,6 +15,8 @@ public interface Database
     public int editTrip(int TripId, int FlightId, Calendar Date, double Price, int Status);
     public int removeTrip(int TripId);
     public double calculateAvgEmpty(String Destination);
+    public Calendar getDate(int TripId);
+    public ArrayList<Trip> getAllTrips();
 
     /* Flight methods */
     public int getFlightId(String Source, String Destination);

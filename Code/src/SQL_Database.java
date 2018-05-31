@@ -1,6 +1,9 @@
 package src;
 
+import sun.java2d.pipe.SpanShapeRenderer;
+
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -304,12 +307,14 @@ public class SQL_Database implements Database {
         return numempty / numtrips;
     }
 
-    public Date getDate(int TripId)
+    public Calendar getDate(int TripId)
     {
         //TODO: error check this
         //if (TripId < 0) return -1;
         String query = "SELECT Date FROM trips WHERE TripId = " + TripId;
         Date date = new Date();
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try
         {
             ResultSet rs = st.executeQuery(query);
@@ -321,7 +326,32 @@ public class SQL_Database implements Database {
             System.out.println(e.getMessage());
             //return -1;
         }
-        return date;
+        c.setTime(date);
+        return c;
+    }
+
+    public ArrayList<Trip> getAllTrips()
+    {
+        String query = "SELECT * FROM trips";
+        ArrayList<Trip> out = new ArrayList<Trip>();
+        Calendar c = Calendar.getInstance();
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next())
+            {
+                c.setTime(rs.getDate("Date"));
+                out.add(new Trip(rs.getInt("TripId"), rs.getInt("FlightId"),
+                        c, rs.getDouble("Price"), rs.getInt("Status")));
+            }
+            return out;
+
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /*

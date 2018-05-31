@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import src.SQL_Database;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 
 public class FlightStatusController {
@@ -34,8 +35,8 @@ public class FlightStatusController {
         src.Database db = SQL_Database.getInstance();
 
         //fill date using tripId
-        Date dateobj= ((SQL_Database) db).getDate(tripId);
-        date.setText(dateobj.toString());
+        Calendar cal = ((SQL_Database) db).getDate(tripId);
+        date.setText(cal.toString());
 
         int flightId = ((SQL_Database) db).getFlightIdFromTrip(tripId);
         //fill src_dest using flightId
