@@ -20,8 +20,11 @@ public interface Database
 
     /* Flight methods */
     public int getFlightId(String Source, String Destination);
+    public int getFlightIdFromTrip(int tripid);
     public int addFlight(String Source, String Destination);
     public int removeFlight(int FlightId);
+    public String getFlightSrc(int FlightId);
+    public String getFlightDest(int FlightId);
 
     /* Customer methods */
     public List<String> getCustomerInfo(String Username);
