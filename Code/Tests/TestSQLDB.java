@@ -15,7 +15,7 @@ public class TestSQLDB
 
     @Test
     public void testGetAllFlights(){
-        ArrayList<Trip> trips = db.getAllFlights();
+        ArrayList<Trip> trips = db.getAllTrips();
         for(int i = 0; i < trips.size(); i++){
             assertNotNull(trips.get(i));
         }
