@@ -1,0 +1,11 @@
+.root { /* gls:file:/Applications/SceneBuilder.app/Contents/Java/dist.jar!/com/gluonhq/charm/glisten/control/theme_light.gls */
+    -fx-background: #151515;
+}
+
+.scroll-pane>*.viewport { /* FX theme stylesheet */
+    -fx-background-color: #151515;
+}
+
+.text-area>*.scroll-pane { /* FX theme stylesheet */
+    -fx-background-color: #151515;
+}

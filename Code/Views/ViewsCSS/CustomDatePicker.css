@@ -1,0 +1,40 @@
+.text-input { /* gls:file:/Applications/SceneBuilder.app/Contents/Java/dist.jar!/com/gluonhq/charm/glisten/control/glisten.gls */
+    -fx-background-color: transparent;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-color: rgba(0, 0, 0, 0);
+    -fx-border-insets: 0px;
+    -fx-border-width: 0px;
+    -fx-padding: 0;
+}
+
+.jfx-text-field {
+    -jfx-unfocus-color: #FFFFFF;
+}
+
+.jfx-text-field {
+    -fx-prompt-text-fill: #A0A0A0;
+    /*-fx-prompt-text-fill: red;*/
+    -fx-font-family: Avenir;
+    -fx-font-size: 10pt;
+}
+
+.jfx-date-picker>*.jfx-text-field {
+    -jfx-focus-color: #046A38;
+}
+
+.jfx-date-picker .date-picker-display-node {
+    -fx-highlight-fill: #046A38;
+    -fx-highlight-text-fill: black;
+
+
+}
+
+.jfx-date-picker:editable .date-picker-display-node .text {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.root {
+    -primary-swatch-500: #046A38;
+}

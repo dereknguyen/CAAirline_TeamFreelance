@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -303,6 +304,26 @@ public class SQL_Database implements Database {
         return numempty / numtrips;
     }
 
+    public Date getDate(int TripId)
+    {
+        //TODO: error check this
+        //if (TripId < 0) return -1;
+        String query = "SELECT Date FROM trips WHERE TripId = " + TripId;
+        Date date = new Date();
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            date = rs.getDate("Date");
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            //return -1;
+        }
+        return date;
+    }
+
     /*
 
     Flight methods
@@ -313,6 +334,26 @@ public class SQL_Database implements Database {
     public int getFlightId(String Source, String Destination)
     {
         String query = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
+        int id = -1;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            id = rs.getInt("FlightId");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return -1;
+        }
+        return id;
+    }
+
+    //Returns flight id associated with trip, or -1 on error
+    public int getFlightIdFromTrip(int tripId)
+    {
+        String query = "SELECT FlightId FROM trips WHERE TripId = '" + new Integer(tripId).toString() +  "'";
         int id = -1;
         try
         {
@@ -370,6 +411,49 @@ public class SQL_Database implements Database {
             return 1;
         }
         return 0;
+    }
+
+    public String getFlightSrc(int FlightId) {
+        if (FlightId < 0) return "";
+
+        String src;
+
+        String query = "SELECT Source FROM flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            src = rs.getString("Source");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return "";
+        }
+        return src;
+    }
+
+    public String getFlightDest(int FlightId) {
+        if (FlightId < 0) return "";
+
+        String dest;
+
+        String query = "SELECT Destination from flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            dest = rs.getString("Destination");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return "";
+        }
+        return dest;
+
     }
 
     /*

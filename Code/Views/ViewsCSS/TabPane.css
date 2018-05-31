@@ -1,0 +1,28 @@
+/* Tabpane styling */
+.tab {
+    -fx-pref-width: 120;
+    -fx-pref-height: 50;
+}
+
+.tab-pane > *.tab-header-area > *.tab-header-background {
+    -fx-background-color: #000000;
+    -fx-background-insets: 0px;
+}
+
+.text {
+    -fx-fill: white;
+    -fx-font-family: Avenir;
+    -fx-font-size: bold;
+}
+
+.tab-pane>*.tab-header-area>*.headers-region>*.tab:selected {
+    -fx-border-color: transparent, transparent transparent #B5A369 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+
+
+
+
+
+

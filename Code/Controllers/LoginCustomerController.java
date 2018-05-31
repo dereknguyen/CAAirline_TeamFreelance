@@ -5,17 +5,18 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import src.SQL_Database;
-import src.Text_Database;
 
 public class LoginCustomerController {
    
@@ -34,8 +35,8 @@ public class LoginCustomerController {
    @FXML
    private VBox virtualbox;
 
-   private Label usernameErr = null;
-   private Label passwordErr = null;
+   @FXML
+   private Label errMsg;
 
    @FXML
    void HandleLoginClick(ActionEvent event) throws IOException
@@ -44,58 +45,54 @@ public class LoginCustomerController {
       String password = src.MD5Password.encodePassword(customerPassword.getText().trim());
       if (username.length() == 0)
       {
-         virtualbox.getChildren().removeAll(passwordErr);
-         passwordErr = null;
-         if (usernameErr == null)
-         {
-            usernameErr = new Label("Please enter a username");
-            usernameErr.applyCss();
-            usernameErr.setId("errmsg");
-            usernameErr.setTextFill(Color.web("#C32820"));
-            //label.setTranslateY(-200);
-            virtualbox.getChildren().add(usernameErr);
-         }
+         errMsg.setText("Please enter a username");
+         errMsg.setVisible(true);
       }
       else if (password == null)
       {
-         virtualbox.getChildren().removeAll(usernameErr);
-         usernameErr = null;
-         if (passwordErr == null)
-         {
-            passwordErr = new Label("Please enter a password");
-            passwordErr.applyCss();
-            passwordErr.setId("errmsg");
-            passwordErr.setTextFill(Color.web("#C32820"));
-            virtualbox.getChildren().add(passwordErr);
-         }
+         errMsg.setText("Please enter a password");
+         errMsg.setVisible(true);
       }
       else
       {
-         virtualbox.getChildren().removeAll(passwordErr, usernameErr);
-         usernameErr = null;
-         passwordErr = null;
          src.Database db = SQL_Database.getInstance();
          List<String> entry = db.getCustomerInfo(username);
          if (entry == null)
          {
-            usernameErr = new Label("Invalid username/password");
-            usernameErr.applyCss();
-            usernameErr.setId("errmsg");
-            usernameErr.setTextFill(Color.web("#C32820"));
-            virtualbox.getChildren().add(usernameErr);
+            errMsg.setText("Invalid username/password");
+            errMsg.setVisible(true);
          }
          else if (entry.get(1) != null && !entry.get(1).equals(password))
          {
-            passwordErr = new Label("Invalid username/password");
-            passwordErr.applyCss();
-            passwordErr.setId("errmsg");
-            passwordErr.setTextFill(Color.web("#C32820"));
+            errMsg.setText("Invalid username/password");
+            errMsg.setVisible(true);
          }
          else
          {
-            //todo login successful, for testing, the database contains an account for "user" , "password"
+            errMsg.setVisible(false);
             System.out.println("Login successful");
+            //todo login successful, for testing, the database contains an account for "user" , "password"
          }
+
       }
    }
+
+    @FXML
+    void HandleToCreateAccount(ActionEvent event) {
+        customerSignupButton.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Views/CreateAccount.fxml"));
+
+        try {
+            loader.load();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 }

@@ -1,14 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Views.MainTabs"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainTabsController">
+   <children>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+        <tabs>
+          <Tab style="-fx-background-color: #000000;" text="Booking">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
+                     <children>
+                        <HBox layoutX="371.0" layoutY="179.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Cities and Dates" />
+                                    <AnchorPane prefHeight="20.0" prefWidth="200.0" />
+                                    <JFXComboBox fx:id="bookingFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="245.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                                    <AnchorPane layoutX="10.0" layoutY="49.0" prefHeight="20.0" prefWidth="200.0" />
+                                    <JFXComboBox fx:id="bookingTo" focusColor="#046a38" prefHeight="31.0" prefWidth="245.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                                    <AnchorPane layoutX="10.0" layoutY="235.0" prefHeight="20.0" prefWidth="200.0" />
+                                    <JFXDatePicker fx:id="bookingDepartureDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="302.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                    <AnchorPane layoutX="10.0" layoutY="151.0" prefHeight="20.0" prefWidth="200.0" />
+                                    <JFXDatePicker fx:id="bookingArrivalDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="302.0" promptText="Arrival Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                    <AnchorPane layoutX="10.0" layoutY="205.0" prefHeight="40.0" prefWidth="200.0" />
+                                    <JFXButton fx:id="bookingSearchButton" onAction="#searchTicketsDidTap" prefHeight="36.0" prefWidth="268.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Seach For Tickets" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="425.0" prefWidth="651.0">
+                                 <children>
+                                    <HBox spacing="270.0">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Flights" />
+                                          <JFXButton fx:id="bookingConfirmFlight" onAction="#confirmFlightDidTap" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Confirm Flight Details" />
+                                       </children>
+                                    </HBox>
+                                    <TableView prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" style="-fx-background-color: #151515;" text="From" />
+                                        <TableColumn prefWidth="75.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Time" />
+                                          <TableColumn editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Arrival Time" />
+                                          <TableColumn style="-fx-background-color: #151515;" text="Price" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab style="-fx-background-color: #000000;" text="Check In">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="171.0" layoutY="188.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                           <children>
+                              <VBox prefHeight="425.0" prefWidth="315.0" spacing="35.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Confirmation Number" />
+                                    <JFXTextField fx:id="checkinFlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Enter Number Here" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: regular; -fx-font-size: 9pt; -fx-text-fill: gray;" text="By clicking &quot;Check In&quot;, you are agreeing to the TSA Flight Safety Agreement." wrapText="true" />
+                                          <JFXButton fx:id="checkinButton" onAction="#checkinDidTap" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="Check In" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="425.0" prefWidth="624.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="624.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="TSA Flight Safety Agreement" />
+                                    <TextArea prefHeight="366.0" prefWidth="610.0" style="-fx-background-color: #151515; -fx-font-family: Avenir;" stylesheets="@ViewsCSS/TableColumn.css" text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&#10;&#10;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&#10;&#10;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab style="-fx-background-color: #000000;" text="Flight Status">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                           <children>
+                              <VBox prefHeight="425.0" prefWidth="315.0" spacing="35.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Enter Flight Number" />
+                                    <JFXTextField fx:id="statusFlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Flight Number" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <JFXButton fx:id="statusViewButton" onAction="#viewStatusDidTap" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="View Flight Status" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="425.0" prefWidth="651.0">
+                                 <children>
+                                    <HBox spacing="270.0">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Flight Status" />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="statusTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" style="-fx-background-color: #151515;" text="From" />
+                                          <TableColumn prefWidth="75.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Time" />
+                                          <TableColumn editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Arrival Time" />
+                                          <TableColumn style="-fx-background-color: #151515;" text="Status" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ImageView fitHeight="44.0" fitWidth="110.0" layoutX="445.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../Assets/CaliforniaAirline_Logo.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
