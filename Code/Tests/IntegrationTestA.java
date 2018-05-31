@@ -1,5 +1,6 @@
 package Tests;
 
+import org.junit.Test;
 import src.Database;
 import src.SQL_Database;
 
@@ -8,7 +9,8 @@ import java.util.Calendar;
 public class IntegrationTestA {
     private static Database db = SQL_Database.getInstance();
 
-    public static void main(String[] args)
+    @Test
+    public void TestFlight()
     {
 
         int  flightID = db.addFlight("San Luis Obispo", "Seattle");
