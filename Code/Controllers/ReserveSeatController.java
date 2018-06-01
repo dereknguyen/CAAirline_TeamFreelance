@@ -24,6 +24,6 @@ public class ReserveSeatController {
         int seat = Integer.parseInt(seatNo.getText());
 
         src.Database db = src.SQL_Database.getInstance();
-        db.addTicket(usernm, trip, seat, false);
+        db.addTicket(usernm, trip, seat, 0, false);
     }
 }
