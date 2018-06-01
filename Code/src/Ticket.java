@@ -1,21 +1,21 @@
 package src;
 
-import java.sql.Date;
+import java.util.Calendar;
 
 public class Ticket {
-	private Date date;
+	private Calendar date;
 	private String trip;
 	private int ticketNumber;
 	private int planeNumber;
 	
-	public Ticket(Date d, String t, int ticketNum, int planeNum) {
+	public Ticket(Calendar d, String t, int ticketNum, int planeNum) {
 		date = d;
 		trip = t;
 		ticketNumber = ticketNum;
 		planeNumber = planeNum;
 	}
 	
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 	
