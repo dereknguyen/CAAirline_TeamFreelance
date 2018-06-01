@@ -69,6 +69,24 @@ public class LoginCustomerController {
             errMsg.setVisible(false);
             System.out.println("Login successful");
             //todo login successful, for testing, the database contains an account for "user" , "password"
+
+             //the below will work, but main tabs is not yet working
+
+             /*customerLoginButton.getScene().getWindow().hide();
+             FXMLLoader loader = new FXMLLoader();
+             loader.setLocation(getClass().getResource("/Views/MainTabs.fxml"));
+
+             try {
+                 loader.load();
+             }
+             catch (IOException e) {
+                 e.printStackTrace();
+             }
+
+             Parent root = loader.getRoot();
+             Stage stage = new Stage();
+             stage.setScene(new Scene(root));
+             stage.showAndWait();*/
          }
 
       }
