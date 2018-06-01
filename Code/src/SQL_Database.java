@@ -555,6 +555,33 @@ public class SQL_Database implements Database {
 
      */
 
+    /* Gets employee information from database, returns null if not found */
+    public List<String> getEmployeeInfo(String Username)
+    {
+        String query = "SELECT * FROM employees WHERE Username = ?";
+        List<String> entry = new ArrayList<>();
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next())
+            {
+                return null;
+            }
+            entry.add(rs.getString("Username"));
+            entry.add(rs.getString("EncryptedPassword"));
+            entry.add(rs.getString("FirstName"));
+            entry.add(rs.getString("LastName"));
+            return entry;
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     // Attempts to add employee account to database. Returns 0 on success, -1 on error
     public int addEmployeeAccount(String Username, String EncryptedPassword, String FirstName, String LastName)
     {

@@ -33,6 +33,7 @@ public interface Database
     int removeCustomer(String Username);
 
     /* Employee methods */
+    List<String> getEmployeeInfo(String Username);
     int addEmployeeAccount(String Username, String EncryptedPassword, String FirstName, String LastName);
     int editEmployee(String Username, String EncryptedPassword, String FirstName, String LastName);
     int removeEmployee(String Username);

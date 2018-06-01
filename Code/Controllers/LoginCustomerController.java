@@ -33,9 +33,6 @@ public class LoginCustomerController {
    private JFXButton customerSignupButton;
 
    @FXML
-   private VBox virtualbox;
-
-   @FXML
    private Label errMsg;
 
    @FXML
