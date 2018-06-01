@@ -17,10 +17,10 @@ public interface Database
     double calculateAvgEmpty(String Destination);
     Calendar getDate(int TripId);
     ArrayList<Trip> getAllTrips();
+    int getFlightIdFromTrip(int TripId);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);
-    int getFlightIdFromTrip(int tripid);
     int addFlight(String Source, String Destination);
     int removeFlight(int FlightId);
     String getFlightSrc(int FlightId);
@@ -38,8 +38,9 @@ public interface Database
     int removeEmployee(String Username);
 
     /* Ticket methods */
-    int addTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn);
-    int editTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn);
+    int addTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn);
+    int editTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn);
     int removeTicket(String Username, int TripId, int SeatNumber);
     int checkIn(String Username, int TripId);
+    int setBags(String Username, int TripId, int NumBags);
 }
