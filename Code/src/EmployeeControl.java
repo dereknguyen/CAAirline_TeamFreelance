@@ -6,15 +6,13 @@ import java.sql.Date;
 
 public class EmployeeControl{
    private static EmployeeControl uniqueinstance;
-   //private SQL_Database db;
-   private Text_Database db;
+   private SQL_Database db;
    private Calendar cal;
    private Scanner reader;
 
    private EmployeeControl()
    {
-      //db = SQL_Database.getInstance();
-      db = Text_Database.getInstance();
+      db = SQL_Database.getInstance();
       cal = Calendar.getInstance();
       reader = new Scanner(System.in);
    }
@@ -59,7 +57,7 @@ public class EmployeeControl{
       cal.set(year, month-1, day, hour, min);
       date = new Date(cal.getTime().getTime());
 
-      if(action == 1)
+      /*if(action == 1)
          if (db.removeFlight(db.getFlightId(destination, date)) == 1)
          {
             System.out.println("No matching flight found in database");
@@ -77,7 +75,7 @@ public class EmployeeControl{
                System.out.println("Could not edit flight");
             }
          }
-      }
+      }*/
       return 0;
    }
 
@@ -102,10 +100,10 @@ public class EmployeeControl{
       cal.set(year, month-1, day, hour, min);
       date = new Date(cal.getTime().getTime());
 
-      if (db.addFlight(destination, date) == 1)
-      {
-         System.out.println("Could not add flight to database");
-      }
+      //if (db.addFlight(destination, date) == 1)
+      //{
+      //   System.out.println("Could not add flight to database");
+      //}
    }
 
    /*
@@ -118,12 +116,12 @@ public class EmployeeControl{
       System.out.println("LA: 0, SF: 1, SD: 2, Phoenix: 3, SEA: 4, Dallas: 5");
       int destination = reader.nextInt();
 
-      double avgEmpty = db.calculateAvgEmpty(destination);
+      //double avgEmpty = db.calculateAvgEmpty(destination);
       //int P = flight.baseprice(destination);
-      int P = 5;
-      double p = P - ((avgEmpty/2)*P);
+      //int P = 5;
+      //double p = P - ((avgEmpty/2)*P);
 
-      System.out.println("Price recommendation: " + p);
+      //System.out.println("Price recommendation: " + p);
    }
 
    public void setPrice()
@@ -147,7 +145,7 @@ public class EmployeeControl{
       String username = reader.next();
       System.out.println("What is your password?");
       String password = reader.next();
-      if (action == 0) {
+      /*if (action == 0) {
          System.out.println("What is your first name?");
          String firstname = reader.next();
          System.out.println("What is your last name?");
@@ -166,6 +164,6 @@ public class EmployeeControl{
          else if (level == 1) {
             am.DeleteEmployeeAccount(username);
          }
-      }
+      }*/
    }
 }
