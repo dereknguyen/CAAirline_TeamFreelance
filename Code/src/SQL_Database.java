@@ -9,23 +9,6 @@ import java.util.List;
 
 /*
 
-Queries:
-
-SELECT EncryptedPassword
-  FROM customers WHERE Username = "nparra";
-
-SELECT flights.FlightId FROM flights INNER JOIN trips
- WHERE trips.FlightId = flights.FlightId AND flights.Destination = "Phoenix"
- AND trips.Date < date('now', '+2 week') AND trips.Date >= date('now');
-
-SELECT customers.LastName, customers.FirstName FROM customers INNER JOIN tickets INNER JOIN trips
-WHERE tickets.Username = customers.Username AND tickets.TripId = 0 AND tickets.CheckedIn = 'false';
-
-SELECT tickets.SeatNumber from customers INNER JOIN tickets INNER JOIN flights INNER JOIN trips
-WHERE customers.LastName = 'Parra' AND customers.FirstName = 'Nicolas' AND customers.Username = tickets.Username
-AND tickets.TripId = trips.TripId AND trips.FlightId = flights.FlightId AND flights.Destination = 'Phoenix';
-
-
 Tables:
 
 customers
@@ -303,33 +286,33 @@ public class SQL_Database implements Database {
         return numempty / numtrips;
     }
 
+    /* return departure date of a trip, or null for nonexistant tripID */
     public Calendar getDate(int TripId)
     {
-        //TODO: error check this
-        //if (TripId < 0) return -1;
+        if (TripId < 0) return null;
         String query = "SELECT Date FROM trips WHERE TripId = " + TripId;
-        Date date = new Date();
+        Date date;
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try
         {
             ResultSet rs = st.executeQuery(query);
             rs.next();
             date = rs.getDate("Date");
+            c.setTime(date);
+            return c;
         }
         catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            //return -1;
+            return null;
         }
-        c.setTime(date);
-        return c;
     }
 
+    /* returns an array of all trips in the database, or null on error */
     public ArrayList<Trip> getAllTrips()
     {
         String query = "SELECT * FROM trips";
-        ArrayList<Trip> out = new ArrayList<Trip>();
+        ArrayList<Trip> out = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         try
         {
@@ -350,6 +333,24 @@ public class SQL_Database implements Database {
         }
     }
 
+    /* Returns flight id associated with trip, or -1 on error */
+    public int getFlightIdFromTrip(int TripId)
+    {
+        String query = "SELECT FlightId FROM trips WHERE TripId = " + TripId;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            return rs.getInt("FlightId");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return -1;
+        }
+    }
+
     /*
 
     Flight methods
@@ -360,26 +361,6 @@ public class SQL_Database implements Database {
     public int getFlightId(String Source, String Destination)
     {
         String query = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
-        int id = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            id = rs.getInt("FlightId");
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-            return -1;
-        }
-        return id;
-    }
-
-    //Returns flight id associated with trip, or -1 on error
-    public int getFlightIdFromTrip(int tripId)
-    {
-        String query = "SELECT FlightId FROM trips WHERE TripId = '" + new Integer(tripId).toString() +  "'";
         int id = -1;
         try
         {
@@ -439,46 +420,42 @@ public class SQL_Database implements Database {
         return 0;
     }
 
+    /* return the Flight's Source, or null for nonexistant flightId */
     public String getFlightSrc(int FlightId) {
-        if (FlightId < 0) return "";
+        if (FlightId < 0) return null;
 
-        String src;
-
-        String query = "SELECT Source FROM flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        String query = "SELECT Source FROM flights WHERE FlightId = " + FlightId;
         try
         {
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
-            src = rs.getString("Source");
+            return rs.getString("Source");
         }
         catch (SQLException e)
         {
-            e.getMessage();
-            return "";
+            System.out.println(e.getMessage());
+            return null;
         }
-        return src;
     }
 
+    /* returns the Flight's Destination, or null for nonexistant flightId */
     public String getFlightDest(int FlightId) {
-        if (FlightId < 0) return "";
+        if (FlightId < 0) return null;
 
-        String dest;
-
-        String query = "SELECT Destination from flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        String query = "SELECT Destination FROM flights WHERE FlightId = "  + FlightId;
         try
         {
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
-            dest = rs.getString("Destination");
+            return rs.getString("Destination");
         }
         catch (SQLException e)
         {
-            e.getMessage();
-            return "";
+            System.out.println(e.getMessage());
+            return null;
         }
-        return dest;
 
     }
 
@@ -640,7 +617,6 @@ public class SQL_Database implements Database {
     /*
 
     Ticket methods
-    //todo add NumBags to everything
 
      */
 

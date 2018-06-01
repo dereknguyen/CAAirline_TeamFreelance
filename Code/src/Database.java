@@ -17,10 +17,10 @@ public interface Database
     double calculateAvgEmpty(String Destination);
     Calendar getDate(int TripId);
     ArrayList<Trip> getAllTrips();
+    int getFlightIdFromTrip(int TripId);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);
-    int getFlightIdFromTrip(int tripid);
     int addFlight(String Source, String Destination);
     int removeFlight(int FlightId);
     String getFlightSrc(int FlightId);
