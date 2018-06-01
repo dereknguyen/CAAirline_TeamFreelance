@@ -49,9 +49,9 @@ public class TestSQLDB
     @Test
     public void testTicketMods()
     {
-        assertEquals(db.addTicket("nparra", 0, 15, false), 0);
+        assertEquals(db.addTicket("nparra", 0, 15, 0,false), 0);
         assertEquals(db.checkIn("nparra", 0), 0);
-        assertEquals(db.editTicket("nparra", 0, 9, false), 0);
+        assertEquals(db.editTicket("nparra", 0, 9, 0,false), 0);
         assertEquals(db.removeTicket("nparra", 0, 9), 0);
     }
 
@@ -88,11 +88,11 @@ public class TestSQLDB
         int trip3 = db.addTrip(0, c, 30.00);
         for (int i = 0; i < 10; i++)
         {
-            db.addTicket("nparra", 1, i, true);
+            db.addTicket("nparra", 1, i, 0,true);
         }
         for (int i = 0; i < 10; i++)
         {
-            db.addTicket("nparra", 2, i, true);
+            db.addTicket("nparra", 2, i, 0,true);
         }
         assertEquals(db.calculateAvgEmpty("Phoenix"), 10, 0.001);
         for (int i = 0; i < 10; i++)
