@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import src.SQL_Database;
+import src.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +59,10 @@ public class LoginEmployeeController {
                 errMsg.setVisible(false);
                 System.out.println("Login successful");
                 //todo login successful, for testing, the database contains an account for "user" , "password"
+                Session curSession = Session.getInstance();
+                curSession.setUsername(username);
+
+
             }
 
         }
