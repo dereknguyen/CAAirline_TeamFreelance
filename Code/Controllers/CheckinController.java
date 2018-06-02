@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import src.Database;
 import src.SQL_Database;
+import src.Session;
 
 import java.io.IOException;
 
@@ -37,8 +38,8 @@ public class CheckinController {
         //this assumes confirmation number is the trip id
         Integer tripId = Integer.parseInt(confirmationNumber.getText().trim());
 
-        //TODO: get username
-        String username = "test";
+        Session curSession = Session.getInstance();
+        String username = curSession.getUsername();
 
         db.checkIn(username, tripId);
     }
@@ -56,8 +57,8 @@ public class CheckinController {
             Database db = SQL_Database.getInstance();
 
 
-            //TODO: get username
-            String username = "test";
+            Session curSession = Session.getInstance();
+            String username = curSession.getUsername();
 
 
             int numBags = 0;

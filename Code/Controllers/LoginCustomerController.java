@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import src.SQL_Database;
+import src.Session;
 
 public class LoginCustomerController {
    
@@ -69,6 +70,8 @@ public class LoginCustomerController {
             errMsg.setVisible(false);
             System.out.println("Login successful");
             //todo login successful, for testing, the database contains an account for "user" , "password"
+             Session curSession = Session.getInstance();
+             curSession.setUsername(username);
 
              //the below will work, but main tabs is not yet working
 
