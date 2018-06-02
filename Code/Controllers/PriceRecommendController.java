@@ -12,7 +12,7 @@ public class PriceRecommendController {
     @FXML
     private JFXTextField basePrice;
 
-    @FXML
+    @FXML //todo label to fxml
     private Label recommendation;
 
     @FXML
