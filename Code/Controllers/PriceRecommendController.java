@@ -24,7 +24,7 @@ public class PriceRecommendController {
 
         double avgEmpty = db.calculateAvgEmpty(dest);
         if (avgEmpty == -1) {
-            //not enough flights in database
+            //on error, just use base price
             avgEmpty = 0;
         }
         Double p = P - ((avgEmpty/2)*P);
