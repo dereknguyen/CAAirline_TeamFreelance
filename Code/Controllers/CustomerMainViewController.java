@@ -50,11 +50,13 @@ public class CustomerMainViewController {
 
     @FXML
     void HandleCheckIn(ActionEvent event) {
+        // TODO: Pass flight ID to next view controller
         Utilities.present("/Views/CustomerBaggageView.fxml", "Baggage Declaration");
     }
 
     @FXML
     void HandlePurchase(ActionEvent event) {
+        // TODO: Get selected Row the purchase ticket
         Utilities.present("/Views/PaymentView.fxml", "Confirm Ticket");
     }
 
@@ -120,6 +122,7 @@ public class CustomerMainViewController {
             Date departDate = Date.valueOf(localD);
 
             // TODO: PULL FROM DATABASE
+
         }
 
         return null;
