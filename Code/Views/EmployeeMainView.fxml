@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -60,12 +61,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox prefHeight="575.0" prefWidth="634.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="366.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
                            </padding>
                            <children>
-                              <VBox prefHeight="425.0" prefWidth="292.0" spacing="20.0">
+                              <VBox prefHeight="525.0" prefWidth="702.0" spacing="20.0">
                                  <children>
                                     <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Flight Informations" />
                                     <TabPane fx:id="PS_TripModeTabPane" prefHeight="332.0" prefWidth="292.0" stylesheets="@ViewsCSS/TripSelectionTabPane.css" tabClosingPolicy="UNAVAILABLE">
@@ -76,14 +77,30 @@
                                                    <children>
                                                       <VBox prefHeight="210.0" prefWidth="292.0" spacing="20.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                                                          <children>
-                                                            <JFXComboBox fx:id="PS_OneWayFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
-                                                            <JFXComboBox fx:id="PS_OneWayTo" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
-                                                            <JFXDatePicker fx:id="PS_OneWayDepartDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
-                                                            <JFXTextField fx:id="PS_OneWayBasePrice" focusColor="#046a38" prefHeight="40.0" prefWidth="253.0" promptText="Base Pricing" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE">
+                                                            <HBox spacing="30.0">
+                                                               <children>
+                                                                  <JFXComboBox fx:id="PS_OneWayFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                                                  <JFXComboBox fx:id="PS_OneWayTo" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="30.0">
+                                                               <children>
+                                                                  <JFXDatePicker fx:id="PS_OneWayDepartDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                                                  <JFXTimePicker defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox>
                                                                <VBox.margin>
-                                                                  <Insets left="-5.0" right="30.0" />
+                                                                  <Insets left="-1.0" right="30.0" />
                                                                </VBox.margin>
-                                                            </JFXTextField>
+                                                               <children>
+                                                                  <JFXTextField fx:id="PS_OneWayBasePrice" focusColor="#046a38" prefHeight="40.0" prefWidth="260.0" promptText="Base Pricing" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE">
+                                                                     <HBox.margin>
+                                                                        <Insets left="-2.0" />
+                                                                     </HBox.margin>
+                                                                  </JFXTextField>
+                                                               </children>
+                                                            </HBox>
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -94,17 +111,38 @@
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="254.0">
                                                    <children>
-                                                      <VBox prefHeight="217.0" prefWidth="264.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                                                      <VBox prefHeight="267.0" prefWidth="586.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                                                          <children>
-                                                            <JFXComboBox fx:id="PS_RoundTripFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
-                                                            <JFXComboBox fx:id="PS_RoundTripTo" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
-                                                            <JFXDatePicker fx:id="PS_RoundTripDepartDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
-                                                            <JFXDatePicker fx:id="PS_RoundTripReturnDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Return Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
-                                                            <JFXTextField fx:id="PS_RoundTripBasePrice" focusColor="#046a38" prefHeight="40.0" prefWidth="253.0" promptText="Base Pricing" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE">
+                                                            <HBox spacing="30.0">
+                                                               <children>
+                                                                  <JFXComboBox fx:id="PS_RoundTripFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                                                  <JFXComboBox fx:id="PS_RoundTripTo" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="30.0">
+                                                               <children>
+                                                                  <JFXDatePicker fx:id="PS_RoundTripDepartDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                                                  <JFXDatePicker fx:id="PS_RoundTripReturnDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Return Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="30.0">
+                                                               <children>
+                                                                  <JFXTimePicker defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Departure Time" />
+                                                                  <JFXTimePicker defaultColor="#046a38" layoutX="10.0" layoutY="10.0" prefHeight="34.0" prefWidth="260.0" promptText="Return Time" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox>
                                                                <VBox.margin>
-                                                                  <Insets left="-5.0" right="30.0" />
+                                                                  <Insets left="-1.0" right="30.0" />
                                                                </VBox.margin>
-                                                            </JFXTextField>
+                                                               <children>
+                                                                  <JFXTextField fx:id="PS_RoundTripBasePrice" focusColor="#046a38" prefHeight="40.0" prefWidth="260.0" promptText="Base Pricing" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE">
+                                                                     <HBox.margin>
+                                                                        <Insets left="-2.0" />
+                                                                     </HBox.margin>
+                                                                  </JFXTextField>
+                                                               </children>
+                                                            </HBox>
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -113,7 +151,7 @@
                                           </Tab>
                                        </tabs>
                                     </TabPane>
-                                    <Label fx:id="PS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="260.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
+                                    <Label fx:id="PS_ErrMsg" alignment="CENTER" prefHeight="43.0" prefWidth="574.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
                                     <JFXButton onAction="#PS_HandleSetFlight" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Set Flight" />
                                  </children>
                               </VBox>
