@@ -77,12 +77,12 @@
                                           <JFXButton onAction="#HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Flight" />
                                        </children>
                                     </HBox>
-                                    <TableView prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
+                                    <TableView fx:id="B_AvailableFlightsTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
                                       <columns>
                                         <TableColumn fx:id="B_FromCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="From" />
                                         <TableColumn fx:id="B_ToCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="B_DepartTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Time" />
-                                          <TableColumn fx:id="B_ArrivalTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Arrival Time" />
+                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="B_ReturnDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Return Date" />
                                           <TableColumn fx:id="B_PriceCol" prefWidth="85.0" style="-fx-background-color: #151515;" text="Price" />
                                       </columns>
                                     </TableView>
@@ -108,8 +108,8 @@
                            <children>
                               <VBox prefHeight="425.0" prefWidth="285.0" spacing="35.0">
                                  <children>
-                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Confirmation Number" />
-                                    <JFXTextField fx:id="CI_FlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Enter Number Here" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
+                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Enter Flight Number" />
+                                    <JFXTextField fx:id="CI_FlightID" focusColor="#046a38" prefHeight="40.0" promptText="Flight ID (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
                                     <VBox spacing="5.0">
                                        <children>
                                           <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-size: 9pt; -fx-text-fill: gray;" text="By clicking &quot;Check In&quot;, you are agreeing to the TSA Flight Safety Agreement." wrapText="true" />
@@ -141,8 +141,8 @@
                            <children>
                               <VBox prefHeight="425.0" prefWidth="269.0" spacing="35.0">
                                  <children>
-                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Enter Flight Number" />
-                                    <JFXTextField fx:id="FS_FlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Flight Number" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
+                                    <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Enter Flight ID" />
+                                    <JFXTextField fx:id="FS_FlightID" focusColor="#046a38" prefHeight="40.0" promptText="Flight ID (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
                                     <VBox spacing="5.0">
                                        <children>
                                           <JFXButton onAction="#HandleGetFlightStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="View Flight Status" />
@@ -158,12 +158,12 @@
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Flight Status" />
                                        </children>
                                     </HBox>
-                                    <TableView prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
+                                    <TableView fx:id="FS_FlightStatusTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
                                        <columns>
                                           <TableColumn fx:id="FS_FromCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="FS_ToCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="FS_DepartTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Time" />
-                                          <TableColumn fx:id="FS_ArrivalTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Arrival Time" />
+                                          <TableColumn fx:id="FS_DepartDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="FS_ReturnDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Return Date" />
                                           <TableColumn fx:id="FS_StatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
                                        </columns>
                                     </TableView>
@@ -185,18 +185,17 @@
                                     <HBox spacing="710.0">
                                        <children>
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="My Flights" />
-                                          <JFXButton onAction="#AF_HandleRefresh" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Refresh" />
+                                          <JFXButton onAction="#MF_HandleRefresh" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Refresh" />
                                        </children>
                                     </HBox>
-                                    <TableView prefHeight="413.0" prefWidth="741.0" style="-fx-background-color: #151515;">
+                                    <TableView fx:id="MF_MyFlightTable" prefHeight="413.0" prefWidth="741.0" style="-fx-background-color: #151515;">
                                        <columns>
-                                          <TableColumn fx:id="AF_FlightNumberCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="Flight Number" />
-                                          <TableColumn fx:id="AF_FromCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="From" />
-                                          <TableColumn fx:id="AF_ToCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="AF_DepartTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Time" />
-                                          <TableColumn fx:id="AF_ArivalTimeCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Arrival Time" />
-                                          <TableColumn fx:id="AF_PriceCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="Price" />
-                                          <TableColumn fx:id="AF_StatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="MF_FlightIDCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="Flight ID" />
+                                          <TableColumn fx:id="MF_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
+                                          <TableColumn fx:id="MF_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn fx:id="MF_DepartDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="MF_ReturnDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Return Date" />
+                                          <TableColumn fx:id="MF_StatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
                                        </columns>
                                     </TableView>
                                  </children>

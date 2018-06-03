@@ -5,14 +5,20 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import src.Database;
+import src.SQL_Database;
+import src.Trip;
 
 public class CustomerMainViewController {
 
     @FXML private TabPane B_TripModeTabPane;
-
+    @FXML private TableView<?> B_AvailableFlightsTable;
     @FXML private JFXComboBox<String> B_OneWayFrom;
     @FXML private JFXComboBox<String> B_OneWayTo;
     @FXML private JFXDatePicker B_OneWayDepartDate;
@@ -24,28 +30,38 @@ public class CustomerMainViewController {
 
     @FXML private TableColumn<?, ?> B_FromCol;
     @FXML private TableColumn<?, ?> B_ToCol;
-    @FXML private TableColumn<?, ?> B_DepartTimeCol;
-    @FXML private TableColumn<?, ?> B_ArrivalTimeCol;
+    @FXML private TableColumn<?, ?> B_DepartDateCol;
+    @FXML private TableColumn<?, ?> B_ReturnDateCol;
     @FXML private TableColumn<?, ?> B_PriceCol;
     @FXML private Label B_ErrMsg;
 
-    @FXML private JFXTextField CI_FlightNumber;
+    @FXML private JFXTextField CI_FlightID;
     @FXML private Label CI_ErrMsg;
 
-    @FXML private JFXTextField FS_FlightNumber;
+    @FXML private JFXTextField FS_FlightID;
+    @FXML private TableView<?> FS_FlightStatusTable;
     @FXML private TableColumn<?, ?> FS_FromCol;
     @FXML private TableColumn<?, ?> FS_ToCol;
-    @FXML private TableColumn<?, ?> FS_DepartTimeCol;
-    @FXML private TableColumn<?, ?> FS_ArrivalTimeCol;
+    @FXML private TableColumn<?, ?> FS_DepartDateCol;
+    @FXML private TableColumn<?, ?> FS_ReturnDateCol;
     @FXML private TableColumn<?, ?> FS_StatusCol;
     @FXML private Label FS_ErrMsg;
 
+    @FXML private TableView<?> MF_MyFlightTable;
+    @FXML private TableColumn<?, ?> MF_FlightIDCol;
+    @FXML private TableColumn<?, ?> MF_FromCol;
+    @FXML private TableColumn<?, ?> MF_ToCol;
+    @FXML private TableColumn<?, ?> MF_DepartDateCol;
+    @FXML private TableColumn<?, ?> MF_ReturnDateCol;
+    @FXML private TableColumn<?, ?> MF_StatusCol;
+
+
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_OneWayTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     @FXML
@@ -94,7 +110,7 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void AF_HandleRefresh() {
+    void MF_HandleRefresh() {
 
     }
 
@@ -105,6 +121,7 @@ public class CustomerMainViewController {
         String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
         String to = B_OneWayTo.getSelectionModel().getSelectedItem();
         LocalDate localD = B_OneWayDepartDate.getValue();
+
 
         if (from == null) {
             System.out.println("\tError: From location missing");
@@ -122,6 +139,14 @@ public class CustomerMainViewController {
             Date departDate = Date.valueOf(localD);
 
             // TODO: PULL FROM DATABASE
+
+            Database db = SQL_Database.getInstance();
+            ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate);
+            for (Trip t : results)
+            {
+                System.out.println(t.getTripId() + " " + t.getFlightId() + " "
+                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
+            }
 
         }
 
