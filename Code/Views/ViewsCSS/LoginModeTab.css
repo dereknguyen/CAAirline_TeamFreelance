@@ -1,6 +1,6 @@
 /* Tabpane styling */
 .tab {
-    -fx-pref-width: 170;
+    -fx-pref-width: 120;
     -fx-pref-height: 50;
 }
 
@@ -23,7 +23,3 @@
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
     -fx-border-color: transparent;
 }
-
-
-
-

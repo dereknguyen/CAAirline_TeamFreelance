@@ -1,6 +1,9 @@
 package src;
 
+import com.sun.javafx.tools.packager.PackagerException;
+
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +55,7 @@ public class SQL_Database implements Database {
         try
         {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:Code/src/CAIDatabase.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:src/CAIDatabase.db");
             if (conn != null)
             {
                 st = conn.createStatement();
@@ -346,8 +349,35 @@ public class SQL_Database implements Database {
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
             return -1;
+        }
+    }
+
+    public ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Calendar date)
+    {
+        String query = "SELECT * FROM trips WHERE FlightId = ? AND DATE(Date) = ?";
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, FlightId);
+            ps.setString(2, sdf.format(date.getTime()));
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Trip> output = new ArrayList<>();
+            Calendar c = Calendar.getInstance();
+            while (rs.next())
+            {
+                c.setTime(sdf.parse(rs.getString("Date")));
+                output.add(new Trip(rs.getInt("TripId"), rs.getInt("FlightId"),
+                        c, rs.getDouble("Price"), rs.getInt("Status")));
+            }
+            return output;
+        }
+        catch (SQLException | ParseException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -760,5 +790,27 @@ public class SQL_Database implements Database {
             return -1;
         }
         return 0;
+    }
+
+    public ArrayList<Integer> getFullSeats(int TripId)
+    {
+        if (TripId < 0) return null;
+        String query = "SELECT SeatNumber FROM trips WHERE TripId = " + TripId;
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Integer> output = new ArrayList<>();
+            while (rs.next())
+            {
+                output.add(rs.getInt(1));
+            }
+            return output;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
