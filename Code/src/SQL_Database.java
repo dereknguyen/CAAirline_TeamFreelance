@@ -354,18 +354,18 @@ public class SQL_Database implements Database {
         }
     }
 
-    public ArrayList<Trip> getTripsByFlightAndDate(int FlightId, java.sql.Date date)
+    public ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Calendar date)
     {
         String query = "SELECT * FROM trips WHERE FlightId = ? AND DATE(Date) = ?";
         try
         {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, FlightId);
-            ps.setString(2, date.toString());
+            ps.setString(2, sdf.format(date.getTime()));
             ResultSet rs = ps.executeQuery();
             ArrayList<Trip> output = new ArrayList<>();
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             while (rs.next())
             {
                 c.setTime(sdf.parse(rs.getString("Date")));
@@ -374,12 +374,7 @@ public class SQL_Database implements Database {
             }
             return output;
         }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
-        catch (ParseException e)
+        catch (SQLException | ParseException e)
         {
             System.out.println(e.getMessage());
             return null;
@@ -795,5 +790,27 @@ public class SQL_Database implements Database {
             return -1;
         }
         return 0;
+    }
+
+    public ArrayList<Integer> getFullSeats(int TripId)
+    {
+        if (TripId < 0) return null;
+        String query = "SELECT SeatNumber FROM trips WHERE TripId = " + TripId;
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Integer> output = new ArrayList<>();
+            while (rs.next())
+            {
+                output.add(rs.getInt(1));
+            }
+            return output;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

@@ -19,7 +19,7 @@ public interface Database
     Calendar getDate(int TripId);
     ArrayList<Trip> getAllTrips();
     int getFlightIdFromTrip(int TripId);
-    ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Date date);
+    ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Calendar date);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);
@@ -46,4 +46,5 @@ public interface Database
     int removeTicket(String Username, int TripId, int SeatNumber);
     int checkIn(String Username, int TripId);
     int setBags(String Username, int TripId, int NumBags);
+    ArrayList<Integer> getFullSeats(int TripId);
 }
