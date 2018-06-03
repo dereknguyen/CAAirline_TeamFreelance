@@ -65,14 +65,19 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void HandleCheckIn(ActionEvent event) {
-        // TODO: Pass flight ID to next view controller
+    void CI_HandleCheckIn(ActionEvent event) {
+        // TODO: [1] Get Flight ID
+
+        // TODO: [2] Pass flight ID to baggage view controller
+        /* Will perform to Baggage in conjunction with [2] */
         Utilities.present("/Views/CustomerBaggageView.fxml", "Baggage Declaration");
     }
 
     @FXML
-    void HandlePurchase(ActionEvent event) {
-        // TODO: Get selected Row the purchase ticket
+    void B_HandlePurchase(ActionEvent event) {
+        // TODO: [1] Get selected TABLE ROW in Booking Tab
+
+        // TODO: [2] Present Payment View. We also want to transfer over selected data to payment view controller.
         Utilities.present("/Views/PaymentView.fxml", "Confirm Ticket");
     }
 
@@ -93,7 +98,7 @@ public class CustomerMainViewController {
      * Populate table with available flight information.
      */
     @FXML
-    void searchForTickets() {
+    void B_HandleSearch() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex == 0) {
@@ -105,15 +110,19 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void HandleGetFlightStatus(ActionEvent event) {
+    void FS_HandleGetFlightStatus(ActionEvent event) {
+        // TODO: [1] Grab the flight ID from text field
 
+        // TODO: [2] Display the flight associate with the ID on the table in Flight Status Tab.
     }
 
     @FXML
     void MF_HandleRefresh() {
-
+        // TODO: Just pull what flight associate with the customer and display it in the My Flight Table.
     }
 
+
+    /* HELPERS */
 
     private String searchOneWay() {
         System.out.println("\nSearching: One Way");
@@ -136,10 +145,15 @@ public class CustomerMainViewController {
             return "Please specify departure date.";
         }
         else {
+
+            /* TODO: Convert this to Calendar type to match with Database */
             Date departDate = Date.valueOf(localD);
 
-            // TODO: PULL FROM DATABASE
-
+            /* TODO: PULL FROM DATABASE
+             *
+             * Currently, Nick have it set up so that it will print to console.
+             * What we want is to populate the table with the queried data.
+             */
             Database db = SQL_Database.getInstance();
             ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate);
             for (Trip t : results)
@@ -178,7 +192,11 @@ public class CustomerMainViewController {
             Date departDate = Date.valueOf(departLocal);
             Date returnDate = Date.valueOf(returnLocal);
 
-            // TODO: PULL FROM DATABASE
+            /* TODO: PULL FROM DATABASE
+             *
+             * Same thing as searchOneWay
+             */
+
         }
 
         return null;

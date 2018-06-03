@@ -66,7 +66,7 @@
                                       </tabs>
                                     </TabPane>
                                     <Label fx:id="B_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="260.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
-                                    <JFXButton onAction="#searchForTickets" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Seach For Tickets" />
+                                    <JFXButton onAction="#B_HandleSearch" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Seach For Tickets" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="425.0" prefWidth="651.0" spacing="20.0">
@@ -74,7 +74,7 @@
                                     <HBox spacing="270.0">
                                        <children>
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Flights" />
-                                          <JFXButton onAction="#HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Flight" />
+                                          <JFXButton onAction="#B_HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Flight" />
                                        </children>
                                     </HBox>
                                     <TableView fx:id="B_AvailableFlightsTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
@@ -113,7 +113,7 @@
                                     <VBox spacing="5.0">
                                        <children>
                                           <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-size: 9pt; -fx-text-fill: gray;" text="By clicking &quot;Check In&quot;, you are agreeing to the TSA Flight Safety Agreement." wrapText="true" />
-                                          <JFXButton onAction="#HandleCheckIn" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="Check In" />
+                                          <JFXButton onAction="#CI_HandleCheckIn" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="Check In" />
                                        </children>
                                     </VBox>
                                     <Label fx:id="CI_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="295.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
@@ -145,7 +145,7 @@
                                     <JFXTextField fx:id="FS_FlightID" focusColor="#046a38" prefHeight="40.0" promptText="Flight ID (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
                                     <VBox spacing="5.0">
                                        <children>
-                                          <JFXButton onAction="#HandleGetFlightStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="View Flight Status" />
+                                          <JFXButton onAction="#FS_HandleGetFlightStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-font-weight: bold;" text="View Flight Status" />
                                        </children>
                                     </VBox>
                                     <Label fx:id="FS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="295.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
