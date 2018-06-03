@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+  <children>
+    <AnchorPane prefHeight="776.0" prefWidth="909.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <SplitPane dividerPositions="0.6158301158301158" focusTraversable="true" prefHeight="776.0" prefWidth="1038.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <Text layoutX="252.0" layoutY="130.0" scaleX="3.2818612369746094" scaleY="2.503671264642771" strokeType="OUTSIDE" strokeWidth="0.0" text="More than just an experience" />
+            <Text layoutX="162.0" layoutY="175.0" scaleX="2.0585326880001333" scaleY="2.33678801799421" strokeType="OUTSIDE" strokeWidth="0.0" text="Plan your next adventure with us!" />
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="774.0" prefWidth="385.0">
+          <children>
+            <Text layoutX="164.0" layoutY="113.0" scaleX="4.219102510372657" scaleY="2.429812069238673" strokeType="OUTSIDE" strokeWidth="0.0" text="CALIFORNIA" />
+            <Text layoutX="173.0" layoutY="153.0" scaleX="4.640004123996108" scaleY="2.6247504074690258" strokeType="OUTSIDE" strokeWidth="0.0" text="AIRLINES" />
+            <TextField layoutX="97.0" layoutY="321.0" prefWidth="200.0" text="Username" />
+            <TextField layoutX="97.0" layoutY="365.0" prefWidth="200.0" text="Password" />
+            <Button layoutX="135.0" layoutY="405.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="LOG IN" />
+            <Text layoutX="108.0" layoutY="455.0" scaleX="1.1681485532917089" scaleY="1.4255890541700547" strokeType="OUTSIDE" strokeWidth="0.0" text="Not a member?" />
+            <Hyperlink layoutX="198.0" layoutY="435.0" prefHeight="26.0" prefWidth="72.0" text="Join us.">
+              <font>
+                <Font size="16.0" />
+              </font>
+            </Hyperlink>
+            <Hyperlink layoutX="145.0" layoutY="640.0" text="To employee login" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+</GridPane>
