@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerBaggageViewController">
+   <children>
+      <HBox layoutX="166.0" layoutY="226.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient( #046A38, black);">
+               <children>
+                  <ImageView fitWidth="147.0" layoutX="45.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0">
+                     <image>
+                        <Image url="@../Assets/whitegold_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="600.0" prefWidth="299.0" spacing="15.0">
+               <children>
+                  <JFXButton minWidth="49.0" onAction="#HandleBack" prefHeight="36.0" prefWidth="73.0" style="-fx-background-color: transparent; -fx-background-radius: 3px; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Avenir;" text="&lt; Back">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Label prefHeight="39.0" prefWidth="265.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white; -fx-font-family: Avenir;" text="Baggage Declaration">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <HBox spacing="10.0">
+                     <children>
+                        <JFXTextField fx:id="numCarryOn" focusColor="#046a38" prefHeight="40.0" prefWidth="220.0" promptText="How many carry on?" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray; -fx-font-family: Avenir;" unFocusColor="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <JFXTextField fx:id="carryOnWeight" focusColor="#046a38" prefHeight="40.0" prefWidth="220.0" promptText="Weight per carry on (lbs)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray; -fx-font-family: Avenir;" unFocusColor="WHITE" />
+                        <Label prefHeight="42.0" prefWidth="90.0" style="-fx-font-family: Avenir; -fx-text-fill: White;" text="Lbs." />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <JFXTextField fx:id="numCheckIn" focusColor="#046a38" prefHeight="40.0" prefWidth="217.0" promptText="How many will you check In?" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray; -fx-font-family: Avenir;" unFocusColor="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <JFXTextField fx:id="checkInWeight" focusColor="#046a38" prefHeight="40.0" prefWidth="221.0" promptText="Weight per check in" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray; -fx-font-family: Avenir;" unFocusColor="WHITE" />
+                        <Label prefHeight="42.0" prefWidth="90.0" style="-fx-font-family: Avenir; -fx-text-fill: White;" text="Lbs." />
+                     </children>
+                  </HBox>
+                  <AnchorPane prefHeight="11.0" prefWidth="299.0" />
+                  <HBox />
+                  <JFXButton onAction="#HandleConfirmCheckIn" prefHeight="36.0" prefWidth="265.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Avenir;" text="Confirm Check In" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

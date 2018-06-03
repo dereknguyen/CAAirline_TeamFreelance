@@ -64,7 +64,7 @@ public class LoginController {
     /** Present Main Tabs UI. Use only after successfully authenticate users. */
     private void showMainTab() {
         loginButton.getScene().getWindow().hide();
-        Utilities.present("../Views/Customer/CustomerMainView.fxml", "Main");
+        Utilities.present("../Views/CustomerMainView.fxml", "Main");
     }
 
     private void handleCustomerLogin(String username, String password) {
