@@ -62,9 +62,10 @@ public class LoginController {
 
 
     /** Present Main Tabs UI. Use only after successfully authenticate users. */
-    private void showMainTab() {
+    private void showMainTab(String mode) {
         loginButton.getScene().getWindow().hide();
-        Utilities.present("../Views/CustomerMainView.fxml", "Main");
+
+        Utilities.present(mode, "Main");
     }
 
     private void handleCustomerLogin(String username, String password) {
@@ -80,7 +81,7 @@ public class LoginController {
         }
         else {
             System.out.println("Login successful");
-            showMainTab();
+            showMainTab("../Views/CustomerMainView.fxml");
         }
 
     }
@@ -100,7 +101,7 @@ public class LoginController {
         else
         {
             System.out.println("Login successful");
-            showMainTab();
+            showMainTab("../Views/EmployeeMainView.fxml");
         }
     }
 

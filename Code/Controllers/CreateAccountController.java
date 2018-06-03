@@ -73,7 +73,8 @@ public class CreateAccountController {
             errMsg.setVisible(true);
         }
         else {
-            // TODO: Segue to employee main control
+            createAccountButton.getScene().getWindow().hide();
+            Utilities.present("../Views/Customer/EmployeeMainView.fxml", "Main");
         }
     }
 
