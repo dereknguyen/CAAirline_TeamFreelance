@@ -88,8 +88,21 @@ public class LoginController {
 
     private void handleEmployeeLogin(String username, String password) {
         src.Database db = SQL_Database.getInstance();
+        List<String> entry = db.getEmployeeInfo(username);
 
-        // TODO: Employee login
+        if (entry == null)
+        {
+            errMsg.setText("Invalid username/password");
+        }
+        else if (entry.get(1) != null && !entry.get(1).equals(password))
+        {
+            errMsg.setText("Invalid username/password");
+        }
+        else
+        {
+            System.out.println("Login successful");
+            showMainTab();
+        }
     }
 
 }
