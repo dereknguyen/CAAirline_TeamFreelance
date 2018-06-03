@@ -791,4 +791,26 @@ public class SQL_Database implements Database {
         }
         return 0;
     }
+
+    public ArrayList<Integer> getFullSeats(int TripId)
+    {
+        if (TripId < 0) return null;
+        String query = "SELECT SeatNumber FROM trips WHERE TripId = " + TripId;
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Integer> output = new ArrayList<>();
+            while (rs.next())
+            {
+                output.add(rs.getInt(1));
+            }
+            return output;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

@@ -46,4 +46,5 @@ public interface Database
     int removeTicket(String Username, int TripId, int SeatNumber);
     int checkIn(String Username, int TripId);
     int setBags(String Username, int TripId, int NumBags);
+    ArrayList<Integer> getFullSeats(int TripId);
 }
