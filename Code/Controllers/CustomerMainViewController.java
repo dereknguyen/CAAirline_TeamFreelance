@@ -5,9 +5,13 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import src.Database;
+import src.SQL_Database;
 
 public class CustomerMainViewController {
 
@@ -42,10 +46,10 @@ public class CustomerMainViewController {
 
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_OneWayTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
     }
 
     @FXML
@@ -120,6 +124,8 @@ public class CustomerMainViewController {
             Date departDate = Date.valueOf(localD);
 
             // TODO: PULL FROM DATABASE
+            Database db = SQL_Database.getInstance();
+            db.getAllTrips();
         }
 
         return null;

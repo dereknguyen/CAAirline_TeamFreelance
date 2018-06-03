@@ -78,7 +78,6 @@ public class EmployeeMainViewController {
 
     @FXML
     void B_HandlePurchaseSelected(ActionEvent event) {
-
     }
 
     @FXML

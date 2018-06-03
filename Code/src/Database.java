@@ -1,5 +1,6 @@
 package src;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,6 +19,7 @@ public interface Database
     Calendar getDate(int TripId);
     ArrayList<Trip> getAllTrips();
     int getFlightIdFromTrip(int TripId);
+    ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Date date);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);
