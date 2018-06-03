@@ -11,16 +11,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.BookingPayment">
    <children>
       <HBox layoutX="166.0" layoutY="226.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient( #046A38, black);">
                <children>
                   <ImageView fitWidth="147.0" layoutX="45.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0">
                      <image>
-                        <Image url="@../Assets/CaliforniaAirline_Logo.png" />
+                        <Image url="@../../Assets/whitegold_logo.png" />
                      </image>
                   </ImageView>
                </children>
@@ -40,7 +39,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="247.0">
                      <children>
-                        <JFXDatePicker defaultColor="#046a38" prefHeight="34.0" prefWidth="242.0" promptText="Expiration Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                        <JFXDatePicker defaultColor="#046a38" prefHeight="34.0" prefWidth="242.0" promptText="Expiration Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@../ViewsCSS/CustomDatePicker.css" />
                      </children>
                      <VBox.margin>
                         <Insets left="5.0" />

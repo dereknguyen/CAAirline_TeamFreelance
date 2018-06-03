@@ -5,13 +5,14 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="335.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateCustomerAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="360.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateAccountController">
    <children>
       <VBox fx:id="virtualbox" alignment="TOP_CENTER" layoutX="88.0" layoutY="55.0" prefHeight="311.0" prefWidth="224.0" spacing="25.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
          <children>
@@ -25,8 +26,21 @@
             </ImageView>
             <VBox spacing="10.0">
                <children>
-                  <Label fx:id="errMsg" alignment="CENTER" prefHeight="28.0" prefWidth="235.0" style="-fx-text-fill: red;" wrapText="true" />
-                  <VBox spacing="10.0">
+                  <TabPane fx:id="modeTabPane" prefHeight="71.0" prefWidth="255.0" stylesheets="@ViewsCSS/LoginModeTab.css" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab closable="false" style="-fx-background-color: black;" text="Customer">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="261.0" />
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-background-color: black;" text="Employee">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="14.0" prefWidth="255.0" />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+                  <VBox spacing="15.0">
                      <children>
                         <JFXTextField fx:id="newFirstname" alignment="CENTER" focusColor="#b5a369" prefHeight="40.0" promptText="First Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF;" unFocusColor="#a0a0a0" />
                         <JFXTextField fx:id="newLastname" alignment="CENTER" focusColor="#b5a369" layoutX="10.0" layoutY="10.0" prefHeight="40.0" promptText="Last Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF;" unFocusColor="#a0a0a0" />
@@ -36,10 +50,11 @@
                   </VBox>
                </children>
             </VBox>
+            <Label fx:id="errMsg" alignment="CENTER" prefHeight="28.0" prefWidth="235.0" style="-fx-text-fill: red;" wrapText="true" />
             <VBox spacing="10.0">
                <children>
-                  <JFXButton fx:id="createAccountButton" onAction="#HandleCreateClick" prefHeight="40.0" prefWidth="247.0" style="-fx-background-radius: 3px; -fx-background-color: #046A38; -fx-font-size: 15; -fx-text-fill: #FFFFFF;" text="Create Account" />
-                  <JFXButton fx:id="customerSignupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="37.0" prefHeight="22.0" prefWidth="251.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-font-size: 12; -fx-padding: 0mm; -fx-text-fill: #B5A369;" text="Sign In" />
+                  <JFXButton fx:id="createAccountButton" onAction="#HandleCreateClick" prefHeight="50.0" prefWidth="277.0" style="-fx-background-radius: 3px; -fx-background-color: #046A38; -fx-font-size: 15; -fx-text-fill: #FFFFFF;" text="Create Account" />
+                  <JFXButton fx:id="customerSignupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="37.0" prefHeight="22.0" prefWidth="251.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-font-size: 12; -fx-padding: 0mm; -fx-text-fill: #B5A369;" text="To Sign In" />
                </children>
             </VBox>
          </children>

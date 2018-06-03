@@ -6,21 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.Scanner;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-       Parent root = FXMLLoader.load(getClass().getResource("../Views/GetFlightStatus.fxml"));
-       primaryStage.setTitle("California System");
-       //primaryStage.setScene(new Scene(root, 1600, 900));
-        primaryStage.setScene( new Scene(root, 1000, 600));
+        Parent root = FXMLLoader.load(getClass().getResource("../Views/Login.fxml"));
+        primaryStage.setTitle("California System");
+        primaryStage.setScene( new Scene(root));
         primaryStage.show();
-//        while(true) {
-//            mainLoop();
-//        }
     }
 
 

@@ -37,4 +37,10 @@
 
 .root {
     -primary-swatch-500: #046A38;
+    -fx-text-fill: white;
+}
+
+.jfx-date-picker .text-field{
+    -fx-prompt-text-fill: gray;
+    -fx-text-fill: white;
 }
