@@ -79,7 +79,6 @@ public class LoginController {
             errMsg.setText("Invalid username/password");
         }
         else {
-            //todo login successful, for testing, the database contains an account for "user" , "password"
             System.out.println("Login successful");
             showMainTab();
         }
