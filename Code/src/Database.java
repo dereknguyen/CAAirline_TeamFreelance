@@ -19,7 +19,7 @@ public interface Database
     Calendar getDate(int TripId);
     ArrayList<Trip> getAllTrips();
     int getFlightIdFromTrip(int TripId);
-    ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Date date);
+    ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Calendar date);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);
