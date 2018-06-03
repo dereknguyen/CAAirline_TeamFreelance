@@ -22,4 +22,5 @@ public class Trip {
 
 	public int getTripId() { return TripId; }
 	public int getFlightId() { return FlightId; }
+	public double getPrice() { return Price; }
 }
