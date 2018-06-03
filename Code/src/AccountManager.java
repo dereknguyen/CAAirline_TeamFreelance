@@ -3,14 +3,14 @@ package src;
 import java.util.ArrayList;
 
 public class AccountManager {
-    Text_Database db;
+    SQL_Database db;
 
     public AccountManager() {
-        db = Text_Database.getInstance();
+        db = SQL_Database.getInstance();
     }
 
-    public Account CreateEmployeeAccount(String firstName, String lastName, String username) {
-        db.addEmployeeAccount(username, firstName, lastName);
+    public Account CreateEmployeeAccount(String firstName, String lastName, String username, String encryptedPassword) {
+        db.addEmployeeAccount(username, firstName, lastName, encryptedPassword);
         return new EmployeeAccount(firstName, lastName, username, new ArrayList<>());
     }
     public Account CreateUserAccount(String firstName, String lastName, String username, String encryptedPassword) {

@@ -9,23 +9,6 @@ import java.util.List;
 
 /*
 
-Queries:
-
-SELECT EncryptedPassword
-  FROM customers WHERE Username = "nparra";
-
-SELECT flights.FlightId FROM flights INNER JOIN trips
- WHERE trips.FlightId = flights.FlightId AND flights.Destination = "Phoenix"
- AND trips.Date < date('now', '+2 week') AND trips.Date >= date('now');
-
-SELECT customers.LastName, customers.FirstName FROM customers INNER JOIN tickets INNER JOIN trips
-WHERE tickets.Username = customers.Username AND tickets.TripId = 0 AND tickets.CheckedIn = 'false';
-
-SELECT tickets.SeatNumber from customers INNER JOIN tickets INNER JOIN flights INNER JOIN trips
-WHERE customers.LastName = 'Parra' AND customers.FirstName = 'Nicolas' AND customers.Username = tickets.Username
-AND tickets.TripId = trips.TripId AND trips.FlightId = flights.FlightId AND flights.Destination = 'Phoenix';
-
-
 Tables:
 
 customers
@@ -56,8 +39,8 @@ tickets
     Username String
     TripId int  -- (TripId, SeatNumber) primary key
     SeatNumber int
+    NumBags int
     CheckedIn boolean
-
  */
 
 public class SQL_Database implements Database {
@@ -79,7 +62,6 @@ public class SQL_Database implements Database {
         {
             System.out.println(e.getMessage());
         }
-
     }
 
     static public SQL_Database getInstance()
@@ -304,24 +286,69 @@ public class SQL_Database implements Database {
         return numempty / numtrips;
     }
 
-    public Date getDate(int TripId)
+    /* return departure date of a trip, or null for nonexistant tripID */
+    public Calendar getDate(int TripId)
     {
-        //TODO: error check this
-        //if (TripId < 0) return -1;
+        if (TripId < 0) return null;
         String query = "SELECT Date FROM trips WHERE TripId = " + TripId;
-        Date date = new Date();
+        Date date;
+        Calendar c = Calendar.getInstance();
         try
         {
             ResultSet rs = st.executeQuery(query);
             rs.next();
             date = rs.getDate("Date");
+            c.setTime(date);
+            return c;
         }
         catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            //return -1;
+            return null;
         }
-        return date;
+    }
+
+    /* returns an array of all trips in the database, or null on error */
+    public ArrayList<Trip> getAllTrips()
+    {
+        String query = "SELECT * FROM trips";
+        ArrayList<Trip> out = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next())
+            {
+                c.setTime(rs.getDate("Date"));
+                out.add(new Trip(rs.getInt("TripId"), rs.getInt("FlightId"),
+                        c, rs.getDouble("Price"), rs.getInt("Status")));
+            }
+            return out;
+
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /* Returns flight id associated with trip, or -1 on error */
+    public int getFlightIdFromTrip(int TripId)
+    {
+        String query = "SELECT FlightId FROM trips WHERE TripId = " + TripId;
+        try
+        {
+            ResultSet rs = st.executeQuery(query);
+            // Should only ever return one entry
+            rs.next();
+            return rs.getInt("FlightId");
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+            return -1;
+        }
     }
 
     /*
@@ -334,26 +361,6 @@ public class SQL_Database implements Database {
     public int getFlightId(String Source, String Destination)
     {
         String query = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
-        int id = -1;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            // Should only ever return one entry
-            rs.next();
-            id = rs.getInt("FlightId");
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-            return -1;
-        }
-        return id;
-    }
-
-    //Returns flight id associated with trip, or -1 on error
-    public int getFlightIdFromTrip(int tripId)
-    {
-        String query = "SELECT FlightId FROM trips WHERE TripId = '" + new Integer(tripId).toString() +  "'";
         int id = -1;
         try
         {
@@ -413,46 +420,42 @@ public class SQL_Database implements Database {
         return 0;
     }
 
+    /* return the Flight's Source, or null for nonexistant flightId */
     public String getFlightSrc(int FlightId) {
-        if (FlightId < 0) return "";
+        if (FlightId < 0) return null;
 
-        String src;
-
-        String query = "SELECT Source FROM flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        String query = "SELECT Source FROM flights WHERE FlightId = " + FlightId;
         try
         {
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
-            src = rs.getString("Source");
+            return rs.getString("Source");
         }
         catch (SQLException e)
         {
-            e.getMessage();
-            return "";
+            System.out.println(e.getMessage());
+            return null;
         }
-        return src;
     }
 
+    /* returns the Flight's Destination, or null for nonexistant flightId */
     public String getFlightDest(int FlightId) {
-        if (FlightId < 0) return "";
+        if (FlightId < 0) return null;
 
-        String dest;
-
-        String query = "SELECT Destination from flights WHERE FlightId = '" + new Integer(FlightId).toString() +  "'";
+        String query = "SELECT Destination FROM flights WHERE FlightId = "  + FlightId;
         try
         {
             ResultSet rs = st.executeQuery(query);
             // Should only ever return one entry
             rs.next();
-            dest = rs.getString("Destination");
+            return rs.getString("Destination");
         }
         catch (SQLException e)
         {
-            e.getMessage();
-            return "";
+            System.out.println(e.getMessage());
+            return null;
         }
-        return dest;
 
     }
 
@@ -552,6 +555,33 @@ public class SQL_Database implements Database {
 
      */
 
+    /* Gets employee information from database, returns null if not found */
+    public List<String> getEmployeeInfo(String Username)
+    {
+        String query = "SELECT * FROM employees WHERE Username = ?";
+        List<String> entry = new ArrayList<>();
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next())
+            {
+                return null;
+            }
+            entry.add(rs.getString("Username"));
+            entry.add(rs.getString("EncryptedPassword"));
+            entry.add(rs.getString("FirstName"));
+            entry.add(rs.getString("LastName"));
+            return entry;
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     // Attempts to add employee account to database. Returns 0 on success, -1 on error
     public int addEmployeeAccount(String Username, String EncryptedPassword, String FirstName, String LastName)
     {
@@ -618,17 +648,18 @@ public class SQL_Database implements Database {
      */
 
     // Adds a ticket to the database. Returns 0 on success, -1 on error
-    public int addTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
+    public int addTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn)
     {
         if (TripId < 0 || SeatNumber < 0 || SeatNumber > 19) return -1;
-        String query = "INSERT INTO tickets (Username, TripId, SeatNumber, CheckedIn) values (?,?,?,?)";
+        String query = "INSERT INTO tickets (Username, TripId, SeatNumber, NumBags, CheckedIn) values (?,?,?,?,?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
             ps.setInt(2, TripId);
             ps.setInt(3, SeatNumber);
-            ps.setBoolean(4, CheckedIn);
+            ps.setInt(4, NumBags);
+            ps.setBoolean(5, CheckedIn);
             ps.executeUpdate();
         }
         catch (SQLException e)
@@ -642,21 +673,22 @@ public class SQL_Database implements Database {
     // Overload for simplicity
     public int addTicket(String Username, int TripId, int SeatNumber)
     {
-        return addTicket(Username, TripId, SeatNumber, false);
+        return addTicket(Username, TripId, SeatNumber, 0, false);
     }
 
-    // Edits existing customer and changes SeatNumber and CheckedIn
-    public int editTicket(String Username, int TripId, int SeatNumber, boolean CheckedIn)
+    // Edits existing customer and changes SeatNumber and CheckedIn, returns -1 on error
+    public int editTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn)
     {
         if (TripId < 0 || SeatNumber > 19 || SeatNumber < 0) return -1;
-        String query = "UPDATE tickets SET SeatNumber = ?, CheckedIn = ? WHERE Username = ? AND TripId = ?";
+        String query = "UPDATE tickets SET SeatNumber = ?, NumBags = ?, CheckedIn = ? WHERE Username = ? AND TripId = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, SeatNumber);
-            ps.setBoolean(2, CheckedIn);
-            ps.setString(3, Username);
-            ps.setInt(4, TripId);
+            ps.setInt(2, NumBags);
+            ps.setBoolean(3, CheckedIn);
+            ps.setString(4, Username);
+            ps.setInt(5, TripId);
             ps.executeUpdate();
         }
         catch (SQLException e)
@@ -702,6 +734,27 @@ public class SQL_Database implements Database {
             ps.executeUpdate();
         }
         catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+    // Set number of bags for customer's ticket. Returns 0 on success, -1 on error
+    public int setBags(String Username, int TripId, int NumBags)
+    {
+        if (TripId < 0) return -1;
+        String query = "UPDATE tickets SET NumBags = ? WHERE Username = ? AND TripId = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, NumBags);
+            ps.setString(2, Username);
+            ps.setInt(3, TripId);
+            ps.executeUpdate();
+
+        } catch (SQLException e)
         {
             System.out.println(e.getMessage());
             return -1;

@@ -4,13 +4,14 @@ import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
 
 public class PriceRecommendController {
     @FXML
-    private JFXTextField destination;
+    private TextField destination;
 
     @FXML
-    private JFXTextField basePrice;
+    private TextField basePrice;
 
     @FXML
     private Label recommendation;
@@ -18,12 +19,16 @@ public class PriceRecommendController {
     @FXML
     void HandlePriceClick(ActionEvent event) {
         double P = Double.parseDouble(basePrice.getText());
-        int dest = Integer.parseInt(destination.getText());
+        String dest = destination.getText();
         src.Database db = src.SQL_Database.getInstance();
 
-        //double avgEmpty = db.calculateAvgEmpty(dest);
-        //Double p = P - ((avgEmpty/2)*P);
-        //String price = p.toString();
-        //recommendation.setText(price);
+        double avgEmpty = db.calculateAvgEmpty(dest);
+        if (avgEmpty == -1) {
+            //on error, just use base price
+            avgEmpty = 0;
+        }
+        Double p = P - ((avgEmpty/2)*P);
+        String price = p.toString();
+        recommendation.setText(price);
     }
 }

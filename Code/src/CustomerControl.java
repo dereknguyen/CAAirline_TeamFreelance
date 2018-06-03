@@ -1,16 +1,15 @@
 package src;
 
 import java.lang.System;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class CustomerControl{
-   //private SQL_Database db;
-   private Text_Database db;
+   private SQL_Database db;
    private static CustomerControl uniqueinstance;
 
-   private  CustomerControl(){
-      //db = SQL_Database.getInstance();
-      db = Text_Database.getInstance();
+   private  CustomerControl() {
+      db = SQL_Database.getInstance();
    }
 
    // Flight Reserve
@@ -27,27 +26,28 @@ public class CustomerControl{
    public void reserve(String username){
       FlightManager fm = new FlightManager();
       Scanner scan = new Scanner(System.in);
-      Trip trip = fm.getTripFromUser();
+      //Trip trip = fm.getTripFromUser();
+      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
-      int flightId = db.getFlightId(trip.getDest(), trip.getDate());
+      int tripId = trip.getTripId();
       System.out.println("What seat would you like? Enter a number 1-20");
       int seatNo = scan.nextInt();
-      db.addTicket(username, flightId, seatNo);
+      db.addTicket(username, tripId, seatNo);
    }
 
    // Checkin
    public void checkin(String username){
       FlightManager fm = new FlightManager();
-      Trip trip = fm.getTripFromUser();
+      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
-      int flightId = db.getFlightId(trip.getDest(), trip.getDate());
+      int flightId = trip.getFlightId();
       db.checkIn(username, flightId);
    }
 
    // View status
    public void status(){
       FlightManager fm = new FlightManager();
-      Trip trip = fm.getTripFromUser();
+      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
       System.out.println("Status = " + db.getStatus(trip.getFlightId()));
    }
