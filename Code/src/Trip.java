@@ -19,8 +19,8 @@ public class Trip {
 	}
 
 	public Calendar getDate() { return Date; }
-
 	public int getTripId() { return TripId; }
 	public int getFlightId() { return FlightId; }
 	public double getPrice() { return Price; }
+	public int getStatus() { return Status; }
 }

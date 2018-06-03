@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import src.Database;
 import src.SQL_Database;
+import src.Trip;
 
 public class CustomerMainViewController {
 
@@ -46,10 +47,10 @@ public class CustomerMainViewController {
 
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     @FXML
@@ -125,7 +126,12 @@ public class CustomerMainViewController {
 
             // TODO: PULL FROM DATABASE
             Database db = SQL_Database.getInstance();
-            db.getAllTrips();
+            ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate);
+            for (Trip t : results)
+            {
+                System.out.println(t.getTripId() + " " + t.getFlightId() + " "
+                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
+            }
         }
 
         return null;
