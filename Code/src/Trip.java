@@ -1,23 +1,27 @@
 package src;
 
-import java.sql.Date;
+import java.util.Calendar;
 
 public class Trip {
-	private Date date;
-	private int destination;
+	private int TripId;
 	private int FlightId;
-	
-	public Trip(Date d, int f) {
-	    Database db = SQL_Database.getInstance();
-		date = d;
-		destination = f;
-		//FlightId = db.getFlightId(f, d);
+	private Calendar Date;
+	private double Price;
+	private int Status;
+
+	public Trip(int TripId, int FlightId, Calendar Date, double Price, int Status)
+	{
+		this.TripId=TripId;
+		this.FlightId=FlightId;
+		this.Date=Date;
+		this.Price=Price;
+		this.Status=Status;
 	}
-   public Date getDate(){
-      return date;
-   }
-   public int getDest(){
-      return destination;
-   }
-   public int getFlightId() { return FlightId; }
+
+	public Calendar getDate() { return Date; }
+
+	public int getTripId() { return TripId; }
+	public int getFlightId() { return FlightId; }
+	public double getPrice() {return Price; }
+	public int getStatus() {return Status; }
 }
