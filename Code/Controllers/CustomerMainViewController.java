@@ -176,7 +176,7 @@ public class CustomerMainViewController {
 
         return null;
     }
-
+    // Populate the table from the database
     private void presentTableRoundTrip(java.util.Date depart, java.util.Date arrive, String from, String to) {
         Calendar departCal = Calendar.getInstance();
         departCal.setTime(depart);
