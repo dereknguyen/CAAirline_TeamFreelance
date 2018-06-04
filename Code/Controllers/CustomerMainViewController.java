@@ -1,18 +1,13 @@
 package Controllers;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -23,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import src.Database;
 import src.SQL_Database;
+import src.Trip;
 
 public class CustomerMainViewController {
 
@@ -32,10 +28,10 @@ public class CustomerMainViewController {
     @FXML private JFXComboBox<String> B_OneWayTo;
     @FXML private JFXDatePicker B_OneWayDepartDate;
 
-    @FXML private TabPane tripOptionsTabPane;
-    @FXML private Tab oneWayTripTab;
-    @FXML private Tab roundTripTab;
-    @FXML private Tab flightStatusTab;
+    @FXML private JFXComboBox<String> B_RoundTripFrom;
+    @FXML private JFXComboBox<String> B_RoundTripTo;
+    @FXML private JFXDatePicker B_RoundTripDepartDate;
+    @FXML private JFXDatePicker B_RoundTripReturnDate;
 
     @FXML private TableColumn<Trip, String> B_FromCol;
     @FXML private TableColumn<Trip, String> B_ToCol;
@@ -110,10 +106,10 @@ public class CustomerMainViewController {
     void B_HandleSearch() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
         if (selectedIndex == 0) {
-            searchErrMsg.setText(searchOneWay());
+            B_ErrMsg.setText(searchOneWay());
         }
         else if (selectedIndex == 1) {
-            searchErrMsg.setText(searchRoundTrip());
+            B_ErrMsg.setText(searchRoundTrip());
         }
     }
 
@@ -134,9 +130,9 @@ public class CustomerMainViewController {
     private String searchOneWay() {
         System.out.println("\nSearching: One Way");
 
-        String from = oneWayFrom.getSelectionModel().getSelectedItem();
-        String to = oneWayTo.getSelectionModel().getSelectedItem();
-        LocalDate localD = oneWayDepartDate.getValue();
+        String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
+        String to = B_OneWayTo.getSelectionModel().getSelectedItem();
+        LocalDate localD = B_OneWayDepartDate.getValue();
 
 
         if (from == null) {
@@ -167,7 +163,7 @@ public class CustomerMainViewController {
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ReturnDateCol.setCellValueFactory(cellData -> { return new ReadOnlyStringWrapper("N/A");});
+            B_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
             B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
             B_AvailableFlightsTable.setItems(results);
@@ -180,25 +176,22 @@ public class CustomerMainViewController {
     private String searchRoundTrip() {
         System.out.println("\nSearching: Round Trip");
 
-        String from = roundTripFrom.getSelectionModel().getSelectedItem();
-        String to = roundTripTo.getSelectionModel().getSelectedItem();
+        String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
+        String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
 
-        LocalDate departLocal = roundTripDepartDate.getValue();
-        LocalDate returnLocal = roundTripReturnDate.getValue();
+        LocalDate departLocal = B_RoundTripDepartDate.getValue();
+        LocalDate returnLocal = B_RoundTripReturnDate.getValue();
 
         if (from == null) {
             System.out.println("\tError: From location missing");
             return "Please specify location you are from.";
-        }
-        else if (to == null) {
+        } else if (to == null) {
             System.out.println("\tError: To location missing");
             return "Please specify location are are going to.";
-        }
-        else if (departLocal == null || returnLocal == null) {
+        } else if (departLocal == null || returnLocal == null) {
             System.out.println("\tError: Departure date or Return date missing");
             return "Missing either depart date or return date";
-        }
-        else {
+        } else {
             Date departDate = Date.valueOf(departLocal);
             Date returnDate = Date.valueOf(returnLocal);
             Calendar c1 = Calendar.getInstance();
@@ -213,4 +206,5 @@ public class CustomerMainViewController {
         }
 
         return null;
+    }
 }
