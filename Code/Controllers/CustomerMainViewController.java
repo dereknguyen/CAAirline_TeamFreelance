@@ -155,11 +155,11 @@ public class CustomerMainViewController {
             ObservableList<Trip> results = FXCollections.observableArrayList(
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), c));
 
-            for (Trip t : results)
+            /*for (Trip t : results)
             {
                 System.out.println(t.getTripId() + " " + t.getFromString() + " " + t.getToString() + " "
                         + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
-            }
+            }*/
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
