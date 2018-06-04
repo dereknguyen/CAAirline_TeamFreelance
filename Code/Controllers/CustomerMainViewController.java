@@ -145,9 +145,9 @@ public class CustomerMainViewController {
             return "Please specify departure date.";
         }
         else {
-
-            /* TODO: Convert this to Calendar type to match with Database */
+            Calendar c = Calendar.getInstance();
             Date departDate = Date.valueOf(localD);
+            c.setTime(departDate);
 
             /* TODO: PULL FROM DATABASE
              *
@@ -155,7 +155,7 @@ public class CustomerMainViewController {
              * What we want is to populate the table with the queried data.
              */
             Database db = SQL_Database.getInstance();
-            ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate);
+            ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), c);
             for (Trip t : results)
             {
                 System.out.println(t.getTripId() + " " + t.getFlightId() + " "
@@ -191,6 +191,10 @@ public class CustomerMainViewController {
         else {
             Date departDate = Date.valueOf(departLocal);
             Date returnDate = Date.valueOf(returnLocal);
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = Calendar.getInstance();
+            c1.setTime(departDate);
+            c2.setTime(returnDate);
 
             /* TODO: PULL FROM DATABASE
              *
