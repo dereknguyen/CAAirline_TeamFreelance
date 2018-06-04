@@ -205,7 +205,7 @@ public class CustomerMainViewController {
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RT_DateString"));
+            B_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
             B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
             B_AvailableFlightsTable.setItems(results);
