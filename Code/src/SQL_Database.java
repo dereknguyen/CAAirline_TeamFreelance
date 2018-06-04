@@ -397,7 +397,9 @@ public class SQL_Database implements Database {
         String Source = getFlightSrc(FlightId);
         String Destination = getFlightDest(FlightId);
         int reverseId = getFlightId(Destination, Source);
-        String query = "SELECT t1.TripId, t1.FlightId, t1.Date AS Depart, t2.Date AS Return, t1.Price AS P1, t2.Price AS P2, t1.Status FROM trips t1 INNER JOIN trips t2 WHERE t1.FlightId = ? AND t2.FlightId = ? AND DATE(t1.Date) = ? AND DATE(t2.Date) = ?";
+        String query = "SELECT t1.TripId, t1.FlightId, t1.Date AS Depart, t2.Date AS Return, " +
+                "t1.Price AS P1, t2.Price AS P2, t1.Status FROM trips t1 INNER JOIN trips t2 " +
+                "WHERE t1.FlightId = ? AND t2.FlightId = ? AND DATE(t1.Date) = ? AND DATE(t2.Date) = ?";
         try
         {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -854,6 +856,33 @@ public class SQL_Database implements Database {
             while (rs.next())
             {
                 output.add(rs.getInt(1));
+            }
+            return output;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Ticket> getTicketsByUser(String Username)
+    {
+        String query = "SELECT * FROM tickets WHERE Username = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, Username);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Ticket> output = new ArrayList<>();
+            while (rs.next())
+            {
+                output.add(new Ticket(
+                        rs.getInt("TripId"),
+                        rs.getInt("SeatNumber"),
+                        rs.getInt("NumBags"),
+                        rs.getBoolean("CheckedIn")
+                ));
             }
             return output;
         }

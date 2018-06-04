@@ -16,9 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import src.Database;
-import src.SQL_Database;
-import src.Trip;
+import src.*;
 
 public class CustomerMainViewController {
 
@@ -123,6 +121,10 @@ public class CustomerMainViewController {
     @FXML
     void MF_HandleRefresh() {
         // TODO: Just pull what flight associates with the customer and display it in the My Flight Table.
+        // TODO add checked in field, seat number, num bags to my flights page?
+        SQL_Database db = SQL_Database.getInstance();
+        Session s = Session.getInstance();
+        ObservableList<Ticket> results = FXCollections.observableArrayList(db.getTicketsByUser(s.getUsername()));
     }
 
 
@@ -155,11 +157,6 @@ public class CustomerMainViewController {
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), c)
             );
 
-            /*for (Trip t : results)
-            {
-                System.out.println(t.getTripId() + " " + t.getFromString() + " " + t.getToString() + " "
-                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatusString());
-            }*/
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
