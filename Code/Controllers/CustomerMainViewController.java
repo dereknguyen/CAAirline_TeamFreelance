@@ -197,10 +197,6 @@ public class CustomerMainViewController {
             c1.setTime(departDate);
             c2.setTime(returnDate);
 
-            /* TODO: PULL FROM DATABASE
-             *
-             * Same thing as searchOneWay
-             */
             Database db = SQL_Database.getInstance();
             ObservableList<Trip> results = FXCollections.observableArrayList(
                     db.getRoundTrips(db.getFlightId(from, to), c1, c2)
