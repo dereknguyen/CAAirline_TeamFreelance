@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -8,17 +9,25 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import src.*;
 
 public class CustomerMainViewController {
+
+    private static final int ONE_WAY = 0;
+    private static final int ROUND_TRIP = 1;
 
     @FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
@@ -78,10 +87,14 @@ public class CustomerMainViewController {
 
     @FXML
     void B_HandlePurchase(ActionEvent event) {
-        // TODO: [1] Get selected TABLE ROW in Booking Tab
+        // Get selected TABLE ROW in Booking Tab
+        int tripID = getSelectedTripID();
 
-        // TODO: [2] Present Payment View. We also want to transfer over selected data to payment view controller.
-        Utilities.present("/Views/PaymentView.fxml", "Confirm Ticket");
+        // Present Payment View. We also want to
+        //  transfer over selected data to payment view controller.
+        if (tripID != 0) {
+            toPaymentView(tripID);
+        }
     }
 
     /*
@@ -134,7 +147,7 @@ public class CustomerMainViewController {
 
         String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
         String to = B_OneWayTo.getSelectionModel().getSelectedItem();
-        LocalDate localD = B_OneWayDepartDate.getValue();
+        LocalDate localDate = B_OneWayDepartDate.getValue();
 
         if (from == null) {
             System.out.println("\tError: From location missing");
@@ -144,17 +157,17 @@ public class CustomerMainViewController {
             System.out.println("\tError: To location missing");
             return "Please specify location are are going to.";
         }
-        else if (localD == null) {
+        else if (localDate == null) {
             System.out.println("\tError: Departure date missing");
             return "Please specify departure date.";
         }
         else {
-            Calendar c = Calendar.getInstance();
-            Date departDate = Date.valueOf(localD);
-            c.setTime(departDate);
+            Calendar departDate = Calendar.getInstance();
+            departDate.setTime(Date.valueOf(localDate));
+
             Database db = SQL_Database.getInstance();
             ObservableList<Trip> results = FXCollections.observableArrayList(
-                    db.getTripsByFlightAndDate(db.getFlightId(from, to), c)
+                    db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
@@ -187,16 +200,16 @@ public class CustomerMainViewController {
             System.out.println("\tError: Departure date or Return date missing");
             return "Missing either depart date or return date";
         } else {
-            Date departDate = Date.valueOf(departLocal);
-            Date returnDate = Date.valueOf(returnLocal);
-            Calendar c1 = Calendar.getInstance();
-            Calendar c2 = Calendar.getInstance();
-            c1.setTime(departDate);
-            c2.setTime(returnDate);
+
+            Calendar departDate = Calendar.getInstance();
+            Calendar returnDate = Calendar.getInstance();
+
+            departDate.setTime(Date.valueOf(departLocal));
+            returnDate.setTime(Date.valueOf(returnLocal));
 
             Database db = SQL_Database.getInstance();
             ObservableList<Trip> results = FXCollections.observableArrayList(
-                    db.getRoundTrips(db.getFlightId(from, to), c1, c2)
+                    db.getRoundTrips(db.getFlightId(from, to), departDate, returnDate)
             );
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
@@ -209,5 +222,49 @@ public class CustomerMainViewController {
         }
 
         return null;
+    }
+
+    private int getSelectedTripID() {
+        SQL_Database db = SQL_Database.getInstance();
+        Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTrip != null) {
+            int flightID = db.getFlightId(selectedTrip.getFromString(), selectedTrip.getToString());
+
+            Calendar date = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
+
+            try {
+                date.setTime(sdf.parse(selectedTrip.getDateString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return db.getTripId(flightID, date);
+        }
+
+        return 0;
+    }
+
+    private void toPaymentView(int tripID) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
+
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        PaymentViewController controller = loader.getController();
+        Stage stage = new Stage();
+        controller.setTripID(tripID);
+        controller.setSelectedMode(ONE_WAY);
+
+        stage.setTitle("Confirm Ticket");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

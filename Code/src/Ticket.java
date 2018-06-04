@@ -3,6 +3,7 @@ package src;
 import java.util.Calendar;
 
 public class Ticket {
+
 	/*private Calendar date;
 	private String trip;
 	private int ticketNumber;
@@ -30,6 +31,7 @@ public class Ticket {
 	public int getPlaneNumber() {
 		return planeNumber;
 	}*/
+
 	private int TripId;
 	private int SeatNumber;
 	private int NumBags;

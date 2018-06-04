@@ -33,22 +33,6 @@ public class Account {
         return this.firstName + " " + this.lastName;
     }
 
-    /**
-     * Get the flight ticket given the associated ticket number of that ticket.
-     * @param ticketNumber The assigned ticket number.
-     * @return The ticket with the given ticket number.
-     */
-    public Ticket getTicket(int ticketNumber) {
-
-        for (Ticket current: this.ticket) {
-            if (current.getTicketNumber() == ticketNumber) {
-                return current;
-            }
-        }
-
-        return null;
-    }
-
     public boolean purchaseTicket(int DestinationID, Date date, Trip trip) {
         SQL_Database db = SQL_Database.getInstance();
         return false;

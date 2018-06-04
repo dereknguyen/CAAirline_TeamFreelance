@@ -27,7 +27,7 @@ public class Trip {
 
 	public Trip(int TripId, int FlightId, Calendar Date, double Price, int Status)
 	{
-		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss");
+		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss z yyyy");
 		SQL_Database db = SQL_Database.getInstance();
 		this.TripId=TripId;
 		this.FlightId=FlightId;
@@ -46,7 +46,7 @@ public class Trip {
 
 	public Trip(int TripId, int FlightId, Calendar Date, Calendar RTDate, double Price, int Status)
 	{
-		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss");
+		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss z yyyy");
 		SQL_Database db = SQL_Database.getInstance();
 		this.TripId=TripId;
 		this.FlightId=FlightId;

@@ -847,7 +847,7 @@ public class SQL_Database implements Database {
     public ArrayList<Integer> getFullSeats(int TripId)
     {
         if (TripId < 0) return null;
-        String query = "SELECT SeatNumber FROM trips WHERE TripId = " + TripId;
+        String query = "SELECT SeatNumber FROM tickets WHERE TripId = " + TripId;
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);

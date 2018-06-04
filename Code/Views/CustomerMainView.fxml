@@ -79,11 +79,11 @@
                                     </HBox>
                                     <TableView fx:id="B_AvailableFlightsTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
                                       <columns>
-                                        <TableColumn fx:id="B_FromCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="From" />
-                                        <TableColumn fx:id="B_ToCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="B_ReturnDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Return Date" />
-                                          <TableColumn fx:id="B_PriceCol" prefWidth="85.0" style="-fx-background-color: #151515;" text="Price" />
+                                        <TableColumn fx:id="B_FromCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="From" />
+                                        <TableColumn fx:id="B_ToCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="150.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="B_ReturnDateCol" editable="false" prefWidth="150.0" style="-fx-background-color: #151515;" text="Return Date" />
+                                          <TableColumn fx:id="B_PriceCol" prefWidth="83.0" style="-fx-background-color: #151515;" text="Price" />
                                       </columns>
                                     </TableView>
                                  </children>
