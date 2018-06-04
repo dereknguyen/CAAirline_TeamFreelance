@@ -158,7 +158,7 @@ public class CustomerMainViewController {
             /*for (Trip t : results)
             {
                 System.out.println(t.getTripId() + " " + t.getFromString() + " " + t.getToString() + " "
-                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
+                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatusString());
             }*/
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));

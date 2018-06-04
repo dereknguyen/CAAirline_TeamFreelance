@@ -329,8 +329,8 @@ public class SQL_Database implements Database {
                 out.add(new Trip(rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c,
-                        new SimpleDoubleProperty(rs.getDouble("Price")),
-                        new SimpleIntegerProperty(rs.getInt("Status"))));
+                        rs.getDouble("Price"),
+                        rs.getInt("Status")));
             }
             return out;
 
@@ -380,8 +380,8 @@ public class SQL_Database implements Database {
                         rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c,
-                        new SimpleDoubleProperty(rs.getDouble("Price")),
-                        new SimpleIntegerProperty(rs.getInt("Status"))));
+                        rs.getDouble("Price"),
+                        rs.getInt("Status")));
             }
             return output;
         }
@@ -419,8 +419,8 @@ public class SQL_Database implements Database {
                         rs.getInt("FlightId"),
                         c1,
                         c2,
-                        new SimpleDoubleProperty(rs.getDouble("P1") + rs.getDouble("P2")),
-                        new SimpleIntegerProperty(rs.getInt("Status"))));
+                        rs.getDouble("P1") + rs.getDouble("P2"),
+                        rs.getInt("Status")));
             }
             return output;
         }

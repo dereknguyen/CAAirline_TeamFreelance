@@ -9,56 +9,71 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Trip {
+	/* Fields */
 	private int TripId;
 	private int FlightId;
 	private Calendar Date;
-	private Calendar RT_Date;
+	private Calendar RTDate;
+	private double Price;
+	private int Status;
+
+	/* Properties (used to populate tables) */
 	private SimpleStringProperty DateString;
-	private SimpleStringProperty RT_DateString;
+	private SimpleStringProperty RTDateString;
 	private SimpleStringProperty FromString;
 	private SimpleStringProperty ToString;
-	private SimpleDoubleProperty Price;
-	private SimpleIntegerProperty Status;
+	private SimpleDoubleProperty PriceString;
+	private SimpleIntegerProperty StatusString;
 
-	public Trip(int TripId, int FlightId, Calendar Date, SimpleDoubleProperty Price, SimpleIntegerProperty Status)
+	public Trip(int TripId, int FlightId, Calendar Date, double Price, int Status)
 	{
 		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss");
 		SQL_Database db = SQL_Database.getInstance();
 		this.TripId=TripId;
 		this.FlightId=FlightId;
 		this.Date=Date;
-		this.RT_Date = null;
+		this.RTDate = null;
+		this.Price = Price;
+		this.Status = Status;
+
 		this.DateString = new SimpleStringProperty(sdf.format(Date.getTime()));
-		this.RT_DateString = null;
+		this.RTDateString = null;
 		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
 		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
-		this.Price=Price;
-		this.Status=Status;
+		this.PriceString= new SimpleDoubleProperty(Price);
+		this.StatusString = new SimpleIntegerProperty(Status);
 	}
 
-	public Trip(int TripId, int FlightId, Calendar Date, Calendar RT_Date,SimpleDoubleProperty Price, SimpleIntegerProperty Status)
+	public Trip(int TripId, int FlightId, Calendar Date, Calendar RTDate, double Price, int Status)
 	{
 		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss");
 		SQL_Database db = SQL_Database.getInstance();
 		this.TripId=TripId;
 		this.FlightId=FlightId;
 		this.Date=Date;
-		this.RT_Date = RT_Date;
+		this.RTDate = RTDate;
+		this.Price = Price;
+		this.Status = Status;
+
 		this.DateString = new SimpleStringProperty(sdf.format(Date.getTime()));
-		this.RT_DateString = new SimpleStringProperty(((SimpleDateFormat) sdf).format(RT_Date.getTime()));
+		this.RTDateString = new SimpleStringProperty(((SimpleDateFormat) sdf).format(RTDate.getTime()));
 		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
 		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
-		this.Price=Price;
-		this.Status=Status;
+		this.PriceString= new SimpleDoubleProperty(Price);
+		this.StatusString = new SimpleIntegerProperty(Status);
 	}
 
-	public Calendar getDate() { return Date; }
-	public String getDateString() { return DateString.get();}
-	public String getRT_DateString() { return RT_DateString.get();}
-	public String getFromString() { return FromString.get();}
-	public String getToString() { return ToString.get();}
 	public int getTripId() { return TripId; }
 	public int getFlightId() { return FlightId; }
-	public double getPrice() { return Price.get(); }
-	public int getStatus() { return Status.get(); }
+	public Calendar getDate() { return Date; }
+	public Calendar getRTDate() { return RTDate; }
+	public double getPrice() { return Price; }
+	public int getStatus() { return Status; }
+
+	public String getDateString() { return DateString.get();}
+	public String getRTDateString() { return RTDateString.get();}
+	public String getFromString() { return FromString.get();}
+	public String getToString() { return ToString.get();}
+	public double getPriceString() { return PriceString.get();}
+	public int getStatusString() { return StatusString.get(); }
 }
