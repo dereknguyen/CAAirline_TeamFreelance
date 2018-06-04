@@ -1,6 +1,9 @@
 package src;
 
 import com.sun.javafx.tools.packager.PackagerException;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -323,8 +326,11 @@ public class SQL_Database implements Database {
             while (rs.next())
             {
                 c.setTime(rs.getDate("Date"));
-                out.add(new Trip(rs.getInt("TripId"), rs.getInt("FlightId"),
-                        c, rs.getDouble("Price"), rs.getInt("Status")));
+                out.add(new Trip(rs.getInt("TripId"),
+                        rs.getInt("FlightId"),
+                        c,
+                        new SimpleDoubleProperty(rs.getDouble("Price")),
+                        new SimpleIntegerProperty(rs.getInt("Status"))));
             }
             return out;
 
@@ -359,18 +365,23 @@ public class SQL_Database implements Database {
         String query = "SELECT * FROM trips WHERE FlightId = ? AND DATE(Date) = ?";
         try
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, FlightId);
             ps.setString(2, sdf.format(date.getTime()));
             ResultSet rs = ps.executeQuery();
             ArrayList<Trip> output = new ArrayList<>();
-            Calendar c = Calendar.getInstance();
             while (rs.next())
             {
-                c.setTime(sdf.parse(rs.getString("Date")));
-                output.add(new Trip(rs.getInt("TripId"), rs.getInt("FlightId"),
-                        c, rs.getDouble("Price"), rs.getInt("Status")));
+                Calendar c = Calendar.getInstance();
+                c.setTime(sdf2.parse(rs.getString("Date")));
+                output.add(new Trip(
+                        rs.getInt("TripId"),
+                        rs.getInt("FlightId"),
+                        c,
+                        new SimpleDoubleProperty(rs.getDouble("Price")),
+                        new SimpleIntegerProperty(rs.getInt("Status"))));
             }
             return output;
         }

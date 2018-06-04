@@ -1,9 +1,7 @@
 package Controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,7 +24,7 @@ public class EmployeeMainViewController {
     @FXML private URL location;
 
     @FXML private TabPane mainTabPane;
-
+    @FXML private TableView<?> AF_AvailableFlightsTable;
     @FXML private TableColumn<?, ?> AF_FlightNumberCol;
     @FXML private TableColumn<?, ?> AF_FromCol;
     @FXML private TableColumn<?, ?> AF_ToCol;
@@ -39,16 +37,18 @@ public class EmployeeMainViewController {
     @FXML private JFXComboBox<?> PS_OneWayFrom;
     @FXML private JFXComboBox<?> PS_OneWayTo;
     @FXML private JFXDatePicker PS_OneWayDepartDate;
+    @FXML private JFXTimePicker PS_OneWayDepartTime;
     @FXML private JFXTextField PS_OneWayBasePrice;
     @FXML private JFXComboBox<?> PS_RoundTripFrom;
     @FXML private JFXComboBox<?> PS_RoundTripTo;
     @FXML private JFXDatePicker PS_RoundTripDepartDate;
     @FXML private JFXDatePicker PS_RoundTripReturnDate;
     @FXML private JFXTextField PS_RoundTripBasePrice;
+    @FXML private JFXTimePicker PS_RoundTripDepartTime;
+    @FXML private JFXTimePicker PS_RoundTripReturnTime;
     @FXML private Label PS_ErrMsg;
 
     @FXML private JFXTextField FS_FlightNumber;
-    @FXML private JFXButton FS_StatusViewButton;
     @FXML private TableView<?> FS_StatusTable;
     @FXML private TableColumn<?, ?> FS_FromCol;
     @FXML private TableColumn<?, ?> FS_ToCol;
@@ -65,6 +65,7 @@ public class EmployeeMainViewController {
     @FXML private JFXDatePicker B_RoundTripDepartDate;
     @FXML private JFXDatePicker B_RoundTripReturnDate;
     @FXML private Label B_ErrMsg;
+    @FXML private TableView<?> B_AvailableFlightsTable;
     @FXML private TableColumn<?, ?> B_FromCol;
     @FXML private TableColumn<?, ?> B_ToCol;
     @FXML private TableColumn<?, ?> B_DepartTimeCol;

@@ -27,13 +27,14 @@ public class PaymentViewController {
 
     @FXML
     void HandlePayment(ActionEvent event) {
-
+        // TODO: We assume all payment are a success
     }
 
     @FXML
     void initialize() {
 
-        // TODO: Grab available seats from database
+        // TODO: Grab available seats from database and populate the seatSelection Combo Box
+
 
     }
 }

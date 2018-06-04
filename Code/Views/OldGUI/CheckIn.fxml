@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CheckinController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.OldControllers.CheckinController">
    <children>
       <Button fx:id="CheckInButton" layoutX="32.0" layoutY="173.0" mnemonicParsing="false" onAction="#CheckInButtonClick" prefHeight="27.0" prefWidth="234.0" text="Check In" />
       <TextField fx:id="confirmationNumber" layoutX="32.0" layoutY="135.0" prefHeight="27.0" prefWidth="234.0" promptText="111111111" />

@@ -15,7 +15,7 @@ public class flightsearchview extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-           Parent root = FXMLLoader.load(getClass().getResource("Views/flightsearchview.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("Views/OldGUI/flightsearchview.fxml"));
 
             Scene scene = new Scene(root, 300, 275);
 

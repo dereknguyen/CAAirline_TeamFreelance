@@ -1,0 +1,18 @@
+.jfx-time-picker .text-field{
+    -fx-prompt-text-fill: gray;
+    -fx-text-fill: white;
+}
+
+.text-input { /* gls:file:/Applications/SceneBuilder.app/Contents/Java/dist.jar!/com/gluonhq/charm/glisten/control/glisten.gls */
+    -fx-background-color: transparent;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-color: rgba(0, 0, 0, 0);
+    -fx-border-insets: 0px;
+    -fx-border-width: 0px;
+    -fx-padding: 0;
+}
+
+.jfx-text-field {
+    -jfx-unfocus-color: #FFFFFF;
+}

@@ -8,72 +8,86 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import javafx.beans.property.ReadOnlyStringWrapper;
-
-
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.Calendar;
+
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.control.cell.PropertyValueFactory;
 import src.Database;
 import src.SQL_Database;
 
 public class CustomerMainViewController {
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
-
-    @FXML private TabPane mainTabPane;
-    @FXML private Tab bookingTab;
-    @FXML private Tab checkInTab;
+    @FXML private TabPane B_TripModeTabPane;
+    @FXML private TableView<Trip> B_AvailableFlightsTable;
+    @FXML private JFXComboBox<String> B_OneWayFrom;
+    @FXML private JFXComboBox<String> B_OneWayTo;
+    @FXML private JFXDatePicker B_OneWayDepartDate;
 
     @FXML private TabPane tripOptionsTabPane;
     @FXML private Tab oneWayTripTab;
     @FXML private Tab roundTripTab;
     @FXML private Tab flightStatusTab;
 
-    @FXML private JFXComboBox<String> oneWayFrom;
-    @FXML private JFXComboBox<String> oneWayTo;
-    @FXML private JFXDatePicker oneWayDepartDate;
+    @FXML private TableColumn<Trip, String> B_FromCol;
+    @FXML private TableColumn<Trip, String> B_ToCol;
+    @FXML private TableColumn<Trip, String> B_DepartDateCol;
+    @FXML private TableColumn<Trip, String> B_ReturnDateCol;
+    @FXML private TableColumn<Trip, String> B_PriceCol;
+    @FXML private Label B_ErrMsg;
 
-    @FXML private JFXComboBox<String> roundTripFrom;
-    @FXML private JFXComboBox<String> roundTripTo;
-    @FXML private JFXDatePicker roundTripDepartDate;
-    @FXML private JFXDatePicker roundTripReturnDate;
+    @FXML private JFXTextField CI_FlightID;
+    @FXML private Label CI_ErrMsg;
 
-    @FXML private JFXButton searchTicketButton;
-    @FXML private JFXButton purchaseButton;
+    @FXML private JFXTextField FS_FlightID;
+    @FXML private TableView<?> FS_FlightStatusTable;
+    @FXML private TableColumn<?, ?> FS_FromCol;
+    @FXML private TableColumn<?, ?> FS_ToCol;
+    @FXML private TableColumn<?, ?> FS_DepartDateCol;
+    @FXML private TableColumn<?, ?> FS_ReturnDateCol;
+    @FXML private TableColumn<?, ?> FS_StatusCol;
+    @FXML private Label FS_ErrMsg;
 
-    @FXML private TableColumn<Integer, String> fromCol;
-    @FXML private TableColumn<Integer, String> toCol;
-    @FXML private TableColumn<Integer, String> departTimeCol;
-    @FXML private TableColumn<Integer, String> arrivalTimeCol;
-    @FXML private TableColumn<Integer, String> priceCol;
+    @FXML private TableView<?> MF_MyFlightTable;
+    @FXML private TableColumn<?, ?> MF_FlightIDCol;
+    @FXML private TableColumn<?, ?> MF_FromCol;
+    @FXML private TableColumn<?, ?> MF_ToCol;
+    @FXML private TableColumn<?, ?> MF_DepartDateCol;
+    @FXML private TableColumn<?, ?> MF_ReturnDateCol;
+    @FXML private TableColumn<?, ?> MF_StatusCol;
 
-    @FXML private Label searchErrMsg;
-
-    @FXML private JFXTextField checkinFlightNumber;
-    @FXML private JFXButton checkinButton;
-
-    @FXML private JFXTextField statusFlightNumber;
-    @FXML private JFXButton statusViewButton;
-    @FXML private TableView<?> statusTable;
 
     @FXML
-    void checkIn(ActionEvent event) {
-
+    void initialize() {
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     @FXML
-    void purchaseSelected(ActionEvent event) {
+    void CI_HandleCheckIn(ActionEvent event) {
+        // TODO: [1] Get Flight ID
 
+        // TODO: [2] Pass flight ID to baggage view controller
+        /* Will perform to Baggage in conjunction with [2] */
+        Utilities.present("/Views/CustomerBaggageView.fxml", "Baggage Declaration");
+    }
+
+    @FXML
+    void B_HandlePurchase(ActionEvent event) {
+        // TODO: [1] Get selected TABLE ROW in Booking Tab
+
+        // TODO: [2] Present Payment View. We also want to transfer over selected data to payment view controller.
+        Utilities.present("/Views/PaymentView.fxml", "Confirm Ticket");
     }
 
     /*
@@ -93,9 +107,8 @@ public class CustomerMainViewController {
      * Populate table with available flight information.
      */
     @FXML
-    void searchForTickets() {
-        int selectedIndex = tripOptionsTabPane.getSelectionModel().getSelectedIndex();
-
+    void B_HandleSearch() {
+        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
         if (selectedIndex == 0) {
             searchErrMsg.setText(searchOneWay());
         }
@@ -105,24 +118,26 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void viewFlightStatus(ActionEvent event) {
+    void FS_HandleGetFlightStatus(ActionEvent event) {
+        // TODO: [1] Grab the flight ID from text field
 
+        // TODO: [2] Display the flight associate with the ID on the table in Flight Status Tab.
     }
 
     @FXML
-    void initialize() {
-        oneWayFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        oneWayTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        roundTripFrom.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
-        roundTripTo.getItems().addAll("Los Angeles", "San Francisco", "San Diego", "Arizona", "Seattle", "Dallas");
+    void MF_HandleRefresh() {
+        // TODO: Just pull what flight associates with the customer and display it in the My Flight Table.
     }
 
+
+    /* HELPERS */
     private String searchOneWay() {
         System.out.println("\nSearching: One Way");
 
         String from = oneWayFrom.getSelectionModel().getSelectedItem();
         String to = oneWayTo.getSelectionModel().getSelectedItem();
         LocalDate localD = oneWayDepartDate.getValue();
+
 
         if (from == null) {
             System.out.println("\tError: From location missing");
@@ -137,9 +152,25 @@ public class CustomerMainViewController {
             return "Please specify departure date.";
         }
         else {
-            java.util.Date departDate = Date.valueOf(localD);
+            Calendar c = Calendar.getInstance();
+            Date departDate = Date.valueOf(localD);
+            c.setTime(departDate);
+            Database db = SQL_Database.getInstance();
+            ObservableList<Trip> results = FXCollections.observableArrayList(
+                    db.getTripsByFlightAndDate(db.getFlightId(from, to), c));
 
-            presentTableOneWay(departDate, oneWayFrom.getValue(), oneWayTo.getValue());
+            for (Trip t : results)
+            {
+                System.out.println(t.getTripId() + " " + t.getFromString() + " " + t.getToString() + " "
+                        + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
+            }
+            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+            B_ReturnDateCol.setCellValueFactory(cellData -> { return new ReadOnlyStringWrapper("N/A");});
+            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+            B_AvailableFlightsTable.setItems(results);
         }
 
 
@@ -168,117 +199,18 @@ public class CustomerMainViewController {
             return "Missing either depart date or return date";
         }
         else {
-            java.util.Date departDate = Date.valueOf(departLocal);
-            java.util.Date returnDate = Date.valueOf(returnLocal);
+            Date departDate = Date.valueOf(departLocal);
+            Date returnDate = Date.valueOf(returnLocal);
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = Calendar.getInstance();
+            c1.setTime(departDate);
+            c2.setTime(returnDate);
 
-            presentTableRoundTrip(departDate, returnDate, roundTripFrom.getValue(), roundTripTo.getValue());
+            /* TODO: PULL FROM DATABASE
+             *
+             * Same thing as searchOneWay
+             */
         }
 
         return null;
-    }
-    // Populate the table from the database
-    private void presentTableRoundTrip(java.util.Date depart, java.util.Date arrive, String from, String to) {
-        Calendar departCal = Calendar.getInstance();
-        departCal.setTime(depart);
-
-        src.Database db = SQL_Database.getInstance();
-        ArrayList<src.Trip> allFlights = db.getAllTrips();
-        ObservableList <src.Trip> departures = FXCollections.observableArrayList();
-        int flightID = db.getFlightId(from,to);
-        for(int i = 0; i < allFlights.size(); i++){
-            if(allFlights.get(i).getFlightId() == flightID && sameDay(allFlights.get(i), departCal)){
-                departures.add(allFlights.get(i));
-            }
-        }
-
-        Calendar arriveCal = Calendar.getInstance();
-        arriveCal.setTime(arrive);
-
-        ObservableList <src.Trip> arrivals = FXCollections.observableArrayList();
-        flightID = db.getFlightId(to, from);
-        for(int i = 0; i < allFlights.size(); i++){
-            if(allFlights.get(i).getFlightId() == flightID && sameDay(allFlights.get(i), arriveCal)){
-                arrivals.add(allFlights.get(i));
-            }
-        }
-
-        fromCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyStringWrapper(from);
-        });
-        toCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyStringWrapper(to);
-        });
-        departTimeCol.setCellValueFactory(cellData -> {
-            Integer rowIndex = cellData.getValue();
-            Calendar date = departures.get(rowIndex).getDate();
-            Format formatter = new SimpleDateFormat("E, dd MMM HH:mm:ss");
-            String s = formatter.format(date);
-            return new ReadOnlyStringWrapper(s);
-        });
-        arrivalTimeCol.setCellValueFactory(cellData -> {
-            Integer rowIndex = cellData.getValue();
-            Calendar date = arrivals.get(rowIndex).getDate();
-            Format formatter = new SimpleDateFormat("E, dd MMM HH:mm:ss");
-            String s = formatter.format(date);
-            return new ReadOnlyStringWrapper(s);
-        });
-        priceCol.setCellValueFactory(cellData -> {
-            Integer rowIndex = cellData.getValue();
-            double price1 = departures.get(rowIndex).getPrice();
-            double price2 = arrivals.get(rowIndex).getPrice();
-            Double price = price1 + price2;
-            String p = "$"+price.toString();
-            return new ReadOnlyStringWrapper(p);
-        });
-
-
-    }
-
-    private void presentTableOneWay(java.util.Date departDate, String from, String to){
-        Calendar departCal = Calendar.getInstance();
-        departCal.setTime(departDate);
-
-        // Pull from database
-        src.Database db = SQL_Database.getInstance();
-        ArrayList<src.Trip> allFlights = db.getAllTrips();
-        ObservableList <src.Trip> data = FXCollections.observableArrayList();
-        int flightID = db.getFlightId(from,to);
-        int tripID = db.getTripId(flightID, departCal);
-        for(int i = 0; i < allFlights.size(); i++){
-            if(allFlights.get(i).getFlightId() == flightID && sameDay(allFlights.get(i), departCal)){
-                data.add(allFlights.get(i));
-            }
-        }
-        fromCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyStringWrapper(from);
-        });
-        toCol.setCellValueFactory(cellData -> {
-            return new ReadOnlyStringWrapper(to);
-        });
-        departTimeCol.setCellValueFactory(cellData -> {
-            Integer rowIndex = cellData.getValue();
-            Calendar date = data.get(rowIndex).getDate();
-            Format formatter = new SimpleDateFormat("E, dd MMM HH:mm:ss");
-            String s = formatter.format(date);
-            return new ReadOnlyStringWrapper(s);
-        });
-        // TODO ARRIVAL TIME: Is this needed for one way??
-        priceCol.setCellValueFactory(cellData -> {
-            Integer rowIndex = cellData.getValue();
-            Double price = data.get(rowIndex).getPrice();
-            String p = "$"+price.toString();
-            return new ReadOnlyStringWrapper(p);
-        });
-
-    }
-
-    private boolean sameDay(src.Trip trip, Calendar date) {
-        if(trip.getDate().get(Calendar.YEAR) == date.get(Calendar.YEAR) && trip.getDate().get(Calendar.DAY_OF_YEAR) == date.get(Calendar.DAY_OF_YEAR))
-            return true;
-        else
-            return false;
-
-    }
-
-
 }
