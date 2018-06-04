@@ -1,6 +1,10 @@
 package Controllers;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -19,7 +23,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import src.Database;
 import src.SQL_Database;
-import src.Trip;
 
 public class CustomerMainViewController {
 
@@ -29,10 +32,10 @@ public class CustomerMainViewController {
     @FXML private JFXComboBox<String> B_OneWayTo;
     @FXML private JFXDatePicker B_OneWayDepartDate;
 
-    @FXML private JFXComboBox<String> B_RoundTripFrom;
-    @FXML private JFXComboBox<String> B_RoundTripTo;
-    @FXML private JFXDatePicker B_RoundTripDepartDate;
-    @FXML private JFXDatePicker B_RoundTripReturnDate;
+    @FXML private TabPane tripOptionsTabPane;
+    @FXML private Tab oneWayTripTab;
+    @FXML private Tab roundTripTab;
+    @FXML private Tab flightStatusTab;
 
     @FXML private TableColumn<Trip, String> B_FromCol;
     @FXML private TableColumn<Trip, String> B_ToCol;
@@ -94,7 +97,7 @@ public class CustomerMainViewController {
      *  - Departure Date (JFXDatePicker)
      *  - Return Date (JFXDatePicker)
      *
-     * Will Check B_TripModeTabPane for either:
+     * Will Check tripOptionsTabPane for either:
      *  - One Way (Index 0)
      *  - Round Trip (Index 1)
      *
@@ -106,12 +109,11 @@ public class CustomerMainViewController {
     @FXML
     void B_HandleSearch() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-
         if (selectedIndex == 0) {
-            B_ErrMsg.setText(searchOneWay());
+            searchErrMsg.setText(searchOneWay());
         }
         else if (selectedIndex == 1) {
-            B_ErrMsg.setText(searchRoundTrip());
+            searchErrMsg.setText(searchRoundTrip());
         }
     }
 
@@ -129,13 +131,12 @@ public class CustomerMainViewController {
 
 
     /* HELPERS */
-
     private String searchOneWay() {
         System.out.println("\nSearching: One Way");
 
-        String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
-        String to = B_OneWayTo.getSelectionModel().getSelectedItem();
-        LocalDate localD = B_OneWayDepartDate.getValue();
+        String from = oneWayFrom.getSelectionModel().getSelectedItem();
+        String to = oneWayTo.getSelectionModel().getSelectedItem();
+        LocalDate localD = oneWayDepartDate.getValue();
 
 
         if (from == null) {
@@ -172,17 +173,18 @@ public class CustomerMainViewController {
             B_AvailableFlightsTable.setItems(results);
         }
 
+
         return null;
     }
 
     private String searchRoundTrip() {
         System.out.println("\nSearching: Round Trip");
 
-        String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-        String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
+        String from = roundTripFrom.getSelectionModel().getSelectedItem();
+        String to = roundTripTo.getSelectionModel().getSelectedItem();
 
-        LocalDate departLocal = B_RoundTripDepartDate.getValue();
-        LocalDate returnLocal = B_RoundTripReturnDate.getValue();
+        LocalDate departLocal = roundTripDepartDate.getValue();
+        LocalDate returnLocal = roundTripReturnDate.getValue();
 
         if (from == null) {
             System.out.println("\tError: From location missing");
@@ -208,9 +210,7 @@ public class CustomerMainViewController {
              *
              * Same thing as searchOneWay
              */
-
         }
 
         return null;
-    }
 }
