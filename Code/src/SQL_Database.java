@@ -392,6 +392,46 @@ public class SQL_Database implements Database {
         }
     }
 
+    public ArrayList<Trip> getRoundTrips(int FlightId, Calendar departDate, Calendar returnDate)
+    {
+        String Source = getFlightSrc(FlightId);
+        String Destination = getFlightDest(FlightId);
+        int reverseId = getFlightId(Destination, Source);
+        String query = "SELECT * FROM trips t1 INNER JOIN trips t2 WHERE " +
+                "t1.FlightId = ? AND t2.FlightId = ? AND t1.Date = ? AND t2.Date = ?";
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, FlightId);
+            ps.setInt(2, reverseId);
+            ps.setString(3, sdf.format(departDate.getTime()));
+            ps.setString(4, sdf.format(returnDate.getTime()));
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Trip> output = new ArrayList<>();
+            while (rs.next())
+            {
+                Calendar c1 = Calendar.getInstance();
+                Calendar c2 = Calendar.getInstance();
+                c1.setTime(sdf2.parse(rs.getString("t1.Date")));
+                c2.setTime(sdf2.parse(rs.getString("t2.Date")));
+                output.add(new Trip(rs.getInt("TripId"),
+                        rs.getInt("FlightId"),
+                        c1,
+                        c2,
+                        new SimpleDoubleProperty(rs.getDouble("Price")),
+                        new SimpleIntegerProperty(rs.getInt("Status"))));
+            }
+            return output;
+        }
+        catch (SQLException | ParseException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /*
 
     Flight methods

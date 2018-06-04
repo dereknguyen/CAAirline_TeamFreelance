@@ -134,7 +134,6 @@ public class CustomerMainViewController {
         String to = B_OneWayTo.getSelectionModel().getSelectedItem();
         LocalDate localD = B_OneWayDepartDate.getValue();
 
-
         if (from == null) {
             System.out.println("\tError: From location missing");
             return "Please specify location you are from.";
@@ -153,7 +152,8 @@ public class CustomerMainViewController {
             c.setTime(departDate);
             Database db = SQL_Database.getInstance();
             ObservableList<Trip> results = FXCollections.observableArrayList(
-                    db.getTripsByFlightAndDate(db.getFlightId(from, to), c));
+                    db.getTripsByFlightAndDate(db.getFlightId(from, to), c)
+            );
 
             /*for (Trip t : results)
             {
@@ -168,8 +168,6 @@ public class CustomerMainViewController {
 
             B_AvailableFlightsTable.setItems(results);
         }
-
-
         return null;
     }
 
@@ -203,6 +201,18 @@ public class CustomerMainViewController {
              *
              * Same thing as searchOneWay
              */
+            Database db = SQL_Database.getInstance();
+            ObservableList<Trip> results1 = FXCollections.observableArrayList(
+                    db.getRoundTrips(db.getFlightId(from, to), c1, c2)
+            );
+
+            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+            B_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
+            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+            B_AvailableFlightsTable.setItems(results1);
         }
 
         return null;

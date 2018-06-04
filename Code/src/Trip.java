@@ -13,7 +13,9 @@ public class Trip {
 	private int TripId;
 	private int FlightId;
 	private Calendar Date;
+	private Calendar RT_Date;
 	private SimpleStringProperty DateString;
+	private SimpleStringProperty RT_DateString;
 	private SimpleStringProperty FromString;
 	private SimpleStringProperty ToString;
 	private SimpleDoubleProperty Price;
@@ -26,7 +28,25 @@ public class Trip {
 		this.TripId=TripId;
 		this.FlightId=FlightId;
 		this.Date=Date;
+		this.RT_Date = null;
 		this.DateString = new SimpleStringProperty(sdf.format(Date.getTime()));
+		this.RT_DateString = null;
+		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
+		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
+		this.Price=Price;
+		this.Status=Status;
+	}
+
+	public Trip(int TripId, int FlightId, Calendar Date, Calendar RT_Date,SimpleDoubleProperty Price, SimpleIntegerProperty Status)
+	{
+		Format sdf = new SimpleDateFormat("E, dd MMM HH:mm:ss");
+		SQL_Database db = SQL_Database.getInstance();
+		this.TripId=TripId;
+		this.FlightId=FlightId;
+		this.Date=Date;
+		this.RT_Date = RT_Date;
+		this.DateString = new SimpleStringProperty(sdf.format(Date.getTime()));
+		this.RT_DateString = new SimpleStringProperty(((SimpleDateFormat) sdf).format(RT_Date.getTime()));
 		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
 		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
 		this.Price=Price;
