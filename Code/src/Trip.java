@@ -3,7 +3,6 @@ package src;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -55,6 +54,7 @@ public class Trip {
 
 	public Calendar getDate() { return Date; }
 	public String getDateString() { return DateString.get();}
+	public String getRT_DateString() { return RT_DateString.get();}
 	public String getFromString() { return FromString.get();}
 	public String getToString() { return ToString.get();}
 	public int getTripId() { return TripId; }

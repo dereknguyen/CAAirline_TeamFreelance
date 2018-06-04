@@ -397,8 +397,7 @@ public class SQL_Database implements Database {
         String Source = getFlightSrc(FlightId);
         String Destination = getFlightDest(FlightId);
         int reverseId = getFlightId(Destination, Source);
-        String query = "SELECT * FROM trips t1 INNER JOIN trips t2 WHERE " +
-                "t1.FlightId = ? AND t2.FlightId = ? AND t1.Date = ? AND t2.Date = ?";
+        String query = "SELECT t1.TripId, t1.FlightId, t1.Date AS Depart, t2.Date AS Return, t1.Price AS P1, t2.Price AS P2, t1.Status FROM trips t1 INNER JOIN trips t2 WHERE t1.FlightId = ? AND t2.FlightId = ? AND DATE(t1.Date) = ? AND DATE(t2.Date) = ?";
         try
         {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -414,13 +413,13 @@ public class SQL_Database implements Database {
             {
                 Calendar c1 = Calendar.getInstance();
                 Calendar c2 = Calendar.getInstance();
-                c1.setTime(sdf2.parse(rs.getString("t1.Date")));
-                c2.setTime(sdf2.parse(rs.getString("t2.Date")));
+                c1.setTime(sdf2.parse(rs.getString("Depart")));
+                c2.setTime(sdf2.parse(rs.getString("Return")));
                 output.add(new Trip(rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c1,
                         c2,
-                        new SimpleDoubleProperty(rs.getDouble("Price")),
+                        new SimpleDoubleProperty(rs.getDouble("P1") + rs.getDouble("P2")),
                         new SimpleIntegerProperty(rs.getInt("Status"))));
             }
             return output;

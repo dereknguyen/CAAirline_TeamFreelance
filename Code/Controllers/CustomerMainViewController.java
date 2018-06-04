@@ -202,17 +202,17 @@ public class CustomerMainViewController {
              * Same thing as searchOneWay
              */
             Database db = SQL_Database.getInstance();
-            ObservableList<Trip> results1 = FXCollections.observableArrayList(
+            ObservableList<Trip> results = FXCollections.observableArrayList(
                     db.getRoundTrips(db.getFlightId(from, to), c1, c2)
             );
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
+            B_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RT_DateString"));
             B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
-            B_AvailableFlightsTable.setItems(results1);
+            B_AvailableFlightsTable.setItems(results);
         }
 
         return null;
