@@ -27,29 +27,29 @@ public class CustomerControl{
       FlightManager fm = new FlightManager();
       Scanner scan = new Scanner(System.in);
       //Trip trip = fm.getTripFromUser();
-      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
+      //Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
-      int tripId = trip.getTripId();
+      //int tripId = trip.getTripId();
       System.out.println("What seat would you like? Enter a number 1-20");
       int seatNo = scan.nextInt();
-      db.addTicket(username, tripId, seatNo);
+      //db.addTicket(username, tripId, seatNo);
    }
 
    // Checkin
    public void checkin(String username){
       FlightManager fm = new FlightManager();
-      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
+      //Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
-      int flightId = trip.getFlightId();
-      db.checkIn(username, flightId);
+      //int flightId = trip.getFlightId();
+      //db.checkIn(username, flightId);
    }
 
    // View status
    public void status(){
       FlightManager fm = new FlightManager();
-      Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
+      //Trip trip = new Trip(0, 0, Calendar.getInstance(), 0, 0);
 
-      System.out.println("Status = " + db.getStatus(trip.getFlightId()));
+      //System.out.println("Status = " + db.getStatus(trip.getFlightId()));
    }
 
 }

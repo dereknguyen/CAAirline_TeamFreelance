@@ -4,13 +4,19 @@ import java.sql.Date;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.ArrayList;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import src.Database;
 import src.SQL_Database;
 import src.Trip;
@@ -18,7 +24,7 @@ import src.Trip;
 public class CustomerMainViewController {
 
     @FXML private TabPane B_TripModeTabPane;
-    @FXML private TableView<?> B_AvailableFlightsTable;
+    @FXML private TableView<Trip> B_AvailableFlightsTable;
     @FXML private JFXComboBox<String> B_OneWayFrom;
     @FXML private JFXComboBox<String> B_OneWayTo;
     @FXML private JFXDatePicker B_OneWayDepartDate;
@@ -28,11 +34,11 @@ public class CustomerMainViewController {
     @FXML private JFXDatePicker B_RoundTripDepartDate;
     @FXML private JFXDatePicker B_RoundTripReturnDate;
 
-    @FXML private TableColumn<?, ?> B_FromCol;
-    @FXML private TableColumn<?, ?> B_ToCol;
-    @FXML private TableColumn<?, ?> B_DepartDateCol;
-    @FXML private TableColumn<?, ?> B_ReturnDateCol;
-    @FXML private TableColumn<?, ?> B_PriceCol;
+    @FXML private TableColumn<Trip, String> B_FromCol;
+    @FXML private TableColumn<Trip, String> B_ToCol;
+    @FXML private TableColumn<Trip, String> B_DepartDateCol;
+    @FXML private TableColumn<Trip, String> B_ReturnDateCol;
+    @FXML private TableColumn<Trip, String> B_PriceCol;
     @FXML private Label B_ErrMsg;
 
     @FXML private JFXTextField CI_FlightID;
@@ -118,7 +124,7 @@ public class CustomerMainViewController {
 
     @FXML
     void MF_HandleRefresh() {
-        // TODO: Just pull what flight associate with the customer and display it in the My Flight Table.
+        // TODO: Just pull what flight associates with the customer and display it in the My Flight Table.
     }
 
 
@@ -148,20 +154,23 @@ public class CustomerMainViewController {
             Calendar c = Calendar.getInstance();
             Date departDate = Date.valueOf(localD);
             c.setTime(departDate);
-
-            /* TODO: PULL FROM DATABASE
-             *
-             * Currently, Nick have it set up so that it will print to console.
-             * What we want is to populate the table with the queried data.
-             */
             Database db = SQL_Database.getInstance();
-            ArrayList<Trip> results = db.getTripsByFlightAndDate(db.getFlightId(from, to), c);
+            ObservableList<Trip> results = FXCollections.observableArrayList(
+                    db.getTripsByFlightAndDate(db.getFlightId(from, to), c));
+
             for (Trip t : results)
             {
-                System.out.println(t.getTripId() + " " + t.getFlightId() + " "
+                System.out.println(t.getTripId() + " " + t.getFrom() + " " + t.getTo() + " "
                         + t.getDate().getTime() + " " + t.getPrice() + " " + t.getStatus());
             }
+            //todo from and to locations are not showing
+            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+            B_ReturnDateCol.setCellValueFactory(cellData -> { return new ReadOnlyStringWrapper("N/A");});
+            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
+            B_AvailableFlightsTable.setItems(results);
         }
 
         return null;
