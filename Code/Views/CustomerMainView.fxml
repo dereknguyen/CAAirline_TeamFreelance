@@ -27,7 +27,7 @@
                      <children>
                         <HBox layoutX="371.0" layoutY="179.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox prefHeight="425.0" prefWidth="292.0" spacing="20.0">
+                              <VBox prefHeight="425.0" prefWidth="283.0" spacing="20.0">
                                  <children>
                                     <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Cities and Dates" />
                                     <TabPane fx:id="B_TripModeTabPane" prefHeight="270.0" prefWidth="264.0" stylesheets="@ViewsCSS/TripSelectionTabPane.css" tabClosingPolicy="UNAVAILABLE">
@@ -56,7 +56,6 @@
                                                             <JFXComboBox fx:id="B_RoundTripFrom" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="From" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
                                                             <JFXComboBox fx:id="B_RoundTripTo" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="To" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
                                                             <JFXDatePicker fx:id="B_RoundTripDepartDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
-                                                            <JFXDatePicker fx:id="B_RoundTripReturnDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Return Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -71,18 +70,18 @@
                               </VBox>
                               <VBox prefHeight="425.0" prefWidth="651.0" spacing="20.0">
                                  <children>
-                                    <HBox spacing="270.0">
+                                    <HBox spacing="295.0">
                                        <children>
-                                          <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Flights" />
-                                          <JFXButton onAction="#B_HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Flight" />
+                                          <Label fx:id="B_TableLabel" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Flights" />
+                                          <JFXButton fx:id="B_PurchaseFlightButton" onAction="#B_HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Flight" />
                                        </children>
                                     </HBox>
                                     <TableView fx:id="B_AvailableFlightsTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
                                       <columns>
                                         <TableColumn fx:id="B_FromCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="From" />
                                         <TableColumn fx:id="B_ToCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="150.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="B_ReturnDateCol" editable="false" prefWidth="150.0" style="-fx-background-color: #151515;" text="Return Date" />
+                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="220.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="B_ReturnDateCol" editable="false" prefWidth="220.0" style="-fx-background-color: #151515;" text="Return Date" />
                                           <TableColumn fx:id="B_PriceCol" prefWidth="83.0" style="-fx-background-color: #151515;" text="Price" />
                                       </columns>
                                     </TableView>
@@ -90,7 +89,7 @@
                               </VBox>
                            </children>
                            <padding>
-                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                              <Insets bottom="20.0" left="15.0" right="10.0" top="30.0" />
                            </padding>
                         </HBox>
                      </children>
