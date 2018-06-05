@@ -41,6 +41,8 @@ public class EmployeeMainViewController {
     private static final int ONE_WAY = 0;
     private static final int ROUND_TRIP = 1;
 
+    private ObservableList<Trip> results;
+
     @FXML private ResourceBundle resources;
     @FXML private URL location;
 
@@ -384,6 +386,9 @@ public class EmployeeMainViewController {
         departDate.setTime(Date.valueOf(date));
         departDate.set(Calendar.HOUR, time.getHour());
         departDate.set(Calendar.MINUTE, time.getMinute());
+
+        SQL_Database db = SQL_Database.getInstance();
+        db.addTrip(db.getFlightId(from, to), departDate, price);
         return null;
     }
 }
