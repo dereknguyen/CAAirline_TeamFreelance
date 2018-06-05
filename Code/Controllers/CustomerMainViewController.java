@@ -104,16 +104,17 @@ public class CustomerMainViewController {
 
         try {
             id = Integer.parseInt(CI_FlightID.getText().trim());
-
+            //TODO add check for no matching ticket, checkIn only returns -1 if the db crashes
             if (db.checkIn(username, id) == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerBaggageView.fxml"));
-                Parent root = null;
+                Parent root;
 
                 try {
                     root = loader.load();
                 }
                 catch (Exception e) {
                     e.printStackTrace();
+                    return;
                 }
 
                 Stage stage = new Stage();
@@ -123,21 +124,22 @@ public class CustomerMainViewController {
                 CustomerBaggageViewController controller = loader.getController();
                 controller.setTripID(id);
 
+                CI_ErrMsg.setVisible(false);
                 stage.show();
             }
             else {
-                // TODO: Print error
-                System.out.println("Wrong ticket number");
+                CI_ErrMsg.setText("No matching ticket number found");
+                CI_ErrMsg.setVisible(true);
             }
         }
-        catch (Exception e) {
-            // TODO: Print Error
-            System.out.println("Wrong ID/format");
+        catch (NumberFormatException e) {
+            CI_ErrMsg.setText("Please enter an integer");
+            CI_ErrMsg.setVisible(true);
         }
     }
 
     @FXML
-    void B_HandlePurchase(ActionEvent event) {
+    void B_HandlePurchase() {
 
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
@@ -166,13 +168,14 @@ public class CustomerMainViewController {
 
             if (tripID != -1) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ReturnFlightSelectionView.fxml"));
-                Parent root = null;
+                Parent root;
 
                 try {
                     root = loader.load();
                 }
                 catch (Exception e) {
                     e.printStackTrace();
+                    return;
                 }
 
                 ReturnFlightSelectionViewController controller = loader.getController();
@@ -331,13 +334,14 @@ public class CustomerMainViewController {
 
     private void toPaymentView_OneWay(int tripID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
-        Parent root = null;
+        Parent root;
 
         try {
             root = loader.load();
         }
         catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
         PaymentViewController controller = loader.getController();
