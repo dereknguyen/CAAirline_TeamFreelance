@@ -289,6 +289,10 @@ public class EmployeeMainViewController {
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
+        MR_From.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        MR_To.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     /* HELPERS */
