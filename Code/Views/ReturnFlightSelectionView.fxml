@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReturnFlightSelectionViewController">
+   <children>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+         <tabs>
+            <Tab closable="false" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Booking">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
+                     <children>
+                        <HBox layoutX="371.0" layoutY="179.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="425.0" prefWidth="283.0" spacing="20.0">
+                                 <children>
+                                    <JFXButton minWidth="49.0" onAction="#HandleBack" prefHeight="50.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-background-radius: 3px; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Avenir;" text="&lt; Back" />
+                                    <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Select Return Flight" />
+                                    <JFXDatePicker fx:id="ReturnFlightDate" defaultColor="#046a38" prefHeight="34.0" prefWidth="260.0" promptText="Depature Date" style="-fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@ViewsCSS/CustomDatePicker.css" />
+                                    <Label fx:id="ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="260.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
+                                    <JFXButton onAction="#HandleSearch" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Seach For Tickets" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="425.0" prefWidth="651.0" spacing="20.0">
+                                 <children>
+                                    <HBox spacing="200.0">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Return Flights" />
+                                          <JFXButton onAction="#HandlePurchase" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Purchase Ticekts" />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="AvailableFlightsTable" prefHeight="413.0" prefWidth="645.0" style="-fx-background-color: #151515;">
+                                       <columns>
+                                          <TableColumn fx:id="FromCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="From" />
+                                          <TableColumn fx:id="ToCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn fx:id="DepartDateCol" editable="false" prefWidth="220.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="ReturnDateCol" editable="false" prefWidth="220.0" style="-fx-background-color: #151515;" text="Return Date" />
+                                          <TableColumn fx:id="PriceCol" prefWidth="83.0" style="-fx-background-color: #151515;" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="15.0" right="10.0" top="30.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <ImageView fitHeight="44.0" fitWidth="110.0" layoutX="445.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../Assets/whitegold_logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
