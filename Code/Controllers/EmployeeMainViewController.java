@@ -25,9 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import src.Database;
-import src.SQL_Database;
-import src.Trip;
+
+import src.*;
 
 
 /*
@@ -35,6 +34,7 @@ import src.Trip;
  * PS - Pricing & Scheduling Tab
  * FS - Flight Status Tab
  * B  - Booking Tab
+ * MR - Management Reports
  */
 public class EmployeeMainViewController {
 
@@ -47,13 +47,13 @@ public class EmployeeMainViewController {
     @FXML private URL location;
 
     @FXML private TabPane mainTabPane;
-    @FXML private TableView<?> AF_AvailableFlightsTable;
+    @FXML private TableView<Ticket> AF_AvailableFlightsTable;
     @FXML private TableColumn<?, ?> AF_FlightNumberCol;
     @FXML private TableColumn<?, ?> AF_FromCol;
     @FXML private TableColumn<?, ?> AF_ToCol;
     @FXML private TableColumn<?, ?> AF_DepartTimeCol;
-    @FXML private TableColumn<?, ?> AF_ArivalTimeCol;
-    @FXML private TableColumn<?, ?> AF_PriceCol;
+    @FXML private TableColumn<Ticket, String> AF_NumBagsCol;
+    @FXML private TableColumn<Ticket, Boolean> AF_CheckedInStatusCol;
     @FXML private TableColumn<?, ?> AF_StatusCol;
 
     @FXML private TabPane PS_TripModeTabPane;
@@ -99,13 +99,74 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_ArrivalTimeCol;
     @FXML private TableColumn<Trip, String> B_PriceCol;
 
-    @FXML
-    void AF_HandleRefresh() {
+    @FXML private TableView<Report> MR_ReportTable;
+    @FXML private Label MR_ReportLabel; //from
+    @FXML private TableColumn<Report, String> MR_DestinationCol;
+    @FXML private TableColumn<Report, String> MR_DataCol;
 
+    @FXML private JFXComboBox<String> MR_From;
+    @FXML private JFXComboBox<String> MR_To;
+
+    @FXML
+    void AF_HandleRefresh(ActionEvent event) {
+        SQL_Database db = SQL_Database.getInstance();
+        ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
+                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
+        );
+
+        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DepartDateString"));
+        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
+        AF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
+        AF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+
+        AF_AvailableFlightsTable.setItems(myFlights);
     }
 
     @FXML
-    void B_HandlePurchaseSelected() {
+    void MR_HandleSeat(ActionEvent event) {
+        String from = MR_From.getSelectionModel().getSelectedItem();
+        String to = MR_To.getSelectionModel().getSelectedItem();
+
+        Database db = SQL_Database.getInstance();
+
+        int id = db.getFlightId(from, to);
+        double avg = ((SQL_Database) db).getAvgSeats(id);
+        MR_ReportLabel.setText(from);
+
+        Report data = new Report(from, to, new Double(avg).toString());
+        ObservableList<Report> results = FXCollections.observableArrayList(data);
+
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
+        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+
+        MR_ReportTable.setItems(results);
+    }
+
+    @FXML
+    void MR_HandleRevenue(ActionEvent event) {
+        String from = MR_From.getSelectionModel().getSelectedItem();
+        String to = MR_To.getSelectionModel().getSelectedItem();
+
+        Database db = SQL_Database.getInstance();
+
+        int id = db.getFlightId(from, to);
+        double avg = ((SQL_Database) db).getAvgRevenue(id);
+        MR_ReportLabel.setText(from);
+
+        Report data = new Report(from, to, new Double(avg).toString());
+        ObservableList<Report> results = FXCollections.observableArrayList(data);
+
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
+        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+
+        MR_ReportTable.setItems(results);
+    }
+
+    @FXML
+    void B_HandlePurchaseSelected(ActionEvent event) {
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (mode == ONE_WAY) {
