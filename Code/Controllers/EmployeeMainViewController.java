@@ -108,7 +108,7 @@ public class EmployeeMainViewController {
     @FXML private JFXComboBox<String> MR_To;
 
     @FXML
-    void AF_HandleRefresh(ActionEvent event) {
+    void AF_HandleRefresh() {
         SQL_Database db = SQL_Database.getInstance();
         ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
                 db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
@@ -126,7 +126,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void MR_HandleSeat(ActionEvent event) {
+    void MR_HandleSeat() {
         String from = MR_From.getSelectionModel().getSelectedItem();
         String to = MR_To.getSelectionModel().getSelectedItem();
 
@@ -146,7 +146,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void MR_HandleRevenue(ActionEvent event) {
+    void MR_HandleRevenue() {
         String from = MR_From.getSelectionModel().getSelectedItem();
         String to = MR_To.getSelectionModel().getSelectedItem();
 
@@ -166,7 +166,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void B_HandlePurchaseSelected(ActionEvent event) {
+    void B_HandlePurchaseSelected() {
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (mode == ONE_WAY) {
