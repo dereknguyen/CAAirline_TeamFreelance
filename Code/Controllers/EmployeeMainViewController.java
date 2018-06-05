@@ -362,6 +362,7 @@ public class EmployeeMainViewController {
 
     private String addflight(String from, String to, LocalDate date, LocalTime time, String basePrice)
     {
+        double adjprice;
         if (from == null)
         {
             return "Please specify starting location";
@@ -382,13 +383,30 @@ public class EmployeeMainViewController {
         {
             return "Please specify base price";
         }
+        try
+        {
+            adjprice = Double.parseDouble(basePrice);
+        }
+        catch (NumberFormatException e)
+        {
+            return "Price must be a decimal";
+        }
         Calendar departDate = Calendar.getInstance();
         departDate.setTime(Date.valueOf(date));
         departDate.set(Calendar.HOUR, time.getHour());
         departDate.set(Calendar.MINUTE, time.getMinute());
 
         SQL_Database db = SQL_Database.getInstance();
-        db.addTrip(db.getFlightId(from, to), departDate, price);
+        adjprice = adjprice - ((db.calculateAvgEmpty(to)/2)*adjprice);
+        int status = db.addTrip(db.getFlightId(from, to), departDate, adjprice);
+        if (status == -1)
+        {
+            return "Flight must not be within 40 minutes of another flight";
+        }
+        else if (status == -2)
+        {
+            return "Flight could not be added";
+        }
         return null;
     }
 }
