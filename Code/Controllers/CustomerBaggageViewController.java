@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import src.CustomerControl;
 import src.SQL_Database;
 import src.Ticket;
@@ -13,7 +14,7 @@ import src.Ticket;
 public class CustomerBaggageViewController {
 
     private int tripID = 0;
-    SQL_Database db = SQL_Database.getInstance();
+    private SQL_Database db = SQL_Database.getInstance();
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
@@ -21,6 +22,7 @@ public class CustomerBaggageViewController {
     @FXML private JFXTextField carryOnWeight;
     @FXML private JFXTextField numCheckIn;
     @FXML private JFXTextField checkInWeight;
+    @FXML private Label ErrMsg;
 
     @FXML
     void HandleBack(ActionEvent event) {
@@ -43,7 +45,7 @@ public class CustomerBaggageViewController {
     }
 
     @FXML
-    void HandleConfirmCheckIn(ActionEvent event) {
+    void HandleConfirmCheckIn() {
         String username = CustomerControl.getInstance().getCustomer().getUserName();
         int seatNumber = getSeatNumber(username, this.tripID);
 
@@ -61,12 +63,14 @@ public class CustomerBaggageViewController {
 
             if (result != -1) {
                 // TODO: End Session
+                ErrMsg.setVisible(false);
                 numCarryOn.getScene().getWindow().hide();
                 Utilities.present("/Views/CustomerMainView.fxml", "Main");
             }
         }
-        catch (Exception e) {
-            // TODO: Print number format error
+        catch (NumberFormatException e) {
+            ErrMsg.setText("Please enter an integer");
+            ErrMsg.setVisible(true);
         }
     }
 

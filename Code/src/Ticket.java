@@ -1,5 +1,6 @@
 package src;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,35 +9,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 
 public class Ticket {
-
-	/*private Calendar date;
-	private String trip;
-	private int ticketNumber;
-	private int planeNumber;
-	
-	public Ticket(Calendar d, String t, int ticketNum, int planeNum) {
-		date = d;
-		trip = t;
-		ticketNumber = ticketNum;
-		planeNumber = planeNum;
-	}
-	
-	public Calendar getDate() {
-		return date;
-	}
-	
-	public String getTrip() {
-		return trip;
-	}
-	
-	public int getTicketNumber() {
-		return ticketNumber;
-	}
-	
-	public int getPlaneNumber() {
-		return planeNumber;
-	}*/
-
 	private int TripId;
 	private int SeatNumber;
 	private int NumBags;
@@ -46,7 +18,7 @@ public class Ticket {
 	private SimpleStringProperty FromString;
 	private SimpleStringProperty ToString;
 	private SimpleStringProperty DepartDateString;
-	private SimpleIntegerProperty FlightStatus;
+	private SimpleStringProperty FlightStatus;
 	private SimpleIntegerProperty NumberOfBags;
 	private SimpleBooleanProperty CheckedInStatus;
 
@@ -67,7 +39,7 @@ public class Ticket {
 	    this.FromString = new SimpleStringProperty(temp.getFromString());
 	    this.ToString = new SimpleStringProperty(temp.getToString());
 	    this.DepartDateString = new SimpleStringProperty(sdf.format(temp.getDate().getTime()));
-        this.FlightStatus = new SimpleIntegerProperty(temp.getStatus());
+        this.FlightStatus = new ReadOnlyStringWrapper(temp.getStatusString());
         this.NumberOfBags = new SimpleIntegerProperty(this.NumBags);
         this.CheckedInStatus = new SimpleBooleanProperty(this.CheckedIn);
     }
@@ -81,7 +53,7 @@ public class Ticket {
 	public String getFromString() { return FromString.get(); }
 	public String getToString() { return ToString.get(); }
 	public String getDepartDateString() { return DepartDateString.get(); }
-	public int getFlightStatus() { return FlightStatus.get(); }
+	public String getFlightStatus() { return FlightStatus.get(); }
 	public int getNumberOfBags() { return NumberOfBags.get(); }
 	public boolean getCheckedInStatus() { return CheckedInStatus.get(); }
 }

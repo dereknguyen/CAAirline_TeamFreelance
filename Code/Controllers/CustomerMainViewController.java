@@ -116,6 +116,7 @@ public class CustomerMainViewController {
 
                 CI_ErrMsg.setVisible(false);
                 stage.show();
+
             }
             else {
                 CI_ErrMsg.setText("No matching ticket number found");
@@ -233,16 +234,16 @@ public class CustomerMainViewController {
         }
         SQL_Database db = SQL_Database.getInstance();
         Trip t = db.getTripInfo(TripId);
-        ObservableList<Trip> result = FXCollections.observableArrayList(t);
+        results = FXCollections.observableArrayList(t);
         if (t == null) return;
 
         FS_ErrMsg.setVisible(false);
         FS_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
         FS_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
         FS_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-        FS_StatusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        FS_StatusCol.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
 
-        FS_FlightStatusTable.setItems(result);
+        FS_FlightStatusTable.setItems(results);
     }
 
     @FXML
@@ -288,6 +289,14 @@ public class CustomerMainViewController {
             results = FXCollections.observableArrayList(
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
+            /* remove cancelled trips */
+            for (Trip t : results)
+            {
+                if (t.getStatus() == 2)
+                {
+                    results.remove(t);
+                }
+            }
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));

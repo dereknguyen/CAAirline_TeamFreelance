@@ -1,7 +1,7 @@
 package src;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.text.Format;
@@ -23,7 +23,7 @@ public class Trip {
 	private SimpleStringProperty FromString;
 	private SimpleStringProperty ToString;
 	private SimpleDoubleProperty PriceString;
-	private SimpleIntegerProperty StatusString;
+	private SimpleStringProperty StatusString;
 
 	public Trip(int TripId, int FlightId, Calendar Date, double Price, int Status)
 	{
@@ -41,7 +41,22 @@ public class Trip {
 		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
 		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
 		this.PriceString= new SimpleDoubleProperty(Price);
-		this.StatusString = new SimpleIntegerProperty(Status);
+		if (Status == 0)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("On-time");
+		}
+		else if (Status == 1)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("Delayed");
+		}
+		else if (Status == 2)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("Cancelled");
+		}
+		else
+		{
+			this.StatusString = new ReadOnlyStringWrapper("ERR");
+		}
 	}
 
 	public Trip(int TripId, int FlightId, Calendar Date, Calendar RTDate, double Price, int Status)
@@ -60,7 +75,22 @@ public class Trip {
 		this.FromString = new SimpleStringProperty(db.getFlightSrc(FlightId));
 		this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
 		this.PriceString= new SimpleDoubleProperty(Price);
-		this.StatusString = new SimpleIntegerProperty(Status);
+		if (Status == 0)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("On-time");
+		}
+		else if (Status == 1)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("Delayed");
+		}
+		else if (Status == 2)
+		{
+			this.StatusString = new ReadOnlyStringWrapper("Cancelled");
+		}
+		else
+		{
+			this.StatusString = new ReadOnlyStringWrapper("ERR");
+		}
 	}
 
 	public int getTripId() { return TripId; }
@@ -75,5 +105,5 @@ public class Trip {
 	public String getFromString() { return FromString.get();}
 	public String getToString() { return ToString.get();}
 	public double getPriceString() { return PriceString.get();}
-	public int getStatusString() { return StatusString.get(); }
+	public String getStatusString() { return StatusString.get(); }
 }
