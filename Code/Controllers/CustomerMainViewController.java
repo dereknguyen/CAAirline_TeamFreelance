@@ -2,7 +2,6 @@ package Controllers;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXButton;
@@ -13,12 +12,8 @@ import com.jfoenix.controls.JFXTextField;
 import java.time.LocalDate;
 import java.util.Locale;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +35,6 @@ public class CustomerMainViewController {
     @FXML private JFXComboBox<String> B_OneWayFrom;
     @FXML private JFXComboBox<String> B_OneWayTo;
     @FXML private JFXDatePicker B_OneWayDepartDate;
-    @FXML private Label B_TableLabel;
     @FXML private JFXButton B_PurchaseFlightButton;
 
     @FXML private JFXComboBox<String> B_RoundTripFrom;
@@ -82,15 +76,12 @@ public class CustomerMainViewController {
         B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
 
         B_TripModeTabPane.getSelectionModel().selectedIndexProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                        if (newValue.intValue() == 1) {
-                            B_PurchaseFlightButton.setText("Choose 1st Flight");
-                        }
-                        else {
-                            B_PurchaseFlightButton.setText("Purchase Flight");
-                        }
+                (observable, oldValue, newValue) -> {
+                    if (newValue.intValue() == 1) {
+                        B_PurchaseFlightButton.setText("Choose 1st Flight");
+                    }
+                    else {
+                        B_PurchaseFlightButton.setText("Purchase Flight");
                     }
                 }
         );
@@ -100,11 +91,10 @@ public class CustomerMainViewController {
     void CI_HandleCheckIn() {
         SQL_Database db = SQL_Database.getInstance();
         String username = CustomerControl.getInstance().getCustomer().getUserName();
-        int id = -1;
+        int id;
 
         try {
             id = Integer.parseInt(CI_FlightID.getText().trim());
-            //TODO add check for no matching ticket, checkIn only returns -1 if the db crashes
             if (db.checkIn(username, id) == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerBaggageView.fxml"));
                 Parent root;
