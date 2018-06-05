@@ -25,9 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import src.Database;
-import src.SQL_Database;
-import src.Trip;
+import src.*;
 
 
 /*
@@ -47,7 +45,7 @@ public class EmployeeMainViewController {
     @FXML private URL location;
 
     @FXML private TabPane mainTabPane;
-    @FXML private TableView<?> AF_AvailableFlightsTable;
+    @FXML private TableView<Ticket> AF_AvailableFlightsTable;
     @FXML private TableColumn<?, ?> AF_FlightNumberCol;
     @FXML private TableColumn<?, ?> AF_FromCol;
     @FXML private TableColumn<?, ?> AF_ToCol;
