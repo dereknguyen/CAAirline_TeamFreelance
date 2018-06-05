@@ -115,6 +115,7 @@ public class CustomerMainViewController {
                 controller.setTripID(id);
 
                 CI_ErrMsg.setVisible(false);
+                CI_FlightID.getScene().getWindow().hide();
                 stage.show();
 
             }
