@@ -125,7 +125,6 @@ public class EmployeeMainViewController {
 
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
-
         if (mode == ONE_WAY) {
             // Get selected TABLE ROW in Booking Tab
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
@@ -195,97 +194,6 @@ public class EmployeeMainViewController {
         }
     }
 
-    private int getSelectedTripID(Trip selectedTrip, String from, String to) {
-        SQL_Database db = SQL_Database.getInstance();
-
-        if (selectedTrip != null) {
-
-            int flightID = db.getFlightId(from, to);
-
-            Calendar date = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
-
-            try {
-                date.setTime(sdf.parse(selectedTrip.getDateString()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return db.getTripId(flightID, date);
-        }
-
-        return 0;
-    }
-
-
-    private void toPaymentView_OneWay(int tripID) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
-        Parent root;
-
-        try {
-            root = loader.load();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        PaymentViewController controller = loader.getController();
-        Stage stage = new Stage();
-        controller.setTripID(tripID);
-        controller.setSelectedMode(ONE_WAY);
-        controller.hideReturnSeat();
-        stage.setTitle("Confirm Ticket");
-        stage.setScene(new Scene(root));
-
-        B_AvailableFlightsTable.getItems().removeAll(results);
-        B_AvailableFlightsTable.getScene().getWindow().hide();
-        stage.show();
-    }
-
-
-    private String searchFlight(String from, String to, LocalDate localDate) {
-        System.out.println("\nSearching:");
-
-        if (from == null) {
-            System.out.println("\tError: From location missing");
-            return "Please specify location you are from.";
-        }
-        else if (to == null) {
-            System.out.println("\tError: To location missing");
-            return "Please specify location are are going to.";
-        }
-        else if (localDate == null) {
-            System.out.println("\tError: Departure date missing");
-            return "Please specify departure date.";
-        }
-        else {
-            Calendar departDate = Calendar.getInstance();
-            departDate.setTime(Date.valueOf(localDate));
-
-            Database db = SQL_Database.getInstance();
-            results = FXCollections.observableArrayList(
-                    db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
-            );
-            /* remove cancelled trips */
-            for (Trip t : results)
-            {
-                if (t.getStatus() == 2)
-                {
-                    results.remove(t);
-                }
-            }
-
-            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-            B_AvailableFlightsTable.setItems(results);
-        }
-        return null;
-    }
-
     @FXML
     void MR_HandleSeat() {
         String from = MR_From.getSelectionModel().getSelectedItem();
@@ -331,7 +239,21 @@ public class EmployeeMainViewController {
 
     @FXML
     void B_HandleSearchTickets() {
-       // B_ErrMsg.setText(searchOneWay());
+        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex == 0) {
+            String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
+            String to = B_OneWayTo.getSelectionModel().getSelectedItem();
+            LocalDate date = B_OneWayDepartDate.getValue();
+            B_ErrMsg.setText(searchFlight(from, to, date));
+        }
+        else if (selectedIndex == 1) {
+            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
+            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
+            LocalDate date = B_RoundTripDepartDate.getValue();
+            B_ErrMsg.setText(searchFlight(from, to, date));
+        }
+
     }
 
 
@@ -423,12 +345,8 @@ public class EmployeeMainViewController {
     }
 
     /* HELPERS */
-    /*private String searchOneWay() {
-        System.out.println("\nSearching: One Way");
-
-        String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
-        String to = B_OneWayTo.getSelectionModel().getSelectedItem();
-        LocalDate localDate = B_OneWayDepartDate.getValue();
+    private String searchFlight(String from, String to, LocalDate localDate) {
+        System.out.println("\nSearching:");
 
         if (from == null) {
             System.out.println("\tError: From location missing");
@@ -447,63 +365,27 @@ public class EmployeeMainViewController {
             departDate.setTime(Date.valueOf(localDate));
 
             Database db = SQL_Database.getInstance();
-            ObservableList<Trip> results = FXCollections.observableArrayList(
+            results = FXCollections.observableArrayList(
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
+            /* remove cancelled trips */
+            for (Trip t : results)
+            {
+                if (t.getStatus() == 2)
+                {
+                    results.remove(t);
+                }
+            }
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-            B_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ArrivalTimeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
+            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
             B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
             B_AvailableFlightsTable.setItems(results);
         }
         return null;
     }
-
-    /*private String searchRoundTrip() {
-        System.out.println("\nSearching: Round Trip");
-
-        String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-        String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-
-        LocalDate departLocal = B_RoundTripDepartDate.getValue();
-        LocalDate returnLocal = B_RoundTripReturnDate.getValue();
-
-        if (from == null) {
-            System.out.println("\tError: From location missing");
-            return "Please specify location you are from.";
-        } else if (to == null) {
-            System.out.println("\tError: To location missing");
-            return "Please specify location are are going to.";
-        } else if (departLocal == null || returnLocal == null) {
-            System.out.println("\tError: Departure date or Return date missing");
-            return "Missing either depart date or return date";
-        } else {
-
-            Calendar departDate = Calendar.getInstance();
-            Calendar returnDate = Calendar.getInstance();
-
-            departDate.setTime(Date.valueOf(departLocal));
-            returnDate.setTime(Date.valueOf(returnLocal));
-
-            Database db = SQL_Database.getInstance();
-            ObservableList<Trip> results = FXCollections.observableArrayList(
-                    db.getRoundTrips(db.getFlightId(from, to), departDate, returnDate)
-            );
-
-            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-            B_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ArrivalTimeCol.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
-            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-            B_AvailableFlightsTable.setItems(results);
-        }
-
-        return null;
-    }*/
 
     private int getSelectedTripID_OneWay() {
         SQL_Database db = SQL_Database.getInstance();
@@ -576,5 +458,53 @@ public class EmployeeMainViewController {
             return "Flight could not be added";
         }
         return null;
+    }
+
+    private int getSelectedTripID(Trip selectedTrip, String from, String to) {
+        SQL_Database db = SQL_Database.getInstance();
+
+        if (selectedTrip != null) {
+
+            int flightID = db.getFlightId(from, to);
+
+            Calendar date = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
+
+            try {
+                date.setTime(sdf.parse(selectedTrip.getDateString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return db.getTripId(flightID, date);
+        }
+
+        return 0;
+    }
+
+
+    private void toPaymentView_OneWay(int tripID) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
+        Parent root;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        PaymentViewController controller = loader.getController();
+        Stage stage = new Stage();
+        controller.setTripID(tripID);
+        controller.setSelectedMode(ONE_WAY);
+        controller.hideReturnSeat();
+        stage.setTitle("Confirm Ticket");
+        stage.setScene(new Scene(root));
+
+        B_AvailableFlightsTable.getItems().removeAll(results);
+        B_AvailableFlightsTable.getScene().getWindow().hide();
+        stage.show();
     }
 }

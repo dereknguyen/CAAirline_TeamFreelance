@@ -58,7 +58,6 @@ public class Trip {
 			this.StatusString = new ReadOnlyStringWrapper("ERR");
 		}
 
-		print();
 	}
 
 	public Trip(int TripId, int FlightId, Calendar Date, Calendar RTDate, double Price, int Status)
@@ -94,17 +93,7 @@ public class Trip {
 			this.StatusString = new ReadOnlyStringWrapper("ERR");
 		}
 
-		print();
 	}
-
-	private void print() {
-        System.out.println();
-        System.out.println(this.TripId);
-        System.out.println(this.FlightId);
-        System.out.println(this.Date);
-        System.out.println(this.RTDate);
-        System.out.println(this.getPrice());
-    }
 
 	public int getTripId() { return TripId; }
 	public int getFlightId() { return FlightId; }

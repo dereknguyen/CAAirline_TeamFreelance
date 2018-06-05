@@ -138,6 +138,7 @@
                                           <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Set Flight Status" />
                                        </children>
                                     </VBox>
+                                    <Label fx:id="FS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="272.0" style="-fx-text-fill: red;" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="425.0" prefWidth="651.0" spacing="20.0">
