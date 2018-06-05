@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -189,19 +190,46 @@ public class EmployeeMainViewController {
     // TODO Set flight function
     @FXML
     void PS_HandleSetFlight(ActionEvent event) {
+        int mode = PS_TripModeTabPane.getSelectionModel().getSelectedIndex();
+        Calendar c = Calendar.getInstance();
 
+        if (mode == ONE_WAY)
+        {
+            String from = PS_OneWayFrom.getSelectionModel().getSelectedItem();
+            String to = PS_OneWayTo.getSelectionModel().getSelectedItem();
+            LocalDate date = PS_OneWayDepartDate.getValue();
+            LocalTime time = PS_OneWayDepartTime.getValue();
+            String basePrice = PS_OneWayBasePrice.getText();
+            PS_ErrMsg.setText(addflight(from, to, date, time, basePrice));
+        }
+        else if (mode == ROUND_TRIP)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     /* HELPERS */
@@ -330,4 +358,32 @@ public class EmployeeMainViewController {
         stage.show();
     }
 
+    private String addflight(String from, String to, LocalDate date, LocalTime time, String basePrice)
+    {
+        if (from == null)
+        {
+            return "Please specify starting location";
+        }
+        if (to == null)
+        {
+            return "Please specify destination";
+        }
+        if (date == null)
+        {
+            return "Please specify departure date";
+        }
+        if (time == null)
+        {
+            return "Please specify departure time";
+        }
+        if (basePrice == null)
+        {
+            return "Please specify base price";
+        }
+        Calendar departDate = Calendar.getInstance();
+        departDate.setTime(Date.valueOf(date));
+        departDate.set(Calendar.HOUR, time.getHour());
+        departDate.set(Calendar.MINUTE, time.getMinute());
+        return null;
+    }
 }
