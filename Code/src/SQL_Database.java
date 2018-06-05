@@ -177,7 +177,7 @@ public class SQL_Database implements Database {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, Status);
             ps.setInt(2, TripId);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
@@ -236,7 +236,7 @@ public class SQL_Database implements Database {
             ps.setDouble(3, Price);
             ps.setInt(4, Status);
             ps.setInt(5, TripId);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
@@ -628,7 +628,7 @@ public class SQL_Database implements Database {
             ps.setString(2, EncryptedPassword);
             ps.setString(3, LastName);
             ps.setString(4, Username);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
@@ -720,7 +720,7 @@ public class SQL_Database implements Database {
             ps.setString(2, FirstName);
             ps.setString(3, LastName);
             ps.setString(4, Username);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
@@ -795,7 +795,7 @@ public class SQL_Database implements Database {
             ps.setBoolean(3, CheckedIn);
             ps.setString(4, Username);
             ps.setInt(5, TripId);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
@@ -858,7 +858,7 @@ public class SQL_Database implements Database {
             ps.setInt(1, NumBags);
             ps.setString(2, Username);
             ps.setInt(3, TripId);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
 
         } catch (SQLException e)
         {
