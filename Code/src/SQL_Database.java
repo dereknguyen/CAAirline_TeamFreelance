@@ -140,28 +140,29 @@ public class SQL_Database implements Database {
         return getNumTrips(null, null);
     }
 
-    public double getAvgRevenue(int FlightId) {
-        int id = FlightId;
-        String query = "SELECT Avg FROM AvgRevPerDest GROUP BY FlightId HAVING FlightId = " + id;
+    public Report getAvgRevenue(int FlightId) {
+        String query = "SELECT Rev FROM AvgRevPerDest WHERE FlightId = " + FlightId;
+        Report rep;
         double avg;
         try
         {
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            avg = rs.getInt(1);
+            avg = rs.getDouble(1);
+            rep = new Report(FlightId, avg);
+            rep.completeInfo();
         }
         catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            return -1;
+            return null;
         }
-        return avg;
+        return rep;
     }
 
     public double getAvgSeats(int FlightId) {
-        int id = FlightId;
-        String query = "SELECT NumFlights FROM NumberOfTripsPerDestination WHERE FlightId = " + id;
-        String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId HAVING FlightId = " + id;
+        String query = "SELECT NumFlights FROM NumberOfTripsPerDestination WHERE FlightId = " + FlightId;
+        String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId HAVING FlightId = " + FlightId;
         double numtrips;
         double numempty;
         try
@@ -366,16 +367,15 @@ public class SQL_Database implements Database {
     {
         String query = "SELECT * FROM trips";
         ArrayList<Trip> out = new ArrayList<>();
-        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         try
         {
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
             {
-                c.setTime(rs.getDate("Date"));
-
-                out.add(new Trip(
-                        rs.getInt("TripId"),
+                Calendar c = Calendar.getInstance();
+                c.setTime(sdf.parse(rs.getString("Date")));
+                out.add(new Trip(rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c,
                         rs.getDouble("Price"),
@@ -384,7 +384,7 @@ public class SQL_Database implements Database {
             return out;
 
         }
-        catch (SQLException e)
+        catch (SQLException | ParseException e)
         {
             System.out.println(e.getMessage());
             return null;

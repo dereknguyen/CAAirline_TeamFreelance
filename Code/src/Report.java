@@ -1,20 +1,28 @@
 package src;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Report {
-    Database db;
+    private int FlightId;
+    private double Revenue;
 
-    //properties
-    SimpleStringProperty FromString;
-    SimpleStringProperty ToString;
-    SimpleStringProperty DataString;
+    /* Properties */
+    private SimpleStringProperty ToString;
+    private SimpleDoubleProperty RevenueString;
 
-    public Report(String from, String to, String data) {
-        db = SQL_Database.getInstance();
-        this.FromString = new SimpleStringProperty(from);
-        this.ToString = new SimpleStringProperty(to);
-        this.DataString = new SimpleStringProperty(data);
-
+    public Report(int FlightId, double Revenue) {
+        this.FlightId = FlightId;
+        this.Revenue = Revenue;
     }
+
+    public void completeInfo()
+    {
+        SQL_Database db = SQL_Database.getInstance();
+        this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
+        this.RevenueString = new SimpleDoubleProperty(Revenue);
+    }
+
+    public String getToString() { return ToString.get(); }
+    public double getRevenue() { return RevenueString.get(); }
 }
