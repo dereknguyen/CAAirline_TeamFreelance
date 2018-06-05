@@ -8,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import src.SQL_Database;
 
-import java.util.Calendar;
-
 public class CreateAccountController {
 
     @FXML private TabPane modeTabPane;
@@ -18,6 +16,7 @@ public class CreateAccountController {
     @FXML private JFXTextField newFirstname;
     @FXML private JFXTextField newLastname;
     @FXML private JFXButton createAccountButton;
+    @FXML private JFXButton loginReturnButton;
     @FXML private Label errMsg;
 
     @FXML
@@ -63,7 +62,7 @@ public class CreateAccountController {
         }
         else {
             createAccountButton.getScene().getWindow().hide();
-            Utilities.present("../Views/Customer/CustomerMainView.fxml", "Main");
+            Utilities.present("../Views/CustomerMainView.fxml", "Main");
         }
     }
 
@@ -76,9 +75,14 @@ public class CreateAccountController {
         }
         else {
             createAccountButton.getScene().getWindow().hide();
-            Utilities.present("../Views/Customer/EmployeeMainView.fxml", "Main");
+            Utilities.present("../Views/EmployeeMainView.fxml", "Main");
         }
     }
 
-
+    @FXML
+    private void HandleLoginReturn()
+    {
+        loginReturnButton.getScene().getWindow().hide();
+        Utilities.present("../Views/LoginView.fxml", "California System");
+    }
 }
