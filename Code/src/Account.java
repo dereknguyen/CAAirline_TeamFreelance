@@ -8,7 +8,7 @@ public class Account {
     private String firstName;
     private String lastName;
     private String userName;
-    private ArrayList<Ticket> ticket;
+    public ArrayList<Ticket> ticket;
 
     public Account(String firstName, String lastName, String username, ArrayList<Ticket> ticket) {
         this.firstName = firstName;

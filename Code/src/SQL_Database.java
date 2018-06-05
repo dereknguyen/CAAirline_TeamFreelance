@@ -1,10 +1,12 @@
 package src;
 
 import com.sun.javafx.tools.packager.PackagerException;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -391,6 +393,7 @@ public class SQL_Database implements Database {
             return null;
         }
     }
+
 
     public ArrayList<Trip> getRoundTrips(int FlightId, Calendar departDate, Calendar returnDate)
     {
@@ -887,30 +890,36 @@ public class SQL_Database implements Database {
         }
     }
 
-    public ArrayList<Ticket> getTicketsByUser(String Username)
-    {
+    public ArrayList<Ticket> getTicketsByUsername(String Username) {
+
         String query = "SELECT * FROM tickets WHERE Username = ?";
-        try
-        {
+        try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
+
             ResultSet rs = ps.executeQuery();
             ArrayList<Ticket> output = new ArrayList<>();
-            while (rs.next())
-            {
-                output.add(new Ticket(
-                        rs.getInt("TripId"),
+
+            while (rs.next()) {
+                Ticket temp = new Ticket(
+                        rs.getInt("TripID"),
                         rs.getInt("SeatNumber"),
                         rs.getInt("NumBags"),
                         rs.getBoolean("CheckedIn")
-                ));
+                );
+
+                temp.completeInfo(temp.getTripId());
+
+                output.add(temp);
             }
+
             return output;
+
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
+
 }

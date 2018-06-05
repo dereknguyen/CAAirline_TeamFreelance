@@ -40,7 +40,6 @@ public class ReturnFlightSelectionViewController {
     @FXML private TableColumn<Trip, String> FromCol;
     @FXML private TableColumn<Trip, String> ToCol;
     @FXML private TableColumn<Trip, String> DepartDateCol;
-    @FXML private TableColumn<Trip, String> ReturnDateCol;
     @FXML private TableColumn<Trip, String> PriceCol;
 
     public void setLocations(String from, String to, int startingTripID) {
@@ -108,7 +107,6 @@ public class ReturnFlightSelectionViewController {
             FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
             PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
             AvailableFlightsTable.setItems(results);

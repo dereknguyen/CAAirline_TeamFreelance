@@ -32,6 +32,8 @@ public class CustomerMainViewController {
     private static final int ONE_WAY = 0;
     private static final int ROUND_TRIP = 1;
 
+    private ObservableList<Trip> results;
+
     @FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
     @FXML private JFXComboBox<String> B_OneWayFrom;
@@ -47,7 +49,6 @@ public class CustomerMainViewController {
     @FXML private TableColumn<Trip, String> B_FromCol;
     @FXML private TableColumn<Trip, String> B_ToCol;
     @FXML private TableColumn<Trip, String> B_DepartDateCol;
-    @FXML private TableColumn<Trip, String> B_ReturnDateCol;
     @FXML private TableColumn<Trip, String> B_PriceCol;
     @FXML private Label B_ErrMsg;
 
@@ -59,19 +60,17 @@ public class CustomerMainViewController {
     @FXML private TableColumn<Trip, String> FS_FromCol;
     @FXML private TableColumn<Trip, String> FS_ToCol;
     @FXML private TableColumn<Trip, String> FS_DepartDateCol;
-    @FXML private TableColumn<Trip, String> FS_ReturnDateCol;
     @FXML private TableColumn<Trip, String> FS_StatusCol;
     @FXML private Label FS_ErrMsg;
 
-    @FXML private TableView<?> MF_MyFlightTable;
-    @FXML private TableColumn<?, ?> MF_FlightIDCol;
-    @FXML private TableColumn<?, ?> MF_FromCol;
-    @FXML private TableColumn<?, ?> MF_ToCol;
-    @FXML private TableColumn<?, ?> MF_DepartDateCol;
-    @FXML private TableColumn<?, ?> MF_ReturnDateCol;
-    @FXML private TableColumn<?, ?> MF_StatusCol;
-    @FXML private TableColumn<?, ?> MF_CheckedInStatusCol;
-    @FXML private TableColumn<?, ?> MF_NumBagsCol;
+    @FXML private TableView<Ticket> MF_MyFlightTable;
+    @FXML private TableColumn<Ticket, String> MF_FlightIDCol;
+    @FXML private TableColumn<Ticket, String> MF_FromCol;
+    @FXML private TableColumn<Ticket, String> MF_ToCol;
+    @FXML private TableColumn<Ticket, String> MF_DepartDateCol;
+    @FXML private TableColumn<Ticket, String> MF_StatusCol;
+    @FXML private TableColumn<Ticket, Boolean> MF_CheckedInStatusCol;
+    @FXML private TableColumn<Ticket, String> MF_NumBagsCol;
 
 
     @FXML
@@ -105,7 +104,7 @@ public class CustomerMainViewController {
         try {
             id = Integer.parseInt(CI_FlightID.getText().trim());
 
-            if (db.checkIn(username, id) != -1) {
+            if (db.checkIn(username, id) == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerBaggageView.fxml"));
                 Parent root = null;
 
@@ -180,6 +179,9 @@ public class CustomerMainViewController {
                 controller.setLocations(to, from, tripID); // Reverse the from-to
                 stage.setTitle("Select Returning Trip");
                 stage.setScene(new Scene(root));
+
+                B_AvailableFlightsTable.getItems().removeAll(results);
+
                 stage.show();
             }
 
@@ -244,15 +246,6 @@ public class CustomerMainViewController {
         FS_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
         FS_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
         FS_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-        if (t.getRTDate() == null)
-        {
-            FS_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
-        }
-        else
-        {
-            //todo this will never run
-            FS_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
-        }
         FS_StatusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
         FS_FlightStatusTable.setItems(result);
@@ -264,7 +257,19 @@ public class CustomerMainViewController {
         // TODO add checked in field, seat number, num bags to my flights page?
         SQL_Database db = SQL_Database.getInstance();
         Session s = Session.getInstance();
-        ObservableList<Ticket> results = FXCollections.observableArrayList(db.getTicketsByUser(s.getUsername()));
+        ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
+                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
+        );
+
+        MF_FlightIDCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        MF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        MF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        MF_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DepartDateString"));
+        MF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
+        MF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
+        MF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+
+        MF_MyFlightTable.setItems(myFlights);
     }
 
 
@@ -289,14 +294,13 @@ public class CustomerMainViewController {
             departDate.setTime(Date.valueOf(localDate));
 
             Database db = SQL_Database.getInstance();
-            ObservableList<Trip> results = FXCollections.observableArrayList(
+            results = FXCollections.observableArrayList(
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
             B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
             B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
             B_AvailableFlightsTable.setItems(results);
@@ -304,48 +308,6 @@ public class CustomerMainViewController {
         return null;
     }
 
-//    private String searchRoundTrip() {
-//        System.out.println("\nSearching: Round Trip");
-//
-//        String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-//        String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-//
-//        LocalDate departLocal = B_RoundTripDepartDate.getValue();
-//        LocalDate returnLocal = B_RoundTripReturnDate.getValue();
-//
-//        if (from == null) {
-//            System.out.println("\tError: From location missing");
-//            return "Please specify location you are from.";
-//        } else if (to == null) {
-//            System.out.println("\tError: To location missing");
-//            return "Please specify location are are going to.";
-//        } else if (departLocal == null || returnLocal == null) {
-//            System.out.println("\tError: Departure date or Return date missing");
-//            return "Missing either depart date or return date";
-//        } else {
-//
-//            Calendar departDate = Calendar.getInstance();
-//            Calendar returnDate = Calendar.getInstance();
-//
-//            departDate.setTime(Date.valueOf(departLocal));
-//            returnDate.setTime(Date.valueOf(returnLocal));
-//
-//            Database db = SQL_Database.getInstance();
-//            ObservableList<Trip> results = FXCollections.observableArrayList(
-//                    db.getRoundTrips(db.getFlightId(from, to), departDate, returnDate)
-//            );
-//
-//            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-//            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-//            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-//            B_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
-//            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-//
-//            B_AvailableFlightsTable.setItems(results);
-//        }
-//
-//        return null;
-//    }
 
     private int getSelectedTripID(Trip selectedTrip, String from, String to) {
         SQL_Database db = SQL_Database.getInstance();
@@ -387,6 +349,9 @@ public class CustomerMainViewController {
         controller.hideReturnSeat();
         stage.setTitle("Confirm Ticket");
         stage.setScene(new Scene(root));
+
+        B_AvailableFlightsTable.getItems().removeAll(results);
+        B_AvailableFlightsTable.getScene().getWindow().hide();
         stage.show();
     }
 }
