@@ -837,7 +837,7 @@ public class SQL_Database implements Database {
             ps.setBoolean(1, true);
             ps.setString(2, Username);
             ps.setInt(3, TripId);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) return -1;
         }
         catch (SQLException e)
         {
