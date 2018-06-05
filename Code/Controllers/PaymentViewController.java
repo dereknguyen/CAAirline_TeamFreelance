@@ -36,6 +36,7 @@ public class PaymentViewController {
     @FXML
     void HandleBack(ActionEvent event) {
         totalCost.getScene().getWindow().hide();
+        Utilities.present("/Views/CustomerMainView.fxml", "Main");
     }
 
     @FXML

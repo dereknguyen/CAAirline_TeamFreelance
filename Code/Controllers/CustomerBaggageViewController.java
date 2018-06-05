@@ -31,7 +31,14 @@ public class CustomerBaggageViewController {
             int result = db.editTicket(username, this.tripID, seatNumber, 0, false);
             if (result != -1) {
                 numCarryOn.getScene().getWindow().hide();
+                Utilities.present("/Views/CustomerMainView.fxml", "Main");
             }
+            else {
+                System.out.println("Edit Ticket Failed");
+            }
+        }
+        else {
+            System.out.println("Edit Ticket Failed");
         }
     }
 
@@ -54,6 +61,8 @@ public class CustomerBaggageViewController {
 
             if (result != -1) {
                 // TODO: End Session
+                numCarryOn.getScene().getWindow().hide();
+                Utilities.present("/Views/CustomerMainView.fxml", "Main");
             }
         }
         catch (Exception e) {
@@ -71,7 +80,7 @@ public class CustomerBaggageViewController {
     }
 
     private int getSeatNumber(String username, int tripID) {
-        ArrayList<Ticket> tickets = this.db.getTicketsByUser(username);
+        ArrayList<Ticket> tickets = this.db.getTicketsByUsername(username);
 
         for (Ticket t: tickets) {
             if (t.getTripId() == tripID) {

@@ -29,7 +29,7 @@ public class CustomerControl{
 
    public void getCustomerFromDB(String username) {
        List<String> info = this.db.getCustomerInfo(username);
-       ArrayList<Ticket> userTickets = this.db.getTicketsByUser(username);
+       ArrayList<Ticket> userTickets = this.db.getTicketsByUsername(username);
 
        this.customer = new Account(info.get(2), info.get(3), info.get(0), userTickets);
    }

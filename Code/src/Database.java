@@ -49,4 +49,5 @@ public interface Database
     int checkIn(String Username, int TripId);
     int setBags(String Username, int TripId, int NumBags);
     ArrayList<Integer> getFullSeats(int TripId);
+    ArrayList<Ticket> getTicketsByUsername(String Username);
 }
