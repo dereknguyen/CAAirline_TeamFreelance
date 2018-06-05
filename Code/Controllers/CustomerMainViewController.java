@@ -138,6 +138,8 @@ public class CustomerMainViewController {
         if (mode == ONE_WAY) {
             // Get selected TABLE ROW in Booking Tab
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+            if (selectedTrip == null) return;
+
             int tripID = getSelectedTripID(selectedTrip,
                     selectedTrip.getFromString(),
                     selectedTrip.getToString());
@@ -152,6 +154,8 @@ public class CustomerMainViewController {
 
             // GRAB STARTING TRIP
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+            if (selectedTrip == null) return;
+
             int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
 
             String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();

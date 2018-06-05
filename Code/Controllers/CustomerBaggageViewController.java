@@ -25,7 +25,7 @@ public class CustomerBaggageViewController {
     @FXML private Label ErrMsg;
 
     @FXML
-    void HandleBack(ActionEvent event) {
+    void HandleBack() {
         String username = CustomerControl.getInstance().getCustomer().getUserName();
         int seatNumber = getSeatNumber(username, this.tripID);
 
