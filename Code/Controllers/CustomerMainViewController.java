@@ -77,23 +77,62 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void CI_HandleCheckIn(ActionEvent event) {
-        // TODO: [1] Get Flight ID
+    void CI_HandleCheckIn() {
+        SQL_Database db = SQL_Database.getInstance();
+        String username = CustomerControl.getInstance().getCustomer().getUserName();
+        int id = -1;
 
-        // TODO: [2] Pass flight ID to baggage view controller
-        /* Will perform to Baggage in conjunction with [2] */
-        Utilities.present("/Views/CustomerBaggageView.fxml", "Baggage Declaration");
+        try {
+            id = Integer.parseInt(CI_FlightID.getText().trim());
+
+            if (db.checkIn(username, id) != -1) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerBaggageView.fxml"));
+                Parent root = null;
+
+                try {
+                    root = loader.load();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Stage stage = new Stage();
+                stage.setTitle("Declare Baggage");
+                stage.setScene(new Scene(root));
+
+                CustomerBaggageViewController controller = loader.getController();
+                controller.setTripID(id);
+
+                stage.show();
+            }
+            else {
+                // TODO: Print error
+                System.out.println("Wrong ticket number");
+            }
+        }
+        catch (Exception e) {
+            // TODO: Print Error
+            System.out.println("Wrong ID/format");
+        }
     }
 
     @FXML
     void B_HandlePurchase(ActionEvent event) {
-        // Get selected TABLE ROW in Booking Tab
-        int tripID = getSelectedTripID();
 
-        // Present Payment View. We also want to
-        //  transfer over selected data to payment view controller.
-        if (tripID != 0) {
-            toPaymentView(tripID);
+        int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
+
+        if (mode == ONE_WAY) {
+            // Get selected TABLE ROW in Booking Tab
+            int tripID = getSelectedTripID_OneWay();
+
+            // Present Payment View. We also want to
+            //  transfer over selected data to payment view controller.
+            if (tripID != 0) {
+                toPaymentView_OneWay(tripID);
+            }
+        }
+        else if (mode == ROUND_TRIP){
+            // TODO: Round Trip Purchase
         }
     }
 
@@ -224,7 +263,7 @@ public class CustomerMainViewController {
         return null;
     }
 
-    private int getSelectedTripID() {
+    private int getSelectedTripID_OneWay() {
         SQL_Database db = SQL_Database.getInstance();
         Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
 
@@ -246,9 +285,8 @@ public class CustomerMainViewController {
         return 0;
     }
 
-    private void toPaymentView(int tripID) {
+    private void toPaymentView_OneWay(int tripID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
-
         Parent root = null;
 
         try {

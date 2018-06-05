@@ -37,8 +37,9 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <JFXComboBox fx:id="seatSelection" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="Available Seats" style="-fx-prompt-text-fill: gray; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                  <JFXComboBox fx:id="seatSelection" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="Departure Flight Available Seats" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
                   <AnchorPane prefHeight="11.0" prefWidth="299.0" />
+                  <JFXComboBox fx:id="returnSeatSelection" focusColor="#046a38" layoutX="10.0" layoutY="135.0" prefHeight="31.0" prefWidth="260.0" promptText="Return Flight Available Seats" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
                   <HBox />
                </children>
                <HBox.margin>

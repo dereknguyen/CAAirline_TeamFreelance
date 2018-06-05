@@ -48,10 +48,7 @@ public class PaymentViewController {
             System.out.println(this.tripID);
             System.out.println(seat);
 
-
-            int success = this.db.addTicket(username, this.tripID, seat);
-
-            if (success == 0) {
+            if (this.db.addTicket(username, this.tripID, seat) == 0) {
                 CustomerControl.getInstance().getCustomerFromDB(username); // Reload
                 totalCost.getScene().getWindow().hide();
             }
