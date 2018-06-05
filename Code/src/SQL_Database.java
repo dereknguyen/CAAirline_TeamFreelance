@@ -373,7 +373,9 @@ public class SQL_Database implements Database {
             while (rs.next())
             {
                 c.setTime(rs.getDate("Date"));
-                out.add(new Trip(rs.getInt("TripId"),
+
+                out.add(new Trip(
+                        rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c,
                         rs.getDouble("Price"),

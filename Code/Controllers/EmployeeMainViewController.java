@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -46,17 +47,14 @@ public class EmployeeMainViewController {
     @FXML private ResourceBundle resources;
     @FXML private URL location;
 
-    @FXML private TabPane mainTabPane;
-    @FXML private TableView<Ticket> AF_AvailableFlightsTable;
-    @FXML private TableColumn<?, ?> AF_FlightNumberCol;
-    @FXML private TableColumn<?, ?> AF_FromCol;
-    @FXML private TableColumn<?, ?> AF_ToCol;
-    @FXML private TableColumn<?, ?> AF_DepartTimeCol;
-    @FXML private TableColumn<Ticket, String> AF_NumBagsCol;
-    @FXML private TableColumn<Ticket, Boolean> AF_CheckedInStatusCol;
-    @FXML private TableColumn<?, ?> AF_StatusCol;
+    @FXML private TableView<Trip> AF_AvailableFlightsTable;
+    @FXML private TableColumn<Trip, String> AF_FlightNumberCol;
+    @FXML private TableColumn<Trip, String> AF_FromCol;
+    @FXML private TableColumn<Trip, String> AF_ToCol;
+    @FXML private TableColumn<Trip, String> AF_DepartTimeCol;
+    @FXML private TableColumn<Trip, String> AF_StatusCol;
+    @FXML private TableColumn<Trip, String> AF_PriceCol;
 
-    @FXML private TabPane PS_TripModeTabPane;
     @FXML private JFXComboBox<String> PS_OneWayFrom;
     @FXML private JFXComboBox<String> PS_OneWayTo;
     @FXML private JFXDatePicker PS_OneWayDepartDate;
@@ -69,8 +67,8 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> FS_FromCol;
     @FXML private TableColumn<Trip, String> FS_ToCol;
     @FXML private TableColumn<Trip, String> FS_DepartTime;
-    @FXML private TableColumn<Trip, String> FS_ArrivalTime;
     @FXML private TableColumn<Trip, String> FS_CurrentStatus;
+
     //TODO Add FS error message to fxml
     @FXML private Label FS_ErrMsg;
     //TODO Add new status for changing status
@@ -98,20 +96,25 @@ public class EmployeeMainViewController {
 
     @FXML
     void AF_HandleRefresh() {
+
         SQL_Database db = SQL_Database.getInstance();
-        ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
-                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
-        );
 
-        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DepartDateString"));
-        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
-        AF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
-        AF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+        System.out.println(db.getAllTrips().isEmpty());
 
-        AF_AvailableFlightsTable.setItems(myFlights);
+//        ObservableList<Trip> trips = FXCollections.observableArrayList(
+//                db.getAllTrips()
+//        );
+
+//
+//        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("TripId"));
+//        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+//        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+//        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+//        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
+//        AF_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+//
+//        AF_AvailableFlightsTable.setItems(trips);
+
     }
 
     @FXML
@@ -218,15 +221,6 @@ public class EmployeeMainViewController {
         FS_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
         FS_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
         FS_DepartTime.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-        if (t.getRTDate() == null)
-        {
-            FS_ArrivalTime.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
-        }
-        else
-        {
-            //todo this will never run
-            FS_ArrivalTime.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
-        }
         FS_CurrentStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
         FS_StatusTable.setItems(result);
