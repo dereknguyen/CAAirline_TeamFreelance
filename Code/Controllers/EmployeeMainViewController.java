@@ -52,8 +52,8 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<?, ?> AF_FromCol;
     @FXML private TableColumn<?, ?> AF_ToCol;
     @FXML private TableColumn<?, ?> AF_DepartTimeCol;
-    @FXML private TableColumn<?, ?> AF_ArivalTimeCol;
-    @FXML private TableColumn<?, ?> AF_PriceCol;
+    @FXML private TableColumn<Ticket, String> AF_NumBagsCol;
+    @FXML private TableColumn<Ticket, Boolean> AF_CheckedInStatusCol;
     @FXML private TableColumn<?, ?> AF_StatusCol;
 
     @FXML private TabPane PS_TripModeTabPane;
@@ -101,7 +101,20 @@ public class EmployeeMainViewController {
 
     @FXML
     void AF_HandleRefresh(ActionEvent event) {
+        SQL_Database db = SQL_Database.getInstance();
+        ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
+                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
+        );
 
+        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DepartDateString"));
+        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
+        AF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
+        AF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+
+        AF_AvailableFlightsTable.setItems(myFlights);
     }
 
     @FXML
