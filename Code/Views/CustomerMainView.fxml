@@ -179,10 +179,15 @@
                            <children>
                               <VBox prefHeight="525.0" prefWidth="995.0" spacing="20.0">
                                  <children>
-                                    <HBox spacing="710.0">
+                                    <HBox spacing="590.0">
                                        <children>
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="My Flights" />
-                                          <JFXButton onAction="#MF_HandleRefresh" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Refresh" />
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <JFXButton onAction="#MF_HandleCancel" prefHeight="36.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-background-radius: 3px; -fx-text-fill: b5a369;" text="Cancel Ticket" />
+                                                <JFXButton onAction="#MF_HandleRefresh" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Refresh" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </HBox>
                                     <TableView fx:id="MF_MyFlightTable" prefHeight="413.0" prefWidth="741.0" style="-fx-background-color: #151515;">
