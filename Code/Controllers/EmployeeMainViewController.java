@@ -317,7 +317,7 @@ public class EmployeeMainViewController {
         //Report data = new Report(from, to, new Double(avg).toString());
         ObservableList<Report> results = FXCollections.observableArrayList(db.getAvgRevenue(id));
 
-        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("Revenue"));
         MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
 
         MR_ReportTable.setItems(results);
@@ -342,11 +342,11 @@ public class EmployeeMainViewController {
         }
     }
 
-    /*@FXML
+    @FXML
     void B_HandleSearchTickets() {
-        B_ErrMsg.setText(searchOneWay());
+       // B_ErrMsg.setText(searchOneWay());
     }
-    */
+
 
     @FXML
     void FS_HandleChangeStatus() {
