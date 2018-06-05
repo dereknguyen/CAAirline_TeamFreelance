@@ -268,6 +268,16 @@ public class CustomerMainViewController {
         MF_MyFlightTable.setItems(myFlights);
     }
 
+    @FXML
+    void MF_HandleCancel() {
+        SQL_Database db = SQL_Database.getInstance();
+        Session s = Session.getInstance();
+        Ticket selectedTicket = MF_MyFlightTable.getSelectionModel().getSelectedItem();
+        if (selectedTicket == null) return;
+        db.removeTicket(s.getUsername(), selectedTicket.getTripId(), selectedTicket.getSeatNumber());
+        MF_HandleRefresh();
+    }
+
 
     /* HELPERS */
     private String searchFlight(String from, String to, LocalDate localDate) {

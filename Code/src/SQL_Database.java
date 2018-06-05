@@ -806,15 +806,15 @@ public class SQL_Database implements Database {
     }
 
     // Attempts to remove ticket from database. Returns 0 on success, -1 on error
-    public int removeTicket(String Username, int FlightId, int SeatNumber)
+    public int removeTicket(String Username, int TripId, int SeatNumber)
     {
-        if (FlightId < 0) return -1;
+        if (TripId < 0) return -1;
         String query = "DELETE FROM tickets WHERE Username = ? AND TripId = ? AND SeatNumber = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, Username);
-            ps.setInt(2, FlightId);
+            ps.setInt(2, TripId);
             ps.setInt(3, SeatNumber);
             ps.executeUpdate();
         }
