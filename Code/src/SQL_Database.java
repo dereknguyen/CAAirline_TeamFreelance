@@ -433,6 +433,27 @@ public class SQL_Database implements Database {
         }
     }
 
+    public Trip getTripInfo(int TripId)
+    {
+        String query = "SELECT * FROM trips WHERE TripId = " + TripId;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            Calendar c = Calendar.getInstance();
+            c.setTime(sdf.parse(rs.getString("Date")));
+            return new Trip(rs.getInt("TripId"), rs.getInt("FlightId"), c,
+                    rs.getDouble("Price"), rs.getInt("Status"));
+        }
+        catch (SQLException | ParseException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /*
 
     Flight methods
