@@ -69,7 +69,6 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> FS_DepartTime;
     @FXML private TableColumn<Trip, String> FS_CurrentStatus;
 
-    //TODO Add FS error message to fxml
     @FXML private Label FS_ErrMsg;
     //TODO Add new status for changing status
     @FXML private JFXTextField FS_NewStatus;
