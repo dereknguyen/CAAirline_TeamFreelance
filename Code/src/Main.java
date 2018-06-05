@@ -27,6 +27,7 @@ public class Main extends Application {
         /* generate ticket database entries */
         SQL_Database db = SQL_Database.getInstance();
         Calendar c = Calendar.getInstance();
+        c.add(Calendar.WEEK_OF_MONTH, -1);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 100; j++) {
                 db.addTrip(i, c, (Math.floor(Math.random() * 91) + 10));
