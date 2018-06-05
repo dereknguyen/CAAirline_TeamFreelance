@@ -11,7 +11,7 @@ public class AccountManager {
 
     public Account CreateEmployeeAccount(String firstName, String lastName, String username, String encryptedPassword) {
         db.addEmployeeAccount(username, firstName, lastName, encryptedPassword);
-        return new EmployeeAccount(firstName, lastName, username, new ArrayList<>());
+        return new Account(firstName, lastName, username, new ArrayList<>());
     }
     public Account CreateUserAccount(String firstName, String lastName, String username, String encryptedPassword) {
         db.addCustomerAccount(username, encryptedPassword, firstName, lastName);

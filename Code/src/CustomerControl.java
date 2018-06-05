@@ -16,9 +16,7 @@ public class CustomerControl{
       db = SQL_Database.getInstance();
    }
 
-   // Flight Reserve
-
-   static public CustomerControl getInstance()
+   public static CustomerControl getInstance()
    {
       if (uniqueinstance == null)
       {

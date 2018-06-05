@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import src.CustomerControl;
+import src.EmployeeControl;
 import src.SQL_Database;
 
 public class LoginController {
@@ -85,7 +86,6 @@ public class LoginController {
             CustomerControl.getInstance().getCustomerFromDB(username);
             showMainTab("../Views/CustomerMainView.fxml");
         }
-
     }
 
     private void handleEmployeeLogin(String username, String password) {
@@ -103,6 +103,7 @@ public class LoginController {
         else
         {
             System.out.println("Login successful");
+            EmployeeControl.getInstance().getEmployeeFromDB(username);
             showMainTab("../Views/EmployeeMainView.fxml");
         }
     }
