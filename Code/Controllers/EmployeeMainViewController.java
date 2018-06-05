@@ -122,14 +122,12 @@ public class EmployeeMainViewController {
         SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        double avg = db.getAvgSeats(id);
         MR_ReportLabel.setText(from);
 
-        Report data = new Report(from, to, new Double(avg).toString());
-        ObservableList<Report> results = FXCollections.observableArrayList(data);
+        ObservableList<Report> results = FXCollections.observableArrayList(db.getAvgRevenue(id));
 
-        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
         MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("RevenueString"));
 
         MR_ReportTable.setItems(results);
     }

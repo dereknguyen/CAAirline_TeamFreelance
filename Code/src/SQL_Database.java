@@ -367,13 +367,14 @@ public class SQL_Database implements Database {
     {
         String query = "SELECT * FROM trips";
         ArrayList<Trip> out = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         try
         {
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
             {
                 Calendar c = Calendar.getInstance();
-                c.setTime(rs.getDate("Date"));
+                c.setTime(sdf.parse(rs.getString("Date")));
                 out.add(new Trip(rs.getInt("TripId"),
                         rs.getInt("FlightId"),
                         c,
@@ -383,7 +384,7 @@ public class SQL_Database implements Database {
             return out;
 
         }
-        catch (SQLException e)
+        catch (SQLException | ParseException e)
         {
             System.out.println(e.getMessage());
             return null;

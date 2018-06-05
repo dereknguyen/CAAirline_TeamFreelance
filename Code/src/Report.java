@@ -22,4 +22,7 @@ public class Report {
         this.ToString = new SimpleStringProperty(db.getFlightDest(FlightId));
         this.RevenueString = new SimpleDoubleProperty(Revenue);
     }
+
+    public String getToString() { return ToString.get(); }
+    public double getRevenue() { return RevenueString.get(); }
 }
