@@ -25,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import src.Database;
+import src.Report;
 import src.SQL_Database;
 import src.Trip;
 
@@ -34,6 +35,7 @@ import src.Trip;
  * PS - Pricing & Scheduling Tab
  * FS - Flight Status Tab
  * B  - Booking Tab
+ * MR - Management Reports
  */
 public class EmployeeMainViewController {
 
@@ -96,9 +98,57 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_ArrivalTimeCol;
     @FXML private TableColumn<Trip, String> B_PriceCol;
 
+    @FXML private TableView<Report> MR_ReportTable;
+    @FXML private Label MR_ReportLabel; //from
+    @FXML private TableColumn<Report, String> MR_DestinationCol;
+    @FXML private TableColumn<Report, String> MR_DataCol;
+
+    @FXML private JFXComboBox<String> MR_From;
+    @FXML private JFXComboBox<String> MR_To;
+
     @FXML
     void AF_HandleRefresh(ActionEvent event) {
 
+    }
+
+    @FXML
+    void MR_HandleSeat(ActionEvent event) {
+        String from = MR_From.getSelectionModel().getSelectedItem();
+        String to = MR_To.getSelectionModel().getSelectedItem();
+
+        Database db = SQL_Database.getInstance();
+
+        int id = db.getFlightId(from, to);
+        double avg = ((SQL_Database) db).getAvgSeats(id);
+        MR_ReportLabel.setText(from);
+
+        Report data = new Report(from, to, new Double(avg).toString());
+        ObservableList<Report> results = FXCollections.observableArrayList(data);
+
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
+        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+
+        MR_ReportTable.setItems(results);
+    }
+
+    @FXML
+    void MR_HandleRevenue(ActionEvent event) {
+        String from = MR_From.getSelectionModel().getSelectedItem();
+        String to = MR_To.getSelectionModel().getSelectedItem();
+
+        Database db = SQL_Database.getInstance();
+
+        int id = db.getFlightId(from, to);
+        double avg = ((SQL_Database) db).getAvgRevenue(id);
+        MR_ReportLabel.setText(from);
+
+        Report data = new Report(from, to, new Double(avg).toString());
+        ObservableList<Report> results = FXCollections.observableArrayList(data);
+
+        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
+        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+
+        MR_ReportTable.setItems(results);
     }
 
     @FXML
