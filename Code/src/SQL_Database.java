@@ -1,12 +1,5 @@
 package src;
 
-import com.sun.javafx.tools.packager.PackagerException;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
-import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,7 +86,7 @@ public class SQL_Database implements Database {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         String query = "SELECT TripId FROM trips WHERE FlightId = " + FlightId + " AND Date = '" +
                 f.format(date.getTime()) + "'";
-        int id = -1;
+        int id;
         try
         {
             ResultSet rs = st.executeQuery(query);
@@ -125,7 +118,7 @@ public class SQL_Database implements Database {
             query = "SELECT COUNT(*) FROM trips WHERE Date BETWEEN '" +
                     f.format(from.getTime()) + "' AND '" + f.format(to.getTime()) + "'";
         }
-        int NumFlights = 0;
+        int NumFlights;
         try
         {
             ResultSet rs = st.executeQuery(query);
@@ -467,7 +460,7 @@ public class SQL_Database implements Database {
     public int getFlightId(String Source, String Destination)
     {
         String query = "SELECT FlightId FROM flights WHERE Source = '" + Source + "' AND Destination = '" + Destination + "'";
-        int id = -1;
+        int id;
         try
         {
             ResultSet rs = st.executeQuery(query);
