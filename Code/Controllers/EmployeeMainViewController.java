@@ -201,7 +201,7 @@ public class EmployeeMainViewController {
         SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        MR_ReportLabel.setText(from);
+        MR_ReportLabel.setText(from + " Data Report");
         MR_Data.setText(Double.toString(db.getAvgSeats(id)));
     }
 
@@ -213,7 +213,7 @@ public class EmployeeMainViewController {
         SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        MR_ReportLabel.setText(from);
+        MR_ReportLabel.setText(from + " Data Report");
         MR_Data.setText(Double.toString(db.getAvgRevenue(id)));
     }
 
@@ -233,6 +233,38 @@ public class EmployeeMainViewController {
         }
         else if (mode == ROUND_TRIP){
             // TODO: Round Trip Purchase
+            // GRAB STARTING TRIP
+            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+            if (selectedTrip == null) return;
+
+            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+
+            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
+            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
+
+            if (tripID != -1) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ReturnFlightSelectionView.fxml"));
+                Parent root;
+
+                try {
+                    root = loader.load();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                ReturnFlightSelectionViewController controller = loader.getController();
+                Stage stage = new Stage();
+                controller.setLocations(to, from, tripID); // Reverse the from-to
+                stage.setTitle("Select Returning Trip");
+                stage.setScene(new Scene(root));
+
+                B_AvailableFlightsTable.getItems().removeAll(results);
+
+                stage.show();
+            }
+
         }
     }
 
