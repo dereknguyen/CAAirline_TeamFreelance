@@ -42,7 +42,7 @@
                                           <TableColumn fx:id="AF_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
                                           <TableColumn fx:id="AF_DepartTimeCol" editable="false" prefWidth="300.0" style="-fx-background-color: #151515;" text="Departure Date" />
                                           <TableColumn fx:id="AF_PriceCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="Price" />
-                                          <TableColumn fx:id="AF_StatusCol" prefWidth="139.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="AF_StatusCol" prefWidth="138.0" style="-fx-background-color: #151515;" text="Status" />
                                        </columns>
                                     </TableView>
                                  </children>

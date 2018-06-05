@@ -104,21 +104,21 @@ public class EmployeeMainViewController {
 
         SQL_Database db = SQL_Database.getInstance();
 
-        System.out.println(db.getAllTrips().isEmpty());
+//        System.out.println(db.getAllTrips().isEmpty());
 
-//        ObservableList<Trip> trips = FXCollections.observableArrayList(
-//                db.getAllTrips()
-//        );
+        ObservableList<Trip> trips = FXCollections.observableArrayList(
+                db.getAllTrips()
+        );
 
-//
-//        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("TripId"));
-//        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-//        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-//        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-//        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
-//        AF_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-//
-//        AF_AvailableFlightsTable.setItems(trips);
+
+        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("TripId"));
+        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
+        AF_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+        AF_AvailableFlightsTable.setItems(trips);
 
     }
 
@@ -345,11 +345,11 @@ public class EmployeeMainViewController {
         }
     }
 
-    /*@FXML
+    @FXML
     void B_HandleSearchTickets() {
-        B_ErrMsg.setText(searchOneWay());
+//        B_ErrMsg.setText(searchOneWay());
     }
-    */
+
 
     @FXML
     void FS_HandleChangeStatus() {
