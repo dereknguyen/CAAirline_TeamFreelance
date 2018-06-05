@@ -41,7 +41,7 @@ public class Account {
     public Ticket getTicket(int ticketNumber) {
 
         for (Ticket current: this.ticket) {
-            if (current.getTicketNumber() == ticketNumber) {
+            if (current.getTripId() == ticketNumber) {
                 return current;
             }
         }

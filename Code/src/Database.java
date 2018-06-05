@@ -21,6 +21,7 @@ public interface Database
     int getFlightIdFromTrip(int TripId);
     ArrayList<Trip> getTripsByFlightAndDate(int FlightId, Calendar date);
     ArrayList<Trip> getRoundTrips(int FlightId, Calendar departDate, Calendar returnDate);
+    Trip getTripInfo(int TripId);
 
     /* Flight methods */
     int getFlightId(String Source, String Destination);

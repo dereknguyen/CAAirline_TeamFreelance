@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -42,12 +43,12 @@ public class CustomerMainViewController {
     @FXML private Label CI_ErrMsg;
 
     @FXML private JFXTextField FS_FlightID;
-    @FXML private TableView<?> FS_FlightStatusTable;
-    @FXML private TableColumn<?, ?> FS_FromCol;
-    @FXML private TableColumn<?, ?> FS_ToCol;
-    @FXML private TableColumn<?, ?> FS_DepartDateCol;
-    @FXML private TableColumn<?, ?> FS_ReturnDateCol;
-    @FXML private TableColumn<?, ?> FS_StatusCol;
+    @FXML private TableView<Trip> FS_FlightStatusTable;
+    @FXML private TableColumn<Trip, String> FS_FromCol;
+    @FXML private TableColumn<Trip, String> FS_ToCol;
+    @FXML private TableColumn<Trip, String> FS_DepartDateCol;
+    @FXML private TableColumn<Trip, String> FS_ReturnDateCol;
+    @FXML private TableColumn<Trip, String> FS_StatusCol;
     @FXML private Label FS_ErrMsg;
 
     @FXML private TableView<?> MF_MyFlightTable;
@@ -115,7 +116,40 @@ public class CustomerMainViewController {
     void FS_HandleGetFlightStatus(ActionEvent event) {
         // TODO: [1] Grab the flight ID from text field
 
-        // TODO: [2] Display the flight associate with the ID on the table in Flight Status Tab.
+        // TODO: [2] Display the flight associated with the ID on the table in Flight Status Tab.
+        int TripId;
+        try
+        {
+            TripId = Integer.parseInt(FS_FlightID.getText());
+            if (TripId < 0) throw new NumberFormatException();
+        }
+        catch (NumberFormatException e)
+        {
+            FS_ErrMsg.setText("Please enter a valid flight ID");
+            FS_ErrMsg.setVisible(true);
+            return;
+        }
+        SQL_Database db = SQL_Database.getInstance();
+        Trip t = db.getTripInfo(TripId);
+        ObservableList<Trip> result = FXCollections.observableArrayList(t);
+        if (t == null) return;
+
+        FS_ErrMsg.setVisible(false);
+        FS_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        FS_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        FS_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+        if (t.getRTDate() == null)
+        {
+            FS_ReturnDateCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("N/A"));
+        }
+        else
+        {
+            //todo this will never run
+            FS_ReturnDateCol.setCellValueFactory(new PropertyValueFactory<>("RTDateString"));
+        }
+        FS_StatusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
+
+        FS_FlightStatusTable.setItems(result);
     }
 
     @FXML
