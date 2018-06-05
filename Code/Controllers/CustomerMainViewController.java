@@ -1,7 +1,6 @@
 package Controllers;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -113,10 +112,8 @@ public class CustomerMainViewController {
     }
 
     @FXML
-    void FS_HandleGetFlightStatus(ActionEvent event) {
-        // TODO: [1] Grab the flight ID from text field
-
-        // TODO: [2] Display the flight associated with the ID on the table in Flight Status Tab.
+    void FS_HandleGetFlightStatus()
+    {
         int TripId;
         try
         {
