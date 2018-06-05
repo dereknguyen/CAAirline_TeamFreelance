@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import src.CustomerControl;
 import src.SQL_Database;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class PaymentViewController {
 
     private int tripID;
     private int selectedMode;
+    private SQL_Database db;
 
     @FXML private JFXComboBox<Integer> seatSelection;
     @FXML private JFXTextField creditCardNumber;
@@ -36,19 +38,34 @@ public class PaymentViewController {
 
     @FXML
     void HandlePayment(ActionEvent event) {
-        System.out.println(this.tripID);
-        // TODO: We assume all payment are a success
+
+        String username = CustomerControl.getInstance().getCustomer().getUserName();
+
+        if (this.selectedMode == ONE_WAY) {
+            int seat = seatSelection.getSelectionModel().getSelectedItem();
+
+            System.out.println(username);
+            System.out.println(this.tripID);
+            System.out.println(seat);
+
+
+            int success = this.db.addTicket(username, this.tripID, seat);
+
+            if (success == 0) {
+                CustomerControl.getInstance().getCustomerFromDB(username); // Reload
+                totalCost.getScene().getWindow().hide();
+            }
+        }
+
     }
 
     @FXML
     void initialize() {
         // TODO: Grab available seats from database and populate the seatSelection Combo Box
-        SQL_Database db = SQL_Database.getInstance();
+        this.db = SQL_Database.getInstance();
         ArrayList<Integer> takenSeatList = db.getFullSeats(this.tripID);
-
-        System.out.println(takenSeatList);
-
         ArrayList<Integer> seatList = new ArrayList<Integer>();
+
         for (int i = 0; i < 20; i++) { seatList.add(i); }
 
         seatList.removeAll(takenSeatList);

@@ -1,12 +1,16 @@
 package src;
 
 import java.lang.System;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 public class CustomerControl{
    private SQL_Database db;
    private static CustomerControl uniqueinstance;
+
+   private Account customer;
 
    private  CustomerControl() {
       db = SQL_Database.getInstance();
@@ -21,6 +25,17 @@ public class CustomerControl{
          uniqueinstance = new CustomerControl();
       }
       return uniqueinstance;
+   }
+
+   public void getCustomerFromDB(String username) {
+       List<String> info = this.db.getCustomerInfo(username);
+       ArrayList<Ticket> userTickets = this.db.getTicketsByUser(username);
+
+       this.customer = new Account(info.get(2), info.get(3), info.get(0), userTickets);
+   }
+
+   public Account getCustomer() {
+       return customer;
    }
 
    public void reserve(String username){
