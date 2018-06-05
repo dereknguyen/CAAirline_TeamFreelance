@@ -204,6 +204,7 @@ public class SQL_Database implements Database {
         }
         catch (SQLException e)
         {
+            System.out.println(e.getMessage());
             if (e.getMessage().equals("Time Constraint"))
             {
                 return -1;

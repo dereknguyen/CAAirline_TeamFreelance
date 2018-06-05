@@ -100,12 +100,12 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_PriceCol;
 
     @FXML
-    void AF_HandleRefresh(ActionEvent event) {
+    void AF_HandleRefresh() {
 
     }
 
     @FXML
-    void B_HandlePurchaseSelected(ActionEvent event) {
+    void B_HandlePurchaseSelected() {
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (mode == ONE_WAY) {
@@ -124,7 +124,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void B_HandleSearchTickets(ActionEvent event) {
+    void B_HandleSearchTickets() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
         if (selectedIndex == 0) {
             B_ErrMsg.setText(searchOneWay());
@@ -135,7 +135,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void FS_HandleChangeStatus(ActionEvent event) {
+    void FS_HandleChangeStatus() {
         int TripId;
         int newStatus;
         try {
@@ -152,7 +152,7 @@ public class EmployeeMainViewController {
     }
 
     @FXML
-    void FS_HandleViewStatus(ActionEvent event) {
+    void FS_HandleViewStatus() {
         int TripId;
         try
         {
@@ -191,7 +191,7 @@ public class EmployeeMainViewController {
 
     // TODO Set flight function
     @FXML
-    void PS_HandleSetFlight(ActionEvent event) {
+    void PS_HandleSetFlight() {
         int mode = PS_TripModeTabPane.getSelectionModel().getSelectedIndex();
         Calendar c = Calendar.getInstance();
 
@@ -203,14 +203,10 @@ public class EmployeeMainViewController {
             LocalTime time = PS_OneWayDepartTime.getValue();
             String basePrice = PS_OneWayBasePrice.getText();
             PS_ErrMsg.setText(addflight(from, to, date, time, basePrice));
+            AF_HandleRefresh();
         }
         else if (mode == ROUND_TRIP)
         {
-
-        }
-        else
-        {
-
         }
     }
 
