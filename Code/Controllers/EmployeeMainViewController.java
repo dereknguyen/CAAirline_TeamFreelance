@@ -96,6 +96,8 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_ArrivalTimeCol;
     @FXML private TableColumn<Trip, String> B_PriceCol;
 
+
+
     @FXML
     void AF_HandleRefresh(ActionEvent event) {
 
