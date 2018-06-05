@@ -93,8 +93,7 @@ public class EmployeeMainViewController {
 
     @FXML private TableView<Report> MR_ReportTable;
     @FXML private Label MR_ReportLabel; //from
-    @FXML private TableColumn<Report, String> MR_DestinationCol;
-    @FXML private TableColumn<Report, String> MR_DataCol;
+    @FXML private Label MR_Data;
 
     @FXML private JFXComboBox<String> MR_From;
     @FXML private JFXComboBox<String> MR_To;
@@ -296,13 +295,7 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from);
-
-        ObservableList<Report> results = FXCollections.observableArrayList(db.getAvgRevenue(id));
-
-        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("RevenueString"));
-
-        MR_ReportTable.setItems(results);
+        MR_Data.setText(Double.toString(db.getAvgSeats(id)));
     }
 
     @FXML
@@ -313,16 +306,8 @@ public class EmployeeMainViewController {
         SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        //double avg = db.getAvgRevenue(id);
         MR_ReportLabel.setText(from);
-
-        //Report data = new Report(from, to, new Double(avg).toString());
-        ObservableList<Report> results = FXCollections.observableArrayList(db.getAvgRevenue(id));
-
-        MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("Revenue"));
-        MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-
-        MR_ReportTable.setItems(results);
+        MR_Data.setText(Double.toString(db.getAvgRevenue(id)));
     }
 
     @FXML

@@ -140,24 +140,20 @@ public class SQL_Database implements Database {
         return getNumTrips(null, null);
     }
 
-    public Report getAvgRevenue(int FlightId) {
+    public double getAvgRevenue(int FlightId) {
         String query = "SELECT Rev FROM AvgRevPerDest WHERE FlightId = " + FlightId;
-        Report rep;
         double avg;
         try
         {
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            avg = rs.getDouble(1);
-            rep = new Report(FlightId, avg);
-            rep.completeInfo();
+            return rs.getDouble(1);
         }
         catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            return null;
+            return -1;
         }
-        return rep;
     }
 
     public double getAvgSeats(int FlightId) {
