@@ -92,7 +92,8 @@ public class EmployeeMainViewController {
 
     @FXML private TableView<Report> MR_ReportTable;
     @FXML private Label MR_ReportLabel; //from
-    @FXML private Label MR_Data;
+    @FXML private Label MR_DestinationLabel;
+    @FXML private Label MR_DataLabel;
 
     @FXML private JFXComboBox<String> MR_From;
     @FXML private JFXComboBox<String> MR_To;
@@ -202,7 +203,7 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_Data.setText(Double.toString(db.getAvgSeats(id)));
+        MR_DataLabel.setText(Double.toString(db.getAvgSeats(id)));
     }
 
     @FXML
@@ -214,7 +215,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_Data.setText(Double.toString(db.getAvgRevenue(id)));
+        MR_DestinationLabel.setText(to);
+        MR_DataLabel.setText(Double.toString(db.getAvgRevenue(id)));
     }
 
     @FXML
