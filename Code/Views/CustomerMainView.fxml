@@ -190,12 +190,14 @@
                                     </HBox>
                                     <TableView fx:id="MF_MyFlightTable" prefHeight="413.0" prefWidth="741.0" style="-fx-background-color: #151515;">
                                        <columns>
-                                          <TableColumn fx:id="MF_FlightIDCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="Flight ID" />
-                                          <TableColumn fx:id="MF_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
-                                          <TableColumn fx:id="MF_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="MF_DepartDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="MF_ReturnDateCol" editable="false" prefWidth="200.0" style="-fx-background-color: #151515;" text="Return Date" />
-                                          <TableColumn fx:id="MF_StatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="MF_FlightIDCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="Flight ID" />
+                                          <TableColumn fx:id="MF_FromCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="From" />
+                                          <TableColumn fx:id="MF_ToCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="To" />
+                                          <TableColumn fx:id="MF_DepartDateCol" editable="false" prefWidth="175.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="MF_ReturnDateCol" editable="false" prefWidth="175.0" style="-fx-background-color: #151515;" text="Return Date" />
+                                          <TableColumn fx:id="MF_StatusCol" prefWidth="85.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="MF_NumBagsCol" prefWidth="88.0" style="-fx-background-color: #151515;" text="No. Bags" />
+                                          <TableColumn fx:id="MF_CheckedInStatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Checked In" />
                                        </columns>
                                     </TableView>
                                  </children>

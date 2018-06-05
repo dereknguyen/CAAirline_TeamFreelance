@@ -67,6 +67,8 @@ public class CustomerMainViewController {
     @FXML private TableColumn<?, ?> MF_DepartDateCol;
     @FXML private TableColumn<?, ?> MF_ReturnDateCol;
     @FXML private TableColumn<?, ?> MF_StatusCol;
+    @FXML private TableColumn<?, ?> MF_CheckedInStatusCol;
+    @FXML private TableColumn<?, ?> MF_NumBagsCol;
 
 
     @FXML
