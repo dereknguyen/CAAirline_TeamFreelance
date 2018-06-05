@@ -225,7 +225,7 @@ public class SQL_Database implements Database {
         return 0;
     }
 
-    // Attempts to add trip to database. Returns the new trip id, or -1 on error
+    // Attempts to add trip to database. Returns the new trip id, or -1 on time conflict, or -2 on other error
     // Defaults status to 0 (On-time)
     public int addTrip(int FlightId, Calendar date, double Price)
     {
@@ -249,8 +249,14 @@ public class SQL_Database implements Database {
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
-            return -1;
+            if (e.getMessage().equals("Time Constraint"))
+            {
+                return -1;
+            }
+            else
+            {
+                return -2;
+            }
         }
     }
 

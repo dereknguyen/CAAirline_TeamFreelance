@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,10 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import src.Database;
-import src.Report;
-import src.SQL_Database;
-import src.Trip;
+
+import src.*;
 
 
 /*
@@ -42,17 +41,19 @@ public class EmployeeMainViewController {
     private static final int ONE_WAY = 0;
     private static final int ROUND_TRIP = 1;
 
+    private ObservableList<Trip> results;
+
     @FXML private ResourceBundle resources;
     @FXML private URL location;
 
     @FXML private TabPane mainTabPane;
-    @FXML private TableView<?> AF_AvailableFlightsTable;
+    @FXML private TableView<Ticket> AF_AvailableFlightsTable;
     @FXML private TableColumn<?, ?> AF_FlightNumberCol;
     @FXML private TableColumn<?, ?> AF_FromCol;
     @FXML private TableColumn<?, ?> AF_ToCol;
     @FXML private TableColumn<?, ?> AF_DepartTimeCol;
-    @FXML private TableColumn<?, ?> AF_ArivalTimeCol;
-    @FXML private TableColumn<?, ?> AF_PriceCol;
+    @FXML private TableColumn<Ticket, String> AF_NumBagsCol;
+    @FXML private TableColumn<Ticket, Boolean> AF_CheckedInStatusCol;
     @FXML private TableColumn<?, ?> AF_StatusCol;
 
     @FXML private TabPane PS_TripModeTabPane;
@@ -108,7 +109,20 @@ public class EmployeeMainViewController {
 
     @FXML
     void AF_HandleRefresh(ActionEvent event) {
+        SQL_Database db = SQL_Database.getInstance();
+        ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
+                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
+        );
 
+        AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+        AF_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+        AF_DepartTimeCol.setCellValueFactory(new PropertyValueFactory<>("DepartDateString"));
+        AF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
+        AF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
+        AF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+
+        AF_AvailableFlightsTable.setItems(myFlights);
     }
 
     @FXML
@@ -239,19 +253,46 @@ public class EmployeeMainViewController {
     // TODO Set flight function
     @FXML
     void PS_HandleSetFlight(ActionEvent event) {
+        int mode = PS_TripModeTabPane.getSelectionModel().getSelectedIndex();
+        Calendar c = Calendar.getInstance();
 
+        if (mode == ONE_WAY)
+        {
+            String from = PS_OneWayFrom.getSelectionModel().getSelectedItem();
+            String to = PS_OneWayTo.getSelectionModel().getSelectedItem();
+            LocalDate date = PS_OneWayDepartDate.getValue();
+            LocalTime time = PS_OneWayDepartTime.getValue();
+            String basePrice = PS_OneWayBasePrice.getText();
+            PS_ErrMsg.setText(addflight(from, to, date, time, basePrice));
+        }
+        else if (mode == ROUND_TRIP)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco", "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
     /* HELPERS */
@@ -380,4 +421,53 @@ public class EmployeeMainViewController {
         stage.show();
     }
 
+    private String addflight(String from, String to, LocalDate date, LocalTime time, String basePrice)
+    {
+        double adjprice;
+        if (from == null)
+        {
+            return "Please specify starting location";
+        }
+        if (to == null)
+        {
+            return "Please specify destination";
+        }
+        if (date == null)
+        {
+            return "Please specify departure date";
+        }
+        if (time == null)
+        {
+            return "Please specify departure time";
+        }
+        if (basePrice == null)
+        {
+            return "Please specify base price";
+        }
+        try
+        {
+            adjprice = Double.parseDouble(basePrice);
+        }
+        catch (NumberFormatException e)
+        {
+            return "Price must be a decimal";
+        }
+        Calendar departDate = Calendar.getInstance();
+        departDate.setTime(Date.valueOf(date));
+        departDate.set(Calendar.HOUR, time.getHour());
+        departDate.set(Calendar.MINUTE, time.getMinute());
+
+        SQL_Database db = SQL_Database.getInstance();
+        adjprice = adjprice - ((db.calculateAvgEmpty(to)/2)*adjprice);
+        int status = db.addTrip(db.getFlightId(from, to), departDate, adjprice);
+        if (status == -1)
+        {
+            return "Flight must not be within 40 minutes of another flight";
+        }
+        else if (status == -2)
+        {
+            return "Flight could not be added";
+        }
+        return null;
+    }
 }
