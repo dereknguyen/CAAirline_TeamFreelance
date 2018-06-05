@@ -2,6 +2,7 @@ package Controllers;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXButton;
@@ -253,10 +254,7 @@ public class CustomerMainViewController {
 
     @FXML
     void MF_HandleRefresh() {
-        // TODO: Just pull what flight associates with the customer and display it in the My Flight Table.
-        // TODO add checked in field, seat number, num bags to my flights page?
         SQL_Database db = SQL_Database.getInstance();
-        Session s = Session.getInstance();
         ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
                 db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
         );
