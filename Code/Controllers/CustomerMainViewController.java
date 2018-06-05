@@ -2,6 +2,7 @@ package Controllers;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -133,8 +134,11 @@ public class CustomerMainViewController {
         }
         else if (mode == ROUND_TRIP){
             // TODO: Round Trip Purchase
+
         }
     }
+
+
 
     /*
      * Search for available tickets given the parameters:
