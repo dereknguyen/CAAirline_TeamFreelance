@@ -370,7 +370,8 @@ public class SQL_Database implements Database {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
         try
         {
-            ResultSet rs = st.executeQuery(query);
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
             while (rs.next())
             {
                 Calendar c = Calendar.getInstance();
