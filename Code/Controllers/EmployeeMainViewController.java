@@ -62,13 +62,6 @@ public class EmployeeMainViewController {
     @FXML private JFXDatePicker PS_OneWayDepartDate;
     @FXML private JFXTimePicker PS_OneWayDepartTime;
     @FXML private JFXTextField PS_OneWayBasePrice;
-    @FXML private JFXComboBox<String> PS_RoundTripFrom;
-    @FXML private JFXComboBox<String> PS_RoundTripTo;
-    @FXML private JFXDatePicker PS_RoundTripDepartDate;
-    @FXML private JFXDatePicker PS_RoundTripReturnDate;
-    @FXML private JFXTextField PS_RoundTripBasePrice;
-    @FXML private JFXTimePicker PS_RoundTripDepartTime;
-    @FXML private JFXTimePicker PS_RoundTripReturnTime;
     @FXML private Label PS_ErrMsg;
 
     @FXML private JFXTextField FS_FlightNumber;
@@ -297,10 +290,10 @@ public class EmployeeMainViewController {
         String from = MR_From.getSelectionModel().getSelectedItem();
         String to = MR_To.getSelectionModel().getSelectedItem();
 
-        Database db = SQL_Database.getInstance();
+        SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        double avg = ((SQL_Database) db).getAvgSeats(id);
+        double avg = db.getAvgSeats(id);
         MR_ReportLabel.setText(from);
 
         Report data = new Report(from, to, new Double(avg).toString());
@@ -317,14 +310,14 @@ public class EmployeeMainViewController {
         String from = MR_From.getSelectionModel().getSelectedItem();
         String to = MR_To.getSelectionModel().getSelectedItem();
 
-        Database db = SQL_Database.getInstance();
+        SQL_Database db = SQL_Database.getInstance();
 
         int id = db.getFlightId(from, to);
-        double avg = ((SQL_Database) db).getAvgRevenue(id);
+        //double avg = db.getAvgRevenue(id);
         MR_ReportLabel.setText(from);
 
-        Report data = new Report(from, to, new Double(avg).toString());
-        ObservableList<Report> results = FXCollections.observableArrayList(data);
+        //Report data = new Report(from, to, new Double(avg).toString());
+        ObservableList<Report> results = FXCollections.observableArrayList(db.getAvgRevenue(id));
 
         MR_DataCol.setCellValueFactory(new PropertyValueFactory<>("DataString"));
         MR_DestinationCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
@@ -353,14 +346,9 @@ public class EmployeeMainViewController {
 
     /*@FXML
     void B_HandleSearchTickets() {
-        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-        if (selectedIndex == 0) {
-            B_ErrMsg.setText(searchOneWay());
-        }
-        else if (selectedIndex == 1) {
-            B_ErrMsg.setText(searchRoundTrip());
-        }
-    }*/
+        B_ErrMsg.setText(searchOneWay());
+    }
+    */
 
     @FXML
     void FS_HandleChangeStatus() {
@@ -420,22 +408,16 @@ public class EmployeeMainViewController {
     // TODO Set flight function
     @FXML
     void PS_HandleSetFlight() {
-        int mode = PS_TripModeTabPane.getSelectionModel().getSelectedIndex();
+
         Calendar c = Calendar.getInstance();
 
-        if (mode == ONE_WAY)
-        {
-            String from = PS_OneWayFrom.getSelectionModel().getSelectedItem();
-            String to = PS_OneWayTo.getSelectionModel().getSelectedItem();
-            LocalDate date = PS_OneWayDepartDate.getValue();
-            LocalTime time = PS_OneWayDepartTime.getValue();
-            String basePrice = PS_OneWayBasePrice.getText();
-            PS_ErrMsg.setText(addflight(from, to, date, time, basePrice));
-            AF_HandleRefresh();
-        }
-        else if (mode == ROUND_TRIP)
-        {
-        }
+        String from = PS_OneWayFrom.getSelectionModel().getSelectedItem();
+        String to = PS_OneWayTo.getSelectionModel().getSelectedItem();
+        LocalDate date = PS_OneWayDepartDate.getValue();
+        LocalTime time = PS_OneWayDepartTime.getValue();
+        String basePrice = PS_OneWayBasePrice.getText();
+        PS_ErrMsg.setText(addflight(from, to, date, time, basePrice));
+        AF_HandleRefresh();
     }
 
     @FXML
@@ -443,10 +425,6 @@ public class EmployeeMainViewController {
         B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
-                "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
-                "San Diego", "Phoenix", "Seattle", "Dallas");
-        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         B_TripModeTabPane.getSelectionModel().selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -462,9 +440,9 @@ public class EmployeeMainViewController {
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+        MR_From.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
-        PS_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+        MR_To.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
     }
 
@@ -508,7 +486,7 @@ public class EmployeeMainViewController {
         return null;
     }
 
-    private String searchRoundTrip() {
+    /*private String searchRoundTrip() {
         System.out.println("\nSearching: Round Trip");
 
         String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
