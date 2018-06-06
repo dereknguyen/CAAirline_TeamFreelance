@@ -203,6 +203,7 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
+        MR_DestinationLabel.setText("To: " + to);
         MR_DataLabel.setText(Double.toString(db.getAvgSeats(id)));
     }
 
@@ -215,7 +216,7 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DestinationLabel.setText(to);
+        MR_DestinationLabel.setText("To: " + to);
         MR_DataLabel.setText(Double.toString(db.getAvgRevenue(id)));
     }
 
