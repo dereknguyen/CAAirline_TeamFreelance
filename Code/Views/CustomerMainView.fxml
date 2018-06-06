@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerMainViewController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerMainViewController">
    <children>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
         <tabs>
@@ -195,9 +195,10 @@
                                           <TableColumn fx:id="MF_FlightIDCol" prefWidth="75.0" style="-fx-background-color: #151515;" text="Flight ID" />
                                           <TableColumn fx:id="MF_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="MF_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="MF_DepartDateCol" editable="false" prefWidth="250.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="MF_StatusCol" prefWidth="125.0" style="-fx-background-color: #151515;" text="Status" />
-                                          <TableColumn fx:id="MF_NumBagsCol" prefWidth="88.0" style="-fx-background-color: #151515;" text="No. Bags" />
+                                          <TableColumn fx:id="MF_DepartDateCol" editable="false" prefWidth="243.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="MF_StatusCol" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="MF_NumBagsCol" prefWidth="70.0" style="-fx-background-color: #151515;" text="No. Bags" />
+                                          <TableColumn fx:id="MF_SeatNumCol" prefWidth="60.0" style="-fx-background-color: #151515 #151515;" text="Seat No." />
                                           <TableColumn fx:id="MF_CheckedInStatusCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="Checked In" />
                                        </columns>
                                     </TableView>

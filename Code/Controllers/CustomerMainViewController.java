@@ -66,6 +66,7 @@ public class CustomerMainViewController {
     @FXML private TableColumn<Ticket, String> MF_StatusCol;
     @FXML private TableColumn<Ticket, Boolean> MF_CheckedInStatusCol;
     @FXML private TableColumn<Ticket, String> MF_NumBagsCol;
+    @FXML private TableColumn<Ticket, String> MF_SeatNumCol;
 
 
     @FXML
@@ -212,13 +213,13 @@ public class CustomerMainViewController {
     @FXML
     void B_HandleSearch() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-        if (selectedIndex == 0) {
+        if (selectedIndex == ONE_WAY) {
             String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
             String to = B_OneWayTo.getSelectionModel().getSelectedItem();
             LocalDate date = B_OneWayDepartDate.getValue();
             B_ErrMsg.setText(searchFlight(from, to, date));
         }
-        else if (selectedIndex == 1) {
+        else if (selectedIndex == ROUND_TRIP) {
             String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
             String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
             LocalDate date = B_RoundTripDepartDate.getValue();
@@ -269,6 +270,7 @@ public class CustomerMainViewController {
         MF_StatusCol.setCellValueFactory(new PropertyValueFactory<>("FlightStatus"));
         MF_NumBagsCol.setCellValueFactory(new PropertyValueFactory<>("NumberOfBags"));
         MF_CheckedInStatusCol.setCellValueFactory(new PropertyValueFactory<>("CheckedInStatus"));
+        MF_SeatNumCol.setCellValueFactory(new PropertyValueFactory<>("SeatNum"));
 
         MF_MyFlightTable.setItems(myFlights);
     }

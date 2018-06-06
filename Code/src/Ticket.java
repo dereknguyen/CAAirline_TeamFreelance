@@ -21,6 +21,7 @@ public class Ticket {
 	private SimpleStringProperty FlightStatus;
 	private SimpleIntegerProperty NumberOfBags;
 	private SimpleBooleanProperty CheckedInStatus;
+	private SimpleIntegerProperty SeatNum;
 
 	public Ticket(int TripId, int SeatNumber, int NumBags, boolean CheckedIn)
 	{
@@ -42,6 +43,7 @@ public class Ticket {
         this.FlightStatus = new ReadOnlyStringWrapper(temp.getStatusString());
         this.NumberOfBags = new SimpleIntegerProperty(this.NumBags);
         this.CheckedInStatus = new SimpleBooleanProperty(this.CheckedIn);
+        this.SeatNum = new SimpleIntegerProperty(this.SeatNumber);
     }
 
 	public int getTripId() { return TripId; }
@@ -56,4 +58,5 @@ public class Ticket {
 	public String getFlightStatus() { return FlightStatus.get(); }
 	public int getNumberOfBags() { return NumberOfBags.get(); }
 	public boolean getCheckedInStatus() { return CheckedInStatus.get(); }
+	public int getSeatNum() { return SeatNum.get(); }
 }

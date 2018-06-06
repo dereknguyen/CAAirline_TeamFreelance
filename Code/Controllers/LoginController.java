@@ -10,6 +10,7 @@ import javafx.scene.control.TabPane;
 import src.CustomerControl;
 import src.EmployeeControl;
 import src.SQL_Database;
+import src.Session;
 
 public class LoginController {
 
@@ -74,6 +75,7 @@ public class LoginController {
 
         src.Database db = SQL_Database.getInstance();
         List<String> entry = db.getCustomerInfo(username);
+        Session s = Session.getInstance();
 
         if (entry == null) {
             errMsg.setText("Invalid username/password");
@@ -83,6 +85,7 @@ public class LoginController {
         }
         else {
             System.out.println("Login successful");
+            s.setUsername(username);
             CustomerControl.getInstance().getCustomerFromDB(username);
             showMainTab("../Views/CustomerMainView.fxml");
         }
@@ -91,6 +94,7 @@ public class LoginController {
     private void handleEmployeeLogin(String username, String password) {
         src.Database db = SQL_Database.getInstance();
         List<String> entry = db.getEmployeeInfo(username);
+        Session s = Session.getInstance();
 
         if (entry == null)
         {
@@ -103,6 +107,7 @@ public class LoginController {
         else
         {
             System.out.println("Login successful");
+            s.setUsername(username);
             EmployeeControl.getInstance().getEmployeeFromDB(username);
             showMainTab("../Views/EmployeeMainView.fxml");
         }
