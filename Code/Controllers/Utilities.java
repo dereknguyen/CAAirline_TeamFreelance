@@ -25,4 +25,22 @@ public class Utilities {
             e.printStackTrace();
         }
     }
+
+    static FXMLLoader present(Stage stage, String resource, String stageTitle) {
+        FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(resource));
+        Parent root;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        stage.setTitle(stageTitle);
+        stage.setScene(new Scene(root));
+
+        return loader;
+    }
 }

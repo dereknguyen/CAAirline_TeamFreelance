@@ -92,6 +92,101 @@ public class CustomerMainViewController {
         );
     }
 
+    /*******************************************************************************************************************
+     *
+     *  BOOKING TAB
+     *
+     ******************************************************************************************************************/
+
+    @FXML
+    void B_HandlePurchase() {
+
+        int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
+
+        if (mode == ONE_WAY) {
+
+            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+            if (selectedTrip == null) return;
+
+            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+
+            if (tripID != -1) {
+
+                Stage stage = new Stage();
+                FXMLLoader loader = Utilities.present(stage, "/Views/PaymentView.fxml", "Confirm Ticket");
+                PaymentViewController controller = loader.getController();
+                controller.setTripID(tripID);
+                controller.setSelectedMode(ONE_WAY);
+                controller.hideReturnSeat();
+                B_AvailableFlightsTable.getScene().getWindow().hide();
+                stage.show();
+            }
+        }
+        else if (mode == ROUND_TRIP) {
+
+            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
+            if (selectedTrip == null) return;
+
+            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+
+            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
+            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
+
+            if (tripID != -1) {
+
+                Stage stage = new Stage();
+                FXMLLoader loader = Utilities.present(stage,
+                        "/Views/ReturnFlightSelectionView.fxml",
+                        "Select Returning Trip");
+
+                ReturnFlightSelectionViewController controller = loader.getController();
+                controller.setLocations(to, from, tripID);
+                B_AvailableFlightsTable.getScene().getWindow().hide();
+                stage.show();
+            }
+        }
+    }
+
+    /*
+     * Search for available tickets given the parameters:
+     *  - From Location (JFXComboBox)
+     *  - To Location (JFXComboBox)
+     *  - Departure Date (JFXDatePicker)
+     *  - Return Date (JFXDatePicker)
+     *
+     * Will Check tripOptionsTabPane for either:
+     *  - One Way (Index 0)
+     *  - Round Trip (Index 1)
+     *
+     * Must Verify that user have input all of the necessary information.
+     *  Else, must print missing information as error message.
+     *
+     * Populate table with available flight information.
+     */
+    @FXML
+    void B_HandleSearch() {
+        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == ONE_WAY) {
+            String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
+            String to = B_OneWayTo.getSelectionModel().getSelectedItem();
+            LocalDate date = B_OneWayDepartDate.getValue();
+            B_ErrMsg.setText(searchFlight(from, to, date));
+        }
+        else if (selectedIndex == ROUND_TRIP) {
+            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
+            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
+            LocalDate date = B_RoundTripDepartDate.getValue();
+            B_ErrMsg.setText(searchFlight(from, to, date));
+        }
+    }
+
+
+    /*******************************************************************************************************************
+     *
+     *  CHECK IN TAB
+     *
+     ******************************************************************************************************************/
+
     @FXML
     void CI_HandleCheckIn() {
         SQL_Database db = SQL_Database.getInstance();
@@ -135,94 +230,12 @@ public class CustomerMainViewController {
         }
     }
 
-    @FXML
-    void B_HandlePurchase() {
 
-        int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-
-        if (mode == ONE_WAY) {
-            // Get selected TABLE ROW in Booking Tab
-            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
-            if (selectedTrip == null) return;
-
-            int tripID = getSelectedTripID(selectedTrip,
-                    selectedTrip.getFromString(),
-                    selectedTrip.getToString());
-
-            // Present Payment View. We also want to
-            //  transfer over selected data to payment view controller.
-            if (tripID != -1) {
-                toPaymentView_OneWay(tripID);
-            }
-        }
-        else if (mode == ROUND_TRIP){
-
-            // GRAB STARTING TRIP
-            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
-            if (selectedTrip == null) return;
-
-            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
-
-            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-
-            if (tripID != -1) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ReturnFlightSelectionView.fxml"));
-                Parent root;
-
-                try {
-                    root = loader.load();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                ReturnFlightSelectionViewController controller = loader.getController();
-                Stage stage = new Stage();
-                controller.setLocations(to, from, tripID); // Reverse the from-to
-                stage.setTitle("Select Returning Trip");
-                stage.setScene(new Scene(root));
-
-                B_AvailableFlightsTable.getItems().removeAll(results);
-
-                stage.show();
-            }
-        }
-    }
-
-    /*
-     * Search for available tickets given the parameters:
-     *  - From Location (JFXComboBox)
-     *  - To Location (JFXComboBox)
-     *  - Departure Date (JFXDatePicker)
-     *  - Return Date (JFXDatePicker)
+    /*******************************************************************************************************************
      *
-     * Will Check tripOptionsTabPane for either:
-     *  - One Way (Index 0)
-     *  - Round Trip (Index 1)
+     *  FLIGHT STATUS TAB
      *
-     * Must Verify that user have input all of the necessary information.
-     *  Else, must print missing information as error message.
-     *
-     * Populate table with available flight information.
-     */
-    @FXML
-    void B_HandleSearch() {
-        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-        if (selectedIndex == ONE_WAY) {
-            String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
-            String to = B_OneWayTo.getSelectionModel().getSelectedItem();
-            LocalDate date = B_OneWayDepartDate.getValue();
-            B_ErrMsg.setText(searchFlight(from, to, date));
-        }
-        else if (selectedIndex == ROUND_TRIP) {
-            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-            LocalDate date = B_RoundTripDepartDate.getValue();
-            B_ErrMsg.setText(searchFlight(from, to, date));
-        }
-    }
+     ******************************************************************************************************************/
 
     @FXML
     void FS_HandleGetFlightStatus()
@@ -252,6 +265,12 @@ public class CustomerMainViewController {
 
         FS_FlightStatusTable.setItems(results);
     }
+
+    /*******************************************************************************************************************
+     *
+     *  MY FLIGHT STATUS TAB
+     *
+     ******************************************************************************************************************/
 
     @FXML
     void MF_HandleRefresh() {
@@ -306,7 +325,12 @@ public class CustomerMainViewController {
         stage.show();
     }
 
-    /* HELPERS */
+
+    /*================================================================================================================*
+     *
+     *  HELPERS METHODS
+     *
+     *================================================================================================================*/
     private String searchFlight(String from, String to, LocalDate localDate) {
         System.out.println("\nSearching:");
 
@@ -365,27 +389,4 @@ public class CustomerMainViewController {
         return 0;
     }
 
-    private void toPaymentView_OneWay(int tripID) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
-        Parent root;
-
-        try {
-            root = loader.load();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        PaymentViewController controller = loader.getController();
-        Stage stage = new Stage();
-        controller.setTripID(tripID);
-        controller.setSelectedMode(ONE_WAY);
-        controller.hideReturnSeat();
-        stage.setTitle("Confirm Ticket");
-        stage.setScene(new Scene(root));
-
-        B_AvailableFlightsTable.getItems().removeAll(results);
-        stage.show();
-    }
 }

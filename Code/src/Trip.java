@@ -108,4 +108,9 @@ public class Trip {
 	public String getToString() { return ToString.get();}
 	public double getPriceString() { return PriceString.get();}
 	public String getStatusString() { return StatusString.get(); }
+
+    public String formatDate() {
+        Format sdf = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
+        return sdf.format(this.Date.getTime());
+    }
 }
