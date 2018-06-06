@@ -136,7 +136,7 @@
                                     <JFXTextField fx:id="FS_FlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Flight Number (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
                                     <VBox spacing="5.0">
                                        <children>
-                                          <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Set Flight Status" />
+                                          <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Search Flights" />
                                        </children>
                                     </VBox>
                                     <Label fx:id="FS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="272.0" style="-fx-text-fill: red;" />
