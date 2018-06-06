@@ -309,6 +309,7 @@ public class EmployeeMainViewController {
                 "San Diego", "Phoenix", "Seattle", "Dallas");
 
         FS_NewStatus.getItems().addAll("On-time", "Delayed", "Cancelled");
+        FS_TripId = -1;
     }
 
     @FXML
