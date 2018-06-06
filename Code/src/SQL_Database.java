@@ -300,7 +300,7 @@ public class SQL_Database implements Database {
         return 0;
     }
 
-    // Calculates average number of empty seats using previous two weeks of flight information, returns -1 on error
+    // Calculates average percentage of empty seats using previous two weeks of flight information, returns -1 on error
     public double calculateAvgEmpty(String Destination)
     {
         int id = getFlightId("San Luis Obispo", Destination);
@@ -314,11 +314,14 @@ public class SQL_Database implements Database {
             rs.next();
             numtrips = rs.getInt(1);
             rs = st.executeQuery(query2);
-            rs.next();
+            if (!rs.next())
+            {
+                return 1.0;
+            }
             numempty = rs.getInt(1);
             if (numtrips == 0)
             {
-                return 20.0;
+                return 1.0;
             }
         }
         catch (SQLException e)
@@ -326,7 +329,8 @@ public class SQL_Database implements Database {
             System.out.println(e.getMessage());
             return -1;
         }
-        return numempty / numtrips;
+        //todo double check this
+        return (numempty/20) / numtrips;
     }
 
     /* return departure date of a trip, or null for nonexistant tripID */
