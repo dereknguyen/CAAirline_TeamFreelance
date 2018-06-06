@@ -1,18 +1,14 @@
 package Controllers;
 
 import com.jfoenix.controls.JFXDatePicker;
-import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +27,6 @@ public class ReturnFlightSelectionViewController {
     private String from;
     private String to;
     private int startingTripID;
-    private static final int ONE_WAY = 0;
     private static final int ROUND_TRIP = 1;
 
     @FXML private JFXDatePicker ReturnFlightDate;
@@ -42,7 +37,7 @@ public class ReturnFlightSelectionViewController {
     @FXML private TableColumn<Trip, String> DepartDateCol;
     @FXML private TableColumn<Trip, String> PriceCol;
 
-    public void setLocations(String from, String to, int startingTripID) {
+    void setLocations(String from, String to, int startingTripID) {
         this.from = from;
         this.to = to;
         this.startingTripID = startingTripID;
@@ -116,13 +111,14 @@ public class ReturnFlightSelectionViewController {
 
     private void toPaymentView(int startingTripID, int returnTripID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
-        Parent root = null;
+        Parent root;
 
         try {
             root = loader.load();
         }
         catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
         PaymentViewController controller = loader.getController();

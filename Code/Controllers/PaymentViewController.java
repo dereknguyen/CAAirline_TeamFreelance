@@ -95,23 +95,24 @@ public class PaymentViewController {
 
     }
 
-    public void setTripID(int id) {
+    void setTripID(int id) {
         this.tripID = id;
     }
-    public void setTripID(int startingTripID, int returnTripID) {
+    void setTripID(int startingTripID, int returnTripID) {
         this.tripID = startingTripID;
         this.returnTripID = returnTripID;
     }
 
-    public void setSelectedMode(int mode) {
+    void setSelectedMode(int mode) {
         this.selectedMode = mode;
     }
-    public void hideReturnSeat() {
+
+    void hideReturnSeat() {
         returnSeatSelection.setDisable(true);
         returnSeatSelection.setVisible(false);
     }
 
-    public void loadReturnSeat() {
+    void loadReturnSeat() {
         this.db = SQL_Database.getInstance();
         ArrayList<Integer> takenSeatList = db.getFullSeats(this.returnTripID);
         ArrayList<Integer> seatList = new ArrayList<>();

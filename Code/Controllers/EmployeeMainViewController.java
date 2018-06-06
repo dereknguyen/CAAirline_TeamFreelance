@@ -114,7 +114,6 @@ public class EmployeeMainViewController {
         AF_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
         AF_AvailableFlightsTable.setItems(trips);
-
     }
 
     @FXML
@@ -209,9 +208,7 @@ public class EmployeeMainViewController {
             LocalDate date = B_RoundTripDepartDate.getValue();
             B_ErrMsg.setText(searchFlight(from, to, date));
         }
-
     }
-
 
     @FXML
     void FS_HandleChangeStatus() {
@@ -337,7 +334,6 @@ public class EmployeeMainViewController {
             return;
         }
 
-        LoginController controller = loader.getController();
         Stage stage = new Stage();
         stage.setTitle("California System");
         stage.setScene(new Scene(root));

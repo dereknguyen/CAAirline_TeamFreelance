@@ -10,7 +10,6 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.Locale;
 
 import javafx.collections.FXCollections;
@@ -141,7 +140,6 @@ public class CustomerMainViewController {
 
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
-
         if (mode == ONE_WAY) {
             // Get selected TABLE ROW in Booking Tab
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
@@ -190,10 +188,8 @@ public class CustomerMainViewController {
 
                 stage.show();
             }
-
         }
     }
-
 
     /*
      * Search for available tickets given the parameters:
@@ -300,7 +296,6 @@ public class CustomerMainViewController {
             return;
         }
 
-        LoginController controller = loader.getController();
         Stage stage = new Stage();
         stage.setTitle("California System");
         stage.setScene(new Scene(root));
@@ -347,7 +342,6 @@ public class CustomerMainViewController {
         }
         return null;
     }
-
 
     private int getSelectedTripID(Trip selectedTrip, String from, String to) {
         SQL_Database db = SQL_Database.getInstance();

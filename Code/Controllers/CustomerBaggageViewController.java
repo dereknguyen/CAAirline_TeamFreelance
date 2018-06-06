@@ -1,9 +1,7 @@
 package Controllers;
 
 import com.jfoenix.controls.JFXTextField;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import src.SQL_Database;
@@ -15,8 +13,6 @@ public class CustomerBaggageViewController {
     private int tripID = 0;
     private SQL_Database db = SQL_Database.getInstance();
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
     @FXML private JFXTextField numCarryOn;
     @FXML private JFXTextField carryOnWeight;
     @FXML private JFXTextField numCheckIn;
@@ -62,7 +58,6 @@ public class CustomerBaggageViewController {
             int result = db.editTicket(username, this.tripID, seatNumber, totalBags, true);
 
             if (result != -1) {
-                // TODO: End Session
                 ErrMsg.setVisible(false);
                 numCarryOn.getScene().getWindow().hide();
                 Utilities.present("/Views/CustomerMainView.fxml", "Main");
@@ -74,12 +69,7 @@ public class CustomerBaggageViewController {
         }
     }
 
-    @FXML
-    void initialize() {
-
-    }
-
-    public void setTripID(int id) {
+    void setTripID(int id) {
         this.tripID = id;
     }
 
