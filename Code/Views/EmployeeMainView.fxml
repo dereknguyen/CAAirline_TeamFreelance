@@ -219,14 +219,14 @@
                                     <HBox spacing="270.0">
                                        <children>
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Available Flights" />
-                                          <JFXButton onAction="#B_HandlePurchaseSelected" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Confirm Flight Details" />
+                                          <JFXButton fx:id="B_PurchaseFlightButton" onAction="#B_HandlePurchaseSelected" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Confirm Flight Details" />
                                        </children>
                                     </HBox>
                                     <TableView fx:id="B_AvailableFlightsTable" prefHeight="466.0" prefWidth="635.0" style="-fx-background-color: #151515;">
                                        <columns>
                                           <TableColumn fx:id="B_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="B_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
-                                          <TableColumn fx:id="B_DepartTimeCol" editable="false" prefWidth="248.0" style="-fx-background-color: #151515;" text="Departure Date" />
+                                          <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="248.0" style="-fx-background-color: #151515;" text="Departure Date" />
                                           <TableColumn fx:id="B_PriceCol" prefWidth="85.0" style="-fx-background-color: #151515;" text="Price" />
                                        </columns>
                                     </TableView>

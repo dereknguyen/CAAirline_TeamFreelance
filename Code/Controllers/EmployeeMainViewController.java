@@ -119,7 +119,7 @@ public class EmployeeMainViewController {
 
     }
 
-    @FXML
+    /*@FXML
     void B_HandlePurchase() {
 
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
@@ -175,8 +175,8 @@ public class EmployeeMainViewController {
 
         }
     }
-
-    @FXML
+*/
+    /*@FXML
     void B_HandleSearch() {
         int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
         if (selectedIndex == 0) {
@@ -191,7 +191,7 @@ public class EmployeeMainViewController {
             LocalDate date = B_RoundTripDepartDate.getValue();
             B_ErrMsg.setText(searchFlight(from, to, date));
         }
-    }
+    }*/
 
     @FXML
     void MR_HandleSeat() {
@@ -234,7 +234,6 @@ public class EmployeeMainViewController {
             }
         }
         else if (mode == ROUND_TRIP){
-            // TODO: Round Trip Purchase
             // GRAB STARTING TRIP
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
             if (selectedTrip == null) return;
@@ -337,9 +336,6 @@ public class EmployeeMainViewController {
 
     @FXML
     void PS_HandleSetFlight() {
-
-        Calendar c = Calendar.getInstance();
-
         String from = PS_OneWayFrom.getSelectionModel().getSelectedItem();
         String to = PS_OneWayTo.getSelectionModel().getSelectedItem();
         LocalDate date = PS_OneWayDepartDate.getValue();
@@ -354,6 +350,10 @@ public class EmployeeMainViewController {
         B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+                "San Diego", "Phoenix", "Seattle", "Dallas");
+        B_RoundTripTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         B_TripModeTabPane.getSelectionModel().selectedIndexProperty().addListener(
                 (observable, oldValue, newValue) -> {
