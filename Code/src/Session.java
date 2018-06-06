@@ -5,8 +5,7 @@ public class Session {
     private String username;
 
     private Session() {
-        //TODO, make default value null
-        this.username = "test";
+        this.username = null;
     }
 
     static public Session getInstance() {

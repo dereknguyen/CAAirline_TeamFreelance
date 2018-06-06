@@ -285,6 +285,30 @@ public class CustomerMainViewController {
         MF_HandleRefresh();
     }
 
+    @FXML
+    void L_HandleLogout()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/LoginView.fxml"));
+        Parent root;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        LoginController controller = loader.getController();
+        Stage stage = new Stage();
+        stage.setTitle("California System");
+        stage.setScene(new Scene(root));
+        B_TripModeTabPane.getScene().getWindow().hide();
+
+        Session s = Session.getInstance();
+        s.setUsername(null);
+        stage.show();
+    }
 
     /* HELPERS */
     private String searchFlight(String from, String to, LocalDate localDate) {
