@@ -142,7 +142,6 @@ public class SQL_Database implements Database {
 
     public double getAvgRevenue(int FlightId) {
         String query = "SELECT Rev FROM AvgRevPerDest WHERE FlightId = " + FlightId;
-        double avg;
         try
         {
             ResultSet rs = st.executeQuery(query);
@@ -256,12 +255,6 @@ public class SQL_Database implements Database {
                 return -2;
             }
         }
-    }
-
-    // Defaults FullSeats to 0 and Price to 0
-    public int addTrip(int FlightId, Calendar date)
-    {
-        return addTrip(FlightId, date, 0);
     }
 
     // Changes trips's destination, date, fullseats, and price. Returns 0 on success, -1 on error
