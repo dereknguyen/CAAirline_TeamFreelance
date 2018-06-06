@@ -100,11 +100,9 @@ public class EmployeeMainViewController {
 
         SQL_Database db = SQL_Database.getInstance();
 
-        System.out.println(db.getAllTrips().isEmpty());
         ObservableList<Trip> trips = FXCollections.observableArrayList(
                 db.getAllTrips()
         );
-
 
         AF_FlightNumberCol.setCellValueFactory(new PropertyValueFactory<>("TripId"));
         AF_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));

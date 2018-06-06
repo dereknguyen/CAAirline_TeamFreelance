@@ -97,7 +97,7 @@
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <Label fx:id="PS_ErrMsg" alignment="CENTER" prefHeight="43.0" prefWidth="574.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
+                                    <Label fx:id="PS_ErrMsg" prefHeight="43.0" prefWidth="574.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
                                     <JFXButton onAction="#PS_HandleSetFlight" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Set Flight" />
                                  </children>
                               </VBox>
@@ -111,7 +111,7 @@
                                           <Label fx:id="PS_ToInfo" text="To:" />
                                           <Label fx:id="PS_DateInfo" text="Date:" />
                                           <Label fx:id="PS_TimeInfo" text="Time:" />
-                                          <Label fx:id="PS_PriceInfo" text="Base Price" />
+                                          <Label fx:id="PS_PriceInfo" text="Base Price:" />
                                        </children>
                                     </VBox>
                                  </children>
