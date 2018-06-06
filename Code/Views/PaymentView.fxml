@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PaymentViewController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PaymentViewController">
    <children>
       <HBox layoutX="166.0" layoutY="226.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -41,6 +41,7 @@
                   <AnchorPane prefHeight="11.0" prefWidth="299.0" />
                   <JFXComboBox fx:id="returnSeatSelection" focusColor="#046a38" layoutX="10.0" layoutY="135.0" prefHeight="31.0" prefWidth="260.0" promptText="Return Flight Available Seats" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
                   <HBox />
+                  <Label fx:id="ErrMsg" prefHeight="43.0" prefWidth="574.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
                </children>
                <HBox.margin>
                   <Insets left="20.0" />

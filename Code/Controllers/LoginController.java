@@ -99,7 +99,7 @@ public class LoginController {
         else {
             System.out.println("Login successful");
             s.setUsername(username);
-            CustomerControl.getInstance().getCustomerFromDB(username);
+            //CustomerControl.getInstance().getCustomerFromDB(username);
             showMainTab("../Views/CustomerMainView.fxml");
         }
     }

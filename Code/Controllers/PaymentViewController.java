@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import src.CustomerControl;
 import src.SQL_Database;
+import src.Session;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public class PaymentViewController {
     @FXML private JFXTextField cardState;
     @FXML private JFXTextField cardZip;
     @FXML private Label totalCost;
+    @FXML private Label ErrMsg;
 
     @FXML
     void HandleBack(ActionEvent event) {
@@ -42,11 +44,17 @@ public class PaymentViewController {
     @FXML
     void HandlePayment(ActionEvent event) {
 
-        String username = CustomerControl.getInstance().getCustomer().getUserName();
-
-
+        Session s = Session.getInstance();
+        String username = s.getUsername();
 
         if (this.selectedMode == ONE_WAY) {
+            if (seatSelection.getSelectionModel().getSelectedItem() == null)
+            {
+                ErrMsg.setText("Please select a seat number");
+                ErrMsg.setVisible(true);
+                return;
+            }
+            ErrMsg.setVisible(false);
             int seat = seatSelection.getSelectionModel().getSelectedItem();
 
             System.out.println(username);
@@ -54,18 +62,28 @@ public class PaymentViewController {
             System.out.println(seat);
 
             if (this.db.addTicket(username, this.tripID, seat) == 0) {
-                CustomerControl.getInstance().getCustomerFromDB(username); // Reload
                 totalCost.getScene().getWindow().hide();
             }
         }
         else if (this.selectedMode == ROUND_TRIP) {
+            if (seatSelection.getSelectionModel().getSelectedItem() == null)
+            {
+                ErrMsg.setText("Please select an outgoing seat number");
+                ErrMsg.setVisible(true);
+                return;
+            }
+            if (returnSeatSelection.getSelectionModel().getSelectedItem() == null)
+            {
+                ErrMsg.setText("Please select a returning seat number");
+                ErrMsg.setVisible(true);
+                return;
+            }
+            ErrMsg.setVisible(false);
             int departSeat = seatSelection.getSelectionModel().getSelectedItem();
             int returnSeat = returnSeatSelection.getSelectionModel().getSelectedItem();
 
             if (this.db.addTicket(username, this.tripID, departSeat) == 0) {
-                CustomerControl.getInstance().getCustomerFromDB(username); // Reload
                 if (this.db.addTicket(username, this.returnTripID, returnSeat) == 0) {
-                    CustomerControl.getInstance().getCustomerFromDB(username); // Reload
                     totalCost.getScene().getWindow().hide();
                 }
             }
@@ -108,7 +126,7 @@ public class PaymentViewController {
     public void loadReturnSeat() {
         this.db = SQL_Database.getInstance();
         ArrayList<Integer> takenSeatList = db.getFullSeats(this.returnTripID);
-        ArrayList<Integer> seatList = new ArrayList<Integer>();
+        ArrayList<Integer> seatList = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) { seatList.add(i); }
 
