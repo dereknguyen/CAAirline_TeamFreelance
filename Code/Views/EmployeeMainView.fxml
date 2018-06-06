@@ -139,6 +139,8 @@
                                           <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Search Flights" />
                                        </children>
                                     </VBox>
+                                    <JFXComboBox fx:id="FS_NewStatus" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="New Status" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                    <JFXButton onAction="#FS_HandleChangeStatus" prefHeight="36.0" prefWidth="259.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Change Flight Status" />
                                     <Label fx:id="FS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="272.0" style="-fx-text-fill: red;" />
                                  </children>
                               </VBox>
@@ -147,7 +149,6 @@
                                     <HBox spacing="325.0">
                                        <children>
                                           <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Flight Status" />
-                                          <JFXButton onAction="#FS_HandleChangeStatus" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Change Flight Status" />
                                        </children>
                                     </HBox>
                                     <TableView fx:id="FS_StatusTable" prefHeight="473.0" prefWidth="641.0" style="-fx-background-color: #151515;">

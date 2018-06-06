@@ -67,10 +67,8 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> FS_ToCol;
     @FXML private TableColumn<Trip, String> FS_DepartTime;
     @FXML private TableColumn<Trip, String> FS_CurrentStatus;
-
+    @FXML private JFXComboBox<String> FS_NewStatus;
     @FXML private Label FS_ErrMsg;
-    //TODO Add new status for changing status
-    @FXML private JFXTextField FS_NewStatus;
 
     @FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
@@ -118,80 +116,6 @@ public class EmployeeMainViewController {
         AF_AvailableFlightsTable.setItems(trips);
 
     }
-
-    /*@FXML
-    void B_HandlePurchase() {
-
-        int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-
-        if (mode == ONE_WAY) {
-            // Get selected TABLE ROW in Booking Tab
-            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
-            if (selectedTrip == null) return;
-
-            int tripID = getSelectedTripID(selectedTrip,
-                    selectedTrip.getFromString(),
-                    selectedTrip.getToString());
-
-            // Present Payment View. We also want to
-            //  transfer over selected data to payment view controller.
-            if (tripID != -1) {
-                toPaymentView_OneWay(tripID);
-            }
-        }
-        else if (mode == ROUND_TRIP){
-
-            // GRAB STARTING TRIP
-            Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
-            if (selectedTrip == null) return;
-
-            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
-
-            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-
-            if (tripID != -1) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ReturnFlightSelectionView.fxml"));
-                Parent root;
-
-                try {
-                    root = loader.load();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                ReturnFlightSelectionViewController controller = loader.getController();
-                Stage stage = new Stage();
-                controller.setLocations(to, from, tripID); // Reverse the from-to
-                stage.setTitle("Select Returning Trip");
-                stage.setScene(new Scene(root));
-
-                B_AvailableFlightsTable.getItems().removeAll(results);
-
-                stage.show();
-            }
-
-        }
-    }
-*/
-    /*@FXML
-    void B_HandleSearch() {
-        int selectedIndex = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
-        if (selectedIndex == 0) {
-            String from = B_OneWayFrom.getSelectionModel().getSelectedItem();
-            String to = B_OneWayTo.getSelectionModel().getSelectedItem();
-            LocalDate date = B_OneWayDepartDate.getValue();
-            B_ErrMsg.setText(searchFlight(from, to, date));
-        }
-        else if (selectedIndex == 1) {
-            String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
-            String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
-            LocalDate date = B_RoundTripDepartDate.getValue();
-            B_ErrMsg.setText(searchFlight(from, to, date));
-        }
-    }*/
 
     @FXML
     void MR_HandleSeat() {
@@ -293,17 +217,40 @@ public class EmployeeMainViewController {
     void FS_HandleChangeStatus() {
         int TripId;
         int newStatus;
+        String choice = FS_NewStatus.getSelectionModel().getSelectedItem();
         try {
             TripId = Integer.parseInt(FS_FlightNumber.getText());
-            newStatus = Integer.parseInt(FS_NewStatus.getText());
-            if(TripId < 0 || newStatus < 0) throw new NumberFormatException();
+            if(TripId < 0) throw new NumberFormatException();
         } catch (NumberFormatException e) {
             FS_ErrMsg.setText("Please enter a valid flight ID");
             FS_ErrMsg.setVisible(true);
             return;
         }
+        if (choice == null)
+        {
+            FS_ErrMsg.setText("Please select a new status");
+            FS_ErrMsg.setVisible(true);
+            return;
+        }
+        switch (choice) {
+            case "On-time":
+                newStatus = 0;
+                break;
+            case "Delayed":
+                newStatus = 1;
+                break;
+            case "Cancelled":
+                newStatus = 2;
+                break;
+            default:
+                FS_ErrMsg.setText("Please select a new status");
+                FS_ErrMsg.setVisible(true);
+                return;
+        }
+        FS_ErrMsg.setVisible(false);
         SQL_Database db = SQL_Database.getInstance();
         db.setStatus(TripId, newStatus);
+        FS_HandleViewStatus();
     }
 
     @FXML
@@ -323,13 +270,12 @@ public class EmployeeMainViewController {
         SQL_Database db = SQL_Database.getInstance();
         Trip t = db.getTripInfo(TripId);
         ObservableList<Trip> result = FXCollections.observableArrayList(t);
-        if (t == null) return;
 
         FS_ErrMsg.setVisible(false);
         FS_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
         FS_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
         FS_DepartTime.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-        FS_CurrentStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        FS_CurrentStatus.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
 
         FS_StatusTable.setItems(result);
     }
@@ -373,6 +319,8 @@ public class EmployeeMainViewController {
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         MR_To.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
+
+        FS_NewStatus.getItems().addAll("On-time", "Delayed", "Cancelled");
     }
 
     /* HELPERS */
