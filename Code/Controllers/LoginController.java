@@ -3,10 +3,14 @@ package Controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+
 import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import src.CustomerControl;
 import src.EmployeeControl;
 import src.SQL_Database;
@@ -69,6 +73,15 @@ public class LoginController {
         loginButton.getScene().getWindow().hide();
 
         Utilities.present(mode, "Main");
+    }
+
+    @FXML
+    void HandleEnterClick(KeyEvent event)
+    {
+        if (event.getCode() == KeyCode.ENTER)
+        {
+            HandleLoginClick();
+        }
     }
 
     private void handleCustomerLogin(String username, String password) {
