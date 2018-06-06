@@ -19,7 +19,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public static void main(String[] args) { launch(args);}
 
     private static void mainLoop() {
@@ -28,6 +27,7 @@ public class Main extends Application {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, 2018);
         c.set(Calendar.MONTH, Calendar.MARCH);
+        c.set(Calendar.MINUTE, 0);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 100; j++) {
                 db.addTrip(i, c, (Math.floor(Math.random() * 91) + 10));
