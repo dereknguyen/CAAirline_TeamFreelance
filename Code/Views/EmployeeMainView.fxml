@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
    <children>
@@ -293,5 +294,10 @@
             <Image url="@../Assets/whitegold_logo.png" />
          </image>
       </ImageView>
+      <JFXButton layoutX="24.0" layoutY="26.0" onAction="#L_HandleLogout" prefHeight="26.0" prefWidth="80.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px;" styleClass="#046A38" text="&lt; Logout" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
