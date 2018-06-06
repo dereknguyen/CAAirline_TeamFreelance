@@ -25,8 +25,7 @@ public class Main extends Application {
         /* generate ticket database entries */
         SQL_Database db = SQL_Database.getInstance();
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, 2018);
-        c.set(Calendar.MONTH, Calendar.MARCH);
+        c.add(Calendar.WEEK_OF_MONTH, -4);
         c.set(Calendar.MINUTE, 0);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 100; j++) {
