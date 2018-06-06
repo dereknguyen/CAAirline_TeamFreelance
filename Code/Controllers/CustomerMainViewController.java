@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javafx.collections.FXCollections;
@@ -95,7 +96,7 @@ public class CustomerMainViewController {
     @FXML
     void CI_HandleCheckIn() {
         SQL_Database db = SQL_Database.getInstance();
-        String username = CustomerControl.getInstance().getCustomer().getUserName();
+        String username = Session.getInstance().getUsername();
         int id;
 
         try {
@@ -260,7 +261,7 @@ public class CustomerMainViewController {
     void MF_HandleRefresh() {
         SQL_Database db = SQL_Database.getInstance();
         ObservableList<Ticket> myFlights = FXCollections.observableArrayList(
-                db.getTicketsByUsername(CustomerControl.getInstance().getCustomer().getUserName())
+                db.getTicketsByUsername(Session.getInstance().getUsername())
         );
 
         MF_FlightIDCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
@@ -335,13 +336,7 @@ public class CustomerMainViewController {
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
             /* remove cancelled trips */
-            for (Trip t : results)
-            {
-                if (t.getStatus() == 2)
-                {
-                    results.remove(t);
-                }
-            }
+            results.removeIf(t -> t.getStatus() == 2);
 
             B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
             B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));

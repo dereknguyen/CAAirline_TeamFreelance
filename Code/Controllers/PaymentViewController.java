@@ -1,12 +1,8 @@
 package Controllers;
 
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import src.CustomerControl;
 import src.SQL_Database;
 import src.Session;
 
@@ -24,25 +20,17 @@ public class PaymentViewController {
 
     @FXML private JFXComboBox<Integer> seatSelection;
     @FXML private JFXComboBox<Integer> returnSeatSelection;
-    @FXML private JFXTextField creditCardNumber;
-    @FXML private JFXTextField CSV;
-    @FXML private JFXDatePicker cardExpDate;
-    @FXML private JFXTextField cardFullName;
-    @FXML private JFXTextField cardBillingAddress;
-    @FXML private JFXTextField cardCity;
-    @FXML private JFXTextField cardState;
-    @FXML private JFXTextField cardZip;
     @FXML private Label totalCost;
     @FXML private Label ErrMsg;
 
     @FXML
-    void HandleBack(ActionEvent event) {
+    void HandleBack() {
         totalCost.getScene().getWindow().hide();
         Utilities.present("/Views/CustomerMainView.fxml", "Main");
     }
 
     @FXML
-    void HandlePayment(ActionEvent event) {
+    void HandlePayment() {
 
         Session s = Session.getInstance();
         String username = s.getUsername();
@@ -95,7 +83,7 @@ public class PaymentViewController {
 
         this.db = SQL_Database.getInstance();
         ArrayList<Integer> takenSeatList = db.getFullSeats(this.tripID);
-        ArrayList<Integer> seatList = new ArrayList<Integer>();
+        ArrayList<Integer> seatList = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) { seatList.add(i); }
 

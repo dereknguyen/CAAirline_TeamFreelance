@@ -4,11 +4,10 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import src.CustomerControl;
 import src.SQL_Database;
+import src.Session;
 import src.Ticket;
 
 public class CustomerBaggageViewController {
@@ -26,7 +25,8 @@ public class CustomerBaggageViewController {
 
     @FXML
     void HandleBack() {
-        String username = CustomerControl.getInstance().getCustomer().getUserName();
+
+        String username = Session.getInstance().getUsername();
         int seatNumber = getSeatNumber(username, this.tripID);
 
         if (seatNumber != -1) {
@@ -46,7 +46,7 @@ public class CustomerBaggageViewController {
 
     @FXML
     void HandleConfirmCheckIn() {
-        String username = CustomerControl.getInstance().getCustomer().getUserName();
+        String username = Session.getInstance().getUsername();
         int seatNumber = getSeatNumber(username, this.tripID);
 
         int carryOn = 0, checkIn = 0, carryWeight = 0, checkWeight = 0, totalBags = 0;

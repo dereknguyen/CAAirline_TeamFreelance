@@ -11,8 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import src.CustomerControl;
-import src.EmployeeControl;
 import src.SQL_Database;
 import src.Session;
 
@@ -121,7 +119,6 @@ public class LoginController {
         {
             System.out.println("Login successful");
             s.setUsername(username);
-            EmployeeControl.getInstance().getEmployeeFromDB(username);
             showMainTab("../Views/EmployeeMainView.fxml");
         }
     }
