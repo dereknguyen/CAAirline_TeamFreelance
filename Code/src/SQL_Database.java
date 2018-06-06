@@ -140,6 +140,7 @@ public class SQL_Database implements Database {
         return getNumTrips(null, null);
     }
 
+    // Returns avg revenue for flightId based on past two weeks
     public double getAvgRevenue(int FlightId) {
         String query = "SELECT Rev FROM AvgRevPerDest WHERE FlightId = " + FlightId;
         try
@@ -151,11 +152,11 @@ public class SQL_Database implements Database {
         catch (SQLException e)
         {
             System.out.println(e.getMessage());
-            return -1;
+            return 0;
         }
     }
 
-    public double getAvgSeats(int FlightId) {
+    /*public double getAvgSeats(int FlightId) {
         String query = "SELECT NumFlights FROM NumberOfTripsPerDestination WHERE FlightId = " + FlightId;
         String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId HAVING FlightId = " + FlightId;
         double numtrips;
@@ -180,7 +181,7 @@ public class SQL_Database implements Database {
         }
         return numempty / numtrips;
     }
-
+*/
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
     public int getStatus(int TripId)
     {

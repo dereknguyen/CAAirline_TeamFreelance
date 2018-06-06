@@ -124,7 +124,7 @@ public class EmployeeMainViewController {
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
         MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Avg. Seat: " + new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        MR_DataLabel.setText("Average Empty Seat Percentage: " + new BigDecimal(db.calculateAvgEmpty(to) * 100).setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "%");
     }
 
     @FXML
