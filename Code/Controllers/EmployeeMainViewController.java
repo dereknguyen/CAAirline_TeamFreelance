@@ -213,7 +213,7 @@ public class EmployeeMainViewController {
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
         MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Revenue: " + Double.toString(db.getAvgRevenue(id)));
+        MR_DataLabel.setText("Revenue: $" + Double.toString(db.getAvgRevenue(id)));
     }
 
     @FXML
