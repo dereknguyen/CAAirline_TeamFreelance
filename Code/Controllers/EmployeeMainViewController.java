@@ -2,6 +2,7 @@ package Controllers;
 
 import com.jfoenix.controls.*;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -200,7 +201,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DataLabel.setText(Double.toString(db.getAvgSeats(id)));
+        MR_DestinationLabel.setText("To: " + to);
+        MR_DataLabel.setText(new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
     }
 
     @FXML
@@ -212,8 +214,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Revenue: $" + Double.toString(db.getAvgRevenue(id)));
+        MR_DestinationLabel.setText("To: " + to);
+        MR_DataLabel.setText(new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
     }
 
     @FXML
