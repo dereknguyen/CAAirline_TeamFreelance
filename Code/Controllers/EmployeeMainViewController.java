@@ -87,7 +87,6 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_PriceCol;
     @FXML private Label B_ErrMsg;
 
-    @FXML private TableView<Report> MR_ReportTable;
     @FXML private Label MR_ReportLabel; //from
     @FXML private Label MR_DestinationLabel;
     @FXML private Label MR_DataLabel;
@@ -123,8 +122,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DestinationLabel.setText("To: " + to);
-        MR_DataLabel.setText(new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        MR_DestinationLabel.setText("To Destination: " + to);
+        MR_DataLabel.setText("Avg. Seat: " + new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
     }
 
     @FXML
@@ -136,8 +135,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DestinationLabel.setText("To: " + to);
-        MR_DataLabel.setText(new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        MR_DestinationLabel.setText("To Destination: " + to);
+        MR_DataLabel.setText("Revenue: $" + new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
     }
 
     @FXML
