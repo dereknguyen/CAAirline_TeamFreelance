@@ -3,20 +3,15 @@ package Controllers;
 import com.jfoenix.controls.*;
 
 import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -45,9 +40,6 @@ public class EmployeeMainViewController {
 
     private ObservableList<Trip> results;
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
-
     @FXML private TableView<Trip> AF_AvailableFlightsTable;
     @FXML private TableColumn<Trip, String> AF_FlightNumberCol;
     @FXML private TableColumn<Trip, String> AF_FromCol;
@@ -61,6 +53,12 @@ public class EmployeeMainViewController {
     @FXML private JFXDatePicker PS_OneWayDepartDate;
     @FXML private JFXTimePicker PS_OneWayDepartTime;
     @FXML private JFXTextField PS_OneWayBasePrice;
+    @FXML private Label PS_IdInfo;
+    @FXML private Label PS_FromInfo;
+    @FXML private Label PS_ToInfo;
+    @FXML private Label PS_DateInfo;
+    @FXML private Label PS_TimeInfo;
+    @FXML private Label PS_PriceInfo;
     @FXML private Label PS_ErrMsg;
 
     @FXML private JFXTextField FS_FlightNumber;
@@ -337,8 +335,6 @@ public class EmployeeMainViewController {
         FS_StatusTable.setItems(result);
     }
 
-
-    // TODO Set flight function
     @FXML
     void PS_HandleSetFlight() {
 
@@ -490,8 +486,14 @@ public class EmployeeMainViewController {
         }
         else if (status == -2)
         {
-            return "Flight could not be added";
+            return "Flight already exists";
         }
+        PS_IdInfo.setText("Flight Id: " + status);
+        PS_FromInfo.setText("From: " + from);
+        PS_ToInfo.setText("To: " + to);
+        PS_DateInfo.setText("Date: " + date);
+        PS_TimeInfo.setText("Time: " + time);
+        PS_PriceInfo.setText("Adjusted Price: " + adjprice);
         return null;
     }
 

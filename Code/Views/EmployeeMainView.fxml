@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
    <children>
       <TabPane fx:id="TripModeTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
          <tabs>
@@ -105,11 +105,12 @@
                                     <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Flight is all set!" />
                                     <VBox spacing="10.0">
                                        <children>
-                                          <Label text="From: San Luis Obispo" />
-                                          <Label text="To: Dallas" />
-                                          <Label text="Date:" />
-                                          <Label text="Time:" />
-                                          <Label text="Base Price" />
+                                          <Label fx:id="PS_IdInfo" text="Flight Id: " />
+                                          <Label fx:id="PS_FromInfo" text="From:" />
+                                          <Label fx:id="PS_ToInfo" text="To:" />
+                                          <Label fx:id="PS_DateInfo" text="Date:" />
+                                          <Label fx:id="PS_TimeInfo" text="Time:" />
+                                          <Label fx:id="PS_PriceInfo" text="Base Price" />
                                        </children>
                                     </VBox>
                                  </children>
