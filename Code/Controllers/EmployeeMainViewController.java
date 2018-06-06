@@ -44,8 +44,6 @@ public class EmployeeMainViewController {
 
     private ObservableList<Trip> results;
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
 
     @FXML private TableView<Trip> AF_AvailableFlightsTable;
     @FXML private TableColumn<Trip, String> AF_FlightNumberCol;
@@ -90,7 +88,6 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_PriceCol;
     @FXML private Label B_ErrMsg;
 
-    @FXML private TableView<Report> MR_ReportTable;
     @FXML private Label MR_ReportLabel; //from
     @FXML private Label MR_DestinationLabel;
     @FXML private Label MR_DataLabel;
@@ -215,8 +212,8 @@ public class EmployeeMainViewController {
 
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
-        MR_DestinationLabel.setText(to);
-        MR_DataLabel.setText(Double.toString(db.getAvgRevenue(id)));
+        MR_DestinationLabel.setText("To Destination: " + to);
+        MR_DataLabel.setText("Revenue: " + Double.toString(db.getAvgRevenue(id)));
     }
 
     @FXML

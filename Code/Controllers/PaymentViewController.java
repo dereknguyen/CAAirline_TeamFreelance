@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import src.CustomerControl;
+import src.EmployeeControl;
 import src.SQL_Database;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class PaymentViewController {
     private int returnTripID;
     private int selectedMode;
     private SQL_Database db;
+    private boolean isEmployee = false;
 
     @FXML private JFXComboBox<Integer> seatSelection;
     @FXML private JFXComboBox<Integer> returnSeatSelection;
@@ -42,31 +44,34 @@ public class PaymentViewController {
     @FXML
     void HandlePayment(ActionEvent event) {
 
-        String username = CustomerControl.getInstance().getCustomer().getUserName();
+        if (isEmployee) {
 
-
-
-        if (this.selectedMode == ONE_WAY) {
-            int seat = seatSelection.getSelectionModel().getSelectedItem();
-
-            System.out.println(username);
-            System.out.println(this.tripID);
-            System.out.println(seat);
-
-            if (this.db.addTicket(username, this.tripID, seat) == 0) {
-                CustomerControl.getInstance().getCustomerFromDB(username); // Reload
-                totalCost.getScene().getWindow().hide();
-            }
         }
-        else if (this.selectedMode == ROUND_TRIP) {
-            int departSeat = seatSelection.getSelectionModel().getSelectedItem();
-            int returnSeat = returnSeatSelection.getSelectionModel().getSelectedItem();
+        else {
+            String username = CustomerControl.getInstance().getCustomer().getUserName();
 
-            if (this.db.addTicket(username, this.tripID, departSeat) == 0) {
-                CustomerControl.getInstance().getCustomerFromDB(username); // Reload
-                if (this.db.addTicket(username, this.returnTripID, returnSeat) == 0) {
+
+            if (this.selectedMode == ONE_WAY) {
+                int seat = seatSelection.getSelectionModel().getSelectedItem();
+
+                System.out.println(username);
+                System.out.println(this.tripID);
+                System.out.println(seat);
+
+                if (this.db.addTicket(username, this.tripID, seat) == 0) {
                     CustomerControl.getInstance().getCustomerFromDB(username); // Reload
                     totalCost.getScene().getWindow().hide();
+                }
+            } else if (this.selectedMode == ROUND_TRIP) {
+                int departSeat = seatSelection.getSelectionModel().getSelectedItem();
+                int returnSeat = returnSeatSelection.getSelectionModel().getSelectedItem();
+
+                if (this.db.addTicket(username, this.tripID, departSeat) == 0) {
+                    CustomerControl.getInstance().getCustomerFromDB(username); // Reload
+                    if (this.db.addTicket(username, this.returnTripID, returnSeat) == 0) {
+                        CustomerControl.getInstance().getCustomerFromDB(username); // Reload
+                        totalCost.getScene().getWindow().hide();
+                    }
                 }
             }
         }
@@ -118,5 +123,9 @@ public class PaymentViewController {
             returnSeatSelection.getItems().add(seat);
         }
 
+    }
+
+    public void setEmployee() {
+        this.isEmployee = true;
     }
 }
