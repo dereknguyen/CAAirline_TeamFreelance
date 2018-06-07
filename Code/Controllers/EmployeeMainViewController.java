@@ -72,7 +72,7 @@ public class EmployeeMainViewController {
     @FXML private Label FS_ErrMsg;
     private int FS_TripId;
 
-    @FXML private TabPane B_TripModeTabPane;
+    /*@FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
     @FXML private JFXComboBox<String> B_OneWayFrom;
     @FXML private JFXComboBox<String> B_OneWayTo;
@@ -87,7 +87,7 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> B_ToCol;
     @FXML private TableColumn<Trip, String> B_DepartDateCol;
     @FXML private TableColumn<Trip, String> B_PriceCol;
-    @FXML private Label B_ErrMsg;
+    @FXML private Label B_ErrMsg;*/
 
     @FXML private Label MR_ReportLabel; //from
     @FXML private Label MR_DestinationLabel;
@@ -122,10 +122,10 @@ public class EmployeeMainViewController {
 
         SQL_Database db = SQL_Database.getInstance();
 
-        int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
         MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Average Empty Seat Percentage: " + new BigDecimal(db.calculateAvgEmpty(to) * 100).setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "%");
+        MR_DataLabel.setText("Average Empty Seat Percentage: " + new BigDecimal(db.calculateAvgEmpty(to)
+                * 100).setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "%");
     }
 
     @FXML
@@ -138,10 +138,11 @@ public class EmployeeMainViewController {
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
         MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Revenue: $" + new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        MR_DataLabel.setText("Revenue: $" + new BigDecimal(db.getAvgRevenue(id)).setScale(2,
+                BigDecimal.ROUND_HALF_UP).toString());
     }
 
-    @FXML
+    /*@FXML
     void B_HandlePurchaseSelected() {
 
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
@@ -192,7 +193,6 @@ public class EmployeeMainViewController {
 
                 stage.show();
             }
-
         }
     }
 
@@ -212,7 +212,7 @@ public class EmployeeMainViewController {
             LocalDate date = B_RoundTripDepartDate.getValue();
             B_ErrMsg.setText(searchFlight(from, to, date));
         }
-    }
+    }*/
 
     @FXML
     void FS_HandleChangeStatus() {
@@ -286,7 +286,7 @@ public class EmployeeMainViewController {
 
     @FXML
     void initialize() {
-        B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
+        /*B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         B_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
@@ -303,7 +303,7 @@ public class EmployeeMainViewController {
                         B_PurchaseFlightButton.setText("Purchase Flight");
                     }
                 }
-        );
+        );*/
         PS_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
                 "San Diego", "Phoenix", "Seattle", "Dallas");
         PS_OneWayTo.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
@@ -336,15 +336,37 @@ public class EmployeeMainViewController {
         Stage stage = new Stage();
         stage.setTitle("California System");
         stage.setScene(new Scene(root));
-        B_TripModeTabPane.getScene().getWindow().hide();
+        AF_AvailableFlightsTable.getScene().getWindow().hide();
 
         Session s = Session.getInstance();
         s.setUsername(null);
         stage.show();
     }
 
+    @FXML
+    private void HandleToCustomer()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerMainView.fxml"));
+        Parent root;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Stage stage = new Stage();
+        stage.setTitle("Main");
+        stage.setScene(new Scene(root));
+        AF_AvailableFlightsTable.getScene().getWindow().hide();
+
+        stage.show();
+    }
+
     /* HELPERS */
-    private String searchFlight(String from, String to, LocalDate localDate) {
+    /*private String searchFlight(String from, String to, LocalDate localDate) {
         System.out.println("\nSearching:");
 
         if (from == null) {
@@ -367,7 +389,7 @@ public class EmployeeMainViewController {
             results = FXCollections.observableArrayList(
                     db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
             );
-            /* remove cancelled trips */
+            *//* remove cancelled trips *//*
             for (Trip t : results)
             {
                 if (t.getStatus() == 2)
@@ -384,9 +406,9 @@ public class EmployeeMainViewController {
             B_AvailableFlightsTable.setItems(results);
         }
         return null;
-    }
+    }*/
 
-    private int getSelectedTripID_OneWay() {
+    /*private int getSelectedTripID_OneWay() {
         SQL_Database db = SQL_Database.getInstance();
         Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
 
@@ -406,7 +428,7 @@ public class EmployeeMainViewController {
         }
 
         return 0;
-    }
+    }*/
 
     private String addflight(String from, String to, LocalDate date, LocalTime time, String basePrice)
     {
@@ -464,7 +486,7 @@ public class EmployeeMainViewController {
         return null;
     }
 
-    private void toPaymentView_OneWay(int tripID) {
+    /*private void toPaymentView_OneWay(int tripID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
         Parent root;
 
@@ -486,7 +508,7 @@ public class EmployeeMainViewController {
 
         B_AvailableFlightsTable.getItems().removeAll(results);
         stage.show();
-    }
+    }*/
 
     @FXML TableView<Employee> EM_Table;
     @FXML TableColumn<Employee, String> EM_UsernameCol;
@@ -506,10 +528,10 @@ public class EmployeeMainViewController {
 
         if (SQL_Database.getInstance().removeEmployee(selectedEmployee.getUsername()) == 0) {
             refreshEmployeeList();
-            // TODO: SUCCESS MESSAGE
         }
         else {
-            // TODO: Error
+            EM_ErrMsg.setText("Unable to remove employee");
+            EM_ErrMsg.setVisible(true);
         }
     }
 
@@ -522,23 +544,27 @@ public class EmployeeMainViewController {
 
         if (username.length() == 0) {
             EM_ErrMsg.setText("Please enter a username");
+            EM_Msg.setVisible(false);
         }
         else if (firstName.length() == 0) {
             EM_ErrMsg.setText("Please enter a first name");
-
+            EM_Msg.setVisible(false);
         }
         else if (lastName.length() == 0) {
             EM_ErrMsg.setText("Please enter a last name");
+            EM_Msg.setVisible(false);
 
         }
         else if (password == null) {
             EM_ErrMsg.setText("Please enter a password");
+            EM_Msg.setVisible(false);
         }
         else {
             int result = SQL_Database.getInstance().addEmployeeAccount(username, password, firstName, lastName);
 
             if (result == -1) {
                 EM_ErrMsg.setText("Add new employee Error");
+                EM_Msg.setVisible(false);
             }
             else {
                 refreshEmployeeList();
@@ -548,11 +574,9 @@ public class EmployeeMainViewController {
                 EM_NewPassword.clear();
                 EM_ErrMsg.setVisible(false);
 
-                // TODO: Print Success
                 EM_Msg.setText("Welcome to the family, " + firstName + " " + lastName + "!");
             }
         }
-
     }
 
     private ObservableList<Employee> allEmployees;
