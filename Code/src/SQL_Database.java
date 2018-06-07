@@ -760,7 +760,7 @@ public class SQL_Database implements Database {
         return 0;
     }
 
-    public ArrayList<Employee> getAllEmployees()
+    public ArrayList<Employee> getAllEmployees(String currentEmployee)
     {
         String query = "SELECT * FROM employees";
         ArrayList<Employee> output = new ArrayList<>();
@@ -770,9 +770,14 @@ public class SQL_Database implements Database {
             ResultSet rs = ps.executeQuery();
             while (rs.next())
             {
-                output.add(new Employee(rs.getString("Username"),
+                Employee e = new Employee(rs.getString("Username"),
                         rs.getString("FirstName"),
-                        rs.getString("LastName")));
+                        rs.getString("LastName"));
+
+                if (!e.getUsername().equals(currentEmployee)) {
+                    output.add(e);
+                }
+
             }
             return output;
         }

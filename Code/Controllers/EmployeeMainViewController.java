@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -314,6 +315,8 @@ public class EmployeeMainViewController {
 
         FS_NewStatus.getItems().addAll("On-time", "Delayed", "Cancelled");
         FS_TripId = -1;
+
+        refreshEmployeeList();
     }
 
     @FXML
@@ -484,4 +487,86 @@ public class EmployeeMainViewController {
         B_AvailableFlightsTable.getItems().removeAll(results);
         stage.show();
     }
+
+    @FXML TableView<Employee> EM_Table;
+    @FXML TableColumn<Employee, String> EM_UsernameCol;
+    @FXML TableColumn<Employee, String> EM_FirstCol;
+    @FXML TableColumn<Employee, String> EM_LastCol;
+    @FXML JFXTextField EM_NewFirst;
+    @FXML JFXTextField EM_NewLast;
+    @FXML JFXTextField EM_NewUsername;
+    @FXML JFXPasswordField EM_NewPassword;
+    @FXML Label EM_ErrMsg;
+    @FXML Label EM_Msg;
+
+    @FXML
+    void EM_HandleRemove() {
+        Employee selectedEmployee = EM_Table.getSelectionModel().getSelectedItem();
+        if (selectedEmployee == null) return;
+
+        if (SQL_Database.getInstance().removeEmployee(selectedEmployee.getUsername()) == 0) {
+            refreshEmployeeList();
+            // TODO: SUCCESS MESSAGE
+        }
+        else {
+            // TODO: Error
+        }
+    }
+
+    @FXML
+    void EM_HandleAdd() {
+        String username = EM_NewUsername.getText().trim();
+        String password = src.MD5Password.encodePassword(EM_NewPassword.getText().trim());
+        String firstName = EM_NewFirst.getText().trim();
+        String lastName = EM_NewLast.getText().trim();
+
+        if (username.length() == 0) {
+            EM_ErrMsg.setText("Please enter a username");
+        }
+        else if (firstName.length() == 0) {
+            EM_ErrMsg.setText("Please enter a first name");
+
+        }
+        else if (lastName.length() == 0) {
+            EM_ErrMsg.setText("Please enter a last name");
+
+        }
+        else if (password == null) {
+            EM_ErrMsg.setText("Please enter a password");
+        }
+        else {
+            int result = SQL_Database.getInstance().addEmployeeAccount(username, password, firstName, lastName);
+
+            if (result == -1) {
+                EM_ErrMsg.setText("Add new employee Error");
+            }
+            else {
+                refreshEmployeeList();
+                EM_NewUsername.clear();
+                EM_NewFirst.clear();
+                EM_NewLast.clear();
+                EM_NewPassword.clear();
+                EM_ErrMsg.setVisible(false);
+
+                // TODO: Print Success
+                EM_Msg.setText("Welcome to the family, " + firstName + " " + lastName + "!");
+            }
+        }
+
+    }
+
+    private ObservableList<Employee> allEmployees;
+
+    private void refreshEmployeeList() {
+        
+        ArrayList<Employee> all = SQL_Database.getInstance().getAllEmployees(Session.getInstance().getUsername());
+        allEmployees = FXCollections.observableArrayList(all);
+
+        EM_UsernameCol.setCellValueFactory(new PropertyValueFactory<>("UsernameString"));
+        EM_FirstCol.setCellValueFactory(new PropertyValueFactory<>("FirstNameString"));
+        EM_LastCol.setCellValueFactory(new PropertyValueFactory<>("LastNameString"));
+        EM_Table.setItems(allEmployees);
+    }
+
+
 }
