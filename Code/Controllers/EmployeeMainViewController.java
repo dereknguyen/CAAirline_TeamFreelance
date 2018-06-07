@@ -69,6 +69,7 @@ public class EmployeeMainViewController {
     @FXML private TableColumn<Trip, String> FS_CurrentStatus;
     @FXML private JFXComboBox<String> FS_NewStatus;
     @FXML private Label FS_ErrMsg;
+    private int FS_TripId;
 
     @FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
@@ -123,7 +124,7 @@ public class EmployeeMainViewController {
         int id = db.getFlightId(from, to);
         MR_ReportLabel.setText(from + " Data Report");
         MR_DestinationLabel.setText("To Destination: " + to);
-        MR_DataLabel.setText("Avg. Seat: " + new BigDecimal(db.getAvgRevenue(id)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        MR_DataLabel.setText("Average Empty Seat Percentage: " + new BigDecimal(db.calculateAvgEmpty(to) * 100).setScale(2, BigDecimal.ROUND_HALF_UP).toString() + "%");
     }
 
     @FXML
@@ -214,17 +215,8 @@ public class EmployeeMainViewController {
 
     @FXML
     void FS_HandleChangeStatus() {
-        int TripId;
         int newStatus;
         String choice = FS_NewStatus.getSelectionModel().getSelectedItem();
-        try {
-            TripId = Integer.parseInt(FS_FlightNumber.getText());
-            if(TripId < 0) throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            FS_ErrMsg.setText("Please enter a valid flight ID");
-            FS_ErrMsg.setVisible(true);
-            return;
-        }
         if (choice == null)
         {
             FS_ErrMsg.setText("Please select a new status");
@@ -248,7 +240,7 @@ public class EmployeeMainViewController {
         }
         FS_ErrMsg.setVisible(false);
         SQL_Database db = SQL_Database.getInstance();
-        db.setStatus(TripId, newStatus);
+        db.setStatus(FS_TripId, newStatus);
         FS_HandleViewStatus();
     }
 
@@ -277,6 +269,7 @@ public class EmployeeMainViewController {
         FS_CurrentStatus.setCellValueFactory(new PropertyValueFactory<>("StatusString"));
 
         FS_StatusTable.setItems(result);
+        FS_TripId = TripId;
     }
 
     @FXML
@@ -320,6 +313,7 @@ public class EmployeeMainViewController {
                 "San Diego", "Phoenix", "Seattle", "Dallas");
 
         FS_NewStatus.getItems().addAll("On-time", "Delayed", "Cancelled");
+        FS_TripId = -1;
     }
 
     @FXML
