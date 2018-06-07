@@ -45,13 +45,13 @@ public class CustomerBaggageViewController {
         String username = Session.getInstance().getUsername();
         int seatNumber = getSeatNumber(username, this.tripID);
 
-        int carryOn = 0, checkIn = 0, carryWeight = 0, checkWeight = 0, totalBags = 0;
+        int carryOn, checkIn, totalBags;
 
         try {
             carryOn = Integer.parseInt(numCarryOn.getText().trim());
             checkIn = Integer.parseInt(numCheckIn.getText().trim());
-            carryWeight = Integer.parseInt(carryOnWeight.getText().trim());
-            checkWeight = Integer.parseInt(checkInWeight.getText().trim());
+            Integer.parseInt(carryOnWeight.getText().trim());
+            Integer.parseInt(checkInWeight.getText().trim());
 
             totalBags = carryOn + checkIn;
 
