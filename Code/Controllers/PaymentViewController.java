@@ -2,9 +2,12 @@ package Controllers;
 
 import com.jfoenix.controls.JFXComboBox;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import src.SQL_Database;
 import src.Session;
+import src.Trip;
 
 import java.util.ArrayList;
 
@@ -48,6 +51,12 @@ public class PaymentViewController {
 
 
             if (this.db.addTicket(username, this.tripID, seat) == 0) {
+
+                presentTicektView(
+                        this.db.getTripInfo(this.tripID),
+                        null
+                );
+
                 totalCost.getScene().getWindow().hide();
             }
         }
@@ -71,11 +80,27 @@ public class PaymentViewController {
 
             if (this.db.addTicket(username, this.tripID, departSeat) == 0) {
                 if (this.db.addTicket(username, this.returnTripID, returnSeat) == 0) {
+
+                    presentTicektView(
+                            this.db.getTripInfo(this.tripID),
+                            this.db.getTripInfo(this.returnTripID)
+                    );
+
                     totalCost.getScene().getWindow().hide();
                 }
             }
         }
     }
+
+    private void presentTicektView(Trip trip, Trip returnTrip) {
+        Stage stage = new Stage();
+        FXMLLoader loader = Utilities.present(stage, "/Views/PaymentSuccess.fxml", "Your Ticket");
+        PaymentSuccessViewController controller = loader.getController();
+        controller.setInfo(trip, returnTrip);
+        stage.show();
+    }
+
+
 
     @FXML
     void initialize() {
