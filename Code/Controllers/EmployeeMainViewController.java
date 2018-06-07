@@ -142,6 +142,7 @@ public class EmployeeMainViewController {
 
     @FXML
     void B_HandlePurchaseSelected() {
+
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (mode == ONE_WAY) {
@@ -159,7 +160,11 @@ public class EmployeeMainViewController {
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
             if (selectedTrip == null) return;
 
-            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+            int tripID = SQL_Database.getInstance().getSelectedTripID(
+                    selectedTrip,
+                    selectedTrip.getFromString(),
+                    selectedTrip.getToString()
+            );
 
             String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
             String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
@@ -457,27 +462,7 @@ public class EmployeeMainViewController {
         return null;
     }
 
-    private int getSelectedTripID(Trip selectedTrip, String from, String to) {
-        SQL_Database db = SQL_Database.getInstance();
 
-        if (selectedTrip != null) {
-
-            int flightID = db.getFlightId(from, to);
-
-            Calendar date = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
-
-            try {
-                date.setTime(sdf.parse(selectedTrip.getDateString()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return db.getTripId(flightID, date);
-        }
-
-        return 0;
-    }
 
 
     private void toPaymentView_OneWay(int tripID) {
