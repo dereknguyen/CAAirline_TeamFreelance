@@ -1,7 +1,6 @@
 package Controllers;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXButton;
@@ -10,7 +9,6 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -271,7 +269,6 @@ public class CustomerMainViewController {
                 FXMLLoader loader = Utilities.present(stage,
                         "/Views/CustomerBaggageView.fxml",
                         "Declare Baggage");
-
                 CustomerBaggageViewController controller = loader.getController();
                 controller.setTripID(id);
 
@@ -371,9 +368,7 @@ public class CustomerMainViewController {
     @FXML
     void L_HandleLogout() {
         Stage stage = new Stage();
-        FXMLLoader loader = Utilities.present(stage,
-                "/Views/LoginView.fxml",
-                "California System");
+        Utilities.present(stage, "/Views/LoginView.fxml", "California System");
 
         B_TripModeTabPane.getScene().getWindow().hide();
         Session.getInstance().setUsername(null);
