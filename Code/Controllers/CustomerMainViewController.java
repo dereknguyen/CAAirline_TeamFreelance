@@ -30,6 +30,8 @@ public class CustomerMainViewController {
 
     private ObservableList<Trip> results;
 
+    @FXML private JFXButton AsEmployeeButton;
+
     @FXML private TabPane B_TripModeTabPane;
     @FXML private TableView<Trip> B_AvailableFlightsTable;
     @FXML private JFXComboBox<String> B_OneWayFrom;
@@ -68,7 +70,6 @@ public class CustomerMainViewController {
     @FXML private TableColumn<Ticket, String> MF_NumBagsCol;
     @FXML private TableColumn<Ticket, String> MF_SeatNumCol;
 
-
     @FXML
     void initialize() {
         B_OneWayFrom.getItems().addAll("San Luis Obispo", "Los Angeles", "San Francisco",
@@ -90,6 +91,35 @@ public class CustomerMainViewController {
                     }
                 }
         );
+
+        SQL_Database db = SQL_Database.getInstance();
+        if (db.getEmployeeInfo(Session.getInstance().getUsername()) == null)
+        {
+            AsEmployeeButton.setVisible(false);
+            AsEmployeeButton.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void HandleToEmployee()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/EmployeeMainView.fxml"));
+        Parent root;
+
+        try {
+            root = loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Stage stage = new Stage();
+        stage.setTitle("Main");
+        stage.setScene(new Scene(root));
+        B_TripModeTabPane.getScene().getWindow().hide();
+
+        stage.show();
     }
 
     /*******************************************************************************************************************
