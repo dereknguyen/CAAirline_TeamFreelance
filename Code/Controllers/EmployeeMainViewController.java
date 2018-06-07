@@ -484,4 +484,23 @@ public class EmployeeMainViewController {
         B_AvailableFlightsTable.getItems().removeAll(results);
         stage.show();
     }
+
+    @FXML TableView<Employee> EM_Table;
+    @FXML TableColumn<Employee, String> EM_UsernameCol;
+    @FXML TableColumn<Employee, String> EM_FirstCol;
+    @FXML TableColumn<Employee, String> EM_LastCol;
+    @FXML JFXTextField EM_NewFirst;
+    @FXML JFXTextField EM_NewLast;
+    @FXML JFXTextField EM_NewUsername;
+    @FXML JFXPasswordField EM_NewPassword;
+
+    @FXML
+    void EM_HandleRemove() {
+
+    }
+
+    @FXML
+    void EM_HandleAdd() {
+
+    }
 }

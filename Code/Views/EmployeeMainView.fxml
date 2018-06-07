@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
    <children>
       <TabPane fx:id="TripModeTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
          <tabs>
@@ -26,7 +27,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
                      <children>
-                        <HBox layoutX="371.0" layoutY="179.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox layoutX="371.0" layoutY="179.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <VBox prefHeight="525.0" prefWidth="995.0" spacing="20.0">
                                  <children>
@@ -36,9 +37,9 @@
                                           <JFXButton onAction="#AF_HandleRefresh" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Refresh" />
                                        </children>
                                     </HBox>
-                                    <TableView fx:id="AF_AvailableFlightsTable" prefHeight="473.0" prefWidth="940.0" style="-fx-background-color: #151515;">
+                                    <TableView fx:id="AF_AvailableFlightsTable" prefHeight="466.0" prefWidth="1060.0" style="-fx-background-color: #151515;">
                                        <columns>
-                                          <TableColumn fx:id="AF_FlightNumberCol" prefWidth="100.0" style="-fx-background-color: #151515;" text="Flight ID" />
+                                          <TableColumn fx:id="AF_FlightNumberCol" prefWidth="157.0" style="-fx-background-color: #151515;" text="Flight ID" />
                                           <TableColumn fx:id="AF_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="AF_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
                                           <TableColumn fx:id="AF_DepartTimeCol" editable="false" prefWidth="300.0" style="-fx-background-color: #151515;" text="Departure Date" />
@@ -47,6 +48,9 @@
                                        </columns>
                                     </TableView>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets left="35.0" />
+                                 </HBox.margin>
                               </VBox>
                            </children>
                            <padding>
@@ -63,7 +67,7 @@
                      <children>
                         <HBox prefHeight="575.0" prefWidth="1000.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
-                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                              <Insets bottom="20.0" left="65.0" right="30.0" top="30.0" />
                            </padding>
                            <children>
                               <VBox prefHeight="525.0" prefWidth="702.0" spacing="20.0">
@@ -128,20 +132,32 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
-                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                              <Insets bottom="20.0" left="60.0" right="30.0" top="30.0" />
                            </padding>
                            <children>
                               <VBox prefHeight="425.0" prefWidth="269.0" spacing="35.0">
                                  <children>
                                     <Label prefHeight="39.0" prefWidth="316.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Enter Flight ID" />
-                                    <JFXTextField fx:id="FS_FlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Flight Number (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;" unFocusColor="#a0a0a0" />
-                                    <VBox spacing="5.0">
+                                    <VBox spacing="100.0">
                                        <children>
-                                          <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Search Flights" />
+                                          <VBox spacing="20.0">
+                                             <children>
+                                                <JFXTextField fx:id="FS_FlightNumber" focusColor="#046a38" prefHeight="40.0" promptText="Flight Number (e.g. 1, 2, 3)" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets left="-3.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXButton onAction="#FS_HandleViewStatus" prefHeight="36.0" prefWidth="321.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Search Flights" />
+                                             </children>
+                                          </VBox>
+                                          <VBox spacing="20.0">
+                                             <children>
+                                                <JFXComboBox fx:id="FS_NewStatus" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="New Status" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
+                                                <JFXButton onAction="#FS_HandleChangeStatus" prefHeight="36.0" prefWidth="259.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Change Flight Status" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </VBox>
-                                    <JFXComboBox fx:id="FS_NewStatus" focusColor="#046a38" prefHeight="31.0" prefWidth="260.0" promptText="New Status" style="-fx-prompt-text-fill: A0A0A0; -fx-font-weight: bold;" stylesheets="@ViewsCSS/ComboBox.css" unFocusColor="WHITE" />
-                                    <JFXButton onAction="#FS_HandleChangeStatus" prefHeight="36.0" prefWidth="259.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" text="Change Flight Status" />
                                     <Label fx:id="FS_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="272.0" style="-fx-text-fill: red;" />
                                  </children>
                               </VBox>
@@ -157,7 +173,7 @@
                                           <TableColumn fx:id="FS_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="FS_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
                                           <TableColumn fx:id="FS_DepartTime" editable="false" prefWidth="249.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="FS_CurrentStatus" prefWidth="90.0" style="-fx-background-color: #151515;" text="Status" />
+                                          <TableColumn fx:id="FS_CurrentStatus" prefWidth="100.0" style="-fx-background-color: #151515;" text="Status" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -229,14 +245,14 @@
                                           <TableColumn fx:id="B_FromCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="From" />
                                           <TableColumn fx:id="B_ToCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="To" />
                                           <TableColumn fx:id="B_DepartDateCol" editable="false" prefWidth="248.0" style="-fx-background-color: #151515;" text="Departure Date" />
-                                          <TableColumn fx:id="B_PriceCol" prefWidth="85.0" style="-fx-background-color: #151515;" text="Price" />
+                                          <TableColumn fx:id="B_PriceCol" prefWidth="101.0" style="-fx-background-color: #151515;" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children>
                               </VBox>
                            </children>
                            <padding>
-                              <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                              <Insets bottom="20.0" left="65.0" right="30.0" top="30.0" />
                            </padding>
                         </HBox>
                      </children>
@@ -288,14 +304,61 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab closable="false" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Employee Management">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #151515;">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="20.0" left="100.0" right="30.0" top="30.0" />
+                           </padding>
+                           <children>
+                              <VBox prefHeight="525.0" prefWidth="452.0" spacing="20.0">
+                                 <children>
+                                    <HBox spacing="150.0">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="Employees" />
+                                          <JFXButton onAction="#EM_HandleRemove" prefHeight="36.0" prefWidth="157.0" style="-fx-background-color: #8b0000; -fx-background-radius: 3px; -fx-text-fill: white;" text="Remove Employee" />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="EM_Table" prefHeight="466.0" prefWidth="572.0" style="-fx-background-color: #151515;">
+                                       <columns>
+                                          <TableColumn fx:id="EM_UsernameCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="Username" />
+                                          <TableColumn fx:id="EM_FirstCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="First Name" />
+                                          <TableColumn fx:id="EM_LastCol" editable="false" prefWidth="150.0" style="-fx-background-color: #151515;" text="Last Name" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="525.0" prefWidth="295.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="363.0" style="-fx-font-weight: bold; -fx-font-size: 20pt; -fx-text-fill: white;" text="New Employee" />
+                                    <VBox spacing="15.0">
+                                       <children>
+                                          <JFXTextField fx:id="EM_NewFirst" focusColor="#b5a369" prefHeight="40.0" promptText="First Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: gray; -fx-font-family: Avenir; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                                          <JFXTextField fx:id="EM_NewLast" focusColor="#b5a369" layoutX="10.0" layoutY="10.0" prefHeight="40.0" promptText="Last Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: gray; -fx-font-family: Avenir; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                                          <JFXTextField fx:id="EM_NewUsername" focusColor="#b5a369" layoutX="10.0" layoutY="120.0" prefHeight="40.0" promptText="Username" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-prompt-text-fill: gray; -fx-font-family: Avenir; -fx-font-weight: bold;" unFocusColor="WHITE" />
+                                          <JFXPasswordField fx:id="EM_NewPassword" focusColor="#b5a369" prefHeight="40.0" promptText="Password" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-text-font-size: 12pt; -fx-font-family: Avenir; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="B_ErrMsg1" alignment="CENTER" prefHeight="20.0" prefWidth="327.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
+                                    <JFXButton onAction="#EM_HandleAdd" prefHeight="36.0" prefWidth="337.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Add this new employee!" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
-      <ImageView fitHeight="44.0" fitWidth="110.0" layoutX="445.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="14.0">
+      <ImageView fitHeight="44.0" fitWidth="110.0" layoutX="495.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="13.0">
          <image>
             <Image url="@../Assets/whitegold_logo.png" />
          </image>
       </ImageView>
-      <JFXButton layoutX="24.0" layoutY="26.0" onAction="#L_HandleLogout" prefHeight="26.0" prefWidth="80.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px;" styleClass="#046A38" text="&lt; Logout" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <JFXButton layoutX="24.0" layoutY="26.0" onAction="#L_HandleLogout" prefHeight="34.0" prefWidth="80.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px; -fx-text-fill: white;" styleClass="#046A38" text="&lt; Logout" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
