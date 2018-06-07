@@ -44,3 +44,22 @@
     -fx-prompt-text-fill: gray;
     -fx-text-fill: white;
 }
+
+.date-picker-popup .cell{
+    -fx-background-color: #151515;
+}
+
+
+.date-picker-popup {
+    -fx-border-color: #046A38;
+    -fx-background-color: #151515;
+}
+
+.date-picker-popup .right-button,
+.date-picker-popup .left-button {
+    -fx-background-color: #046A38;
+}
+
+.date-picker .cell:hover {
+    -fx-background-color: #046A38;
+}
