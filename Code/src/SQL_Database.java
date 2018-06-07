@@ -132,12 +132,6 @@ public class SQL_Database implements Database {
         return NumFlights;
     }
 
-    // Overload for simplicity
-    public int getNumTrips()
-    {
-        return getNumTrips(null, null);
-    }
-
     // Returns avg revenue for flightId based on past two weeks
     public double getAvgRevenue(int FlightId) {
         String query = "SELECT Rev FROM AvgRevPerDest WHERE FlightId = " + FlightId;
@@ -301,7 +295,6 @@ public class SQL_Database implements Database {
             System.out.println(e.getMessage());
             return -1;
         }
-        //todo double check this
         return (numempty/20) / numtrips;
     }
 
