@@ -69,6 +69,7 @@ public class ReturnFlightSelectionViewController {
 
             if (tripID != -1) {
                 toPaymentView(startingTripID, tripID);
+                ReturnFlightDate.getScene().getWindow().hide();
             }
         }
     }
