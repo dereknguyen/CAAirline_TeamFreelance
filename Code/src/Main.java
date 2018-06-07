@@ -35,9 +35,9 @@ public class Main extends Application {
         }
 
         Random r = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             for (int j = 0; j < 20; j++) {
-                if (r.nextBoolean()) {
+                if (r.nextInt(4) == 0) {
                     db.addTicket("test", i, j);
                 }
             }
