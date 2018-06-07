@@ -17,7 +17,7 @@
                <children>
                   <ImageView fitWidth="147.0" layoutX="45.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0">
                      <image>
-                        <Image url="@../../../csc307 - Previous/Code/Assets/whitegold_logo.png" />
+                        <Image url="@../Assets/whitegold_logo.png" />
                      </image>
                   </ImageView>
                </children>

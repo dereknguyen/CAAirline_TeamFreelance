@@ -36,36 +36,35 @@ public class PaymentViewController {
         String username = s.getUsername();
 
         if (this.selectedMode == ONE_WAY) {
-            if (seatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (seatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select a seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
+
             ErrMsg.setVisible(false);
             int seat = seatSelection.getSelectionModel().getSelectedItem();
 
-            System.out.println(username);
-            System.out.println(this.tripID);
-            System.out.println(seat);
 
             if (this.db.addTicket(username, this.tripID, seat) == 0) {
                 totalCost.getScene().getWindow().hide();
             }
         }
         else if (this.selectedMode == ROUND_TRIP) {
-            if (seatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (seatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select an outgoing seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
-            if (returnSeatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (returnSeatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select a returning seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
+
             ErrMsg.setVisible(false);
             int departSeat = seatSelection.getSelectionModel().getSelectedItem();
             int returnSeat = returnSeatSelection.getSelectionModel().getSelectedItem();
