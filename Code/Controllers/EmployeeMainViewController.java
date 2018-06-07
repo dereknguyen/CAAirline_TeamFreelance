@@ -486,7 +486,6 @@ public class EmployeeMainViewController {
         stage.setScene(new Scene(root));
 
         B_AvailableFlightsTable.getItems().removeAll(results);
-        B_AvailableFlightsTable.getScene().getWindow().hide();
         stage.show();
     }
 }
