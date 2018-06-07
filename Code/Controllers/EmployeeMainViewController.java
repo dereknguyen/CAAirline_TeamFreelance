@@ -405,7 +405,6 @@ public class EmployeeMainViewController {
         return 0;
     }
 
-
     private String addflight(String from, String to, LocalDate date, LocalTime time, String basePrice)
     {
         double adjprice;
@@ -461,9 +460,6 @@ public class EmployeeMainViewController {
         PS_PriceInfo.setText("Adjusted Price: " + adjprice);
         return null;
     }
-
-
-
 
     private void toPaymentView_OneWay(int tripID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/PaymentView.fxml"));
