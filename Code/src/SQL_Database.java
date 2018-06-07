@@ -51,7 +51,7 @@ public class SQL_Database implements Database {
         try
         {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:src/CAIDatabase.db"); //modded for me
+            conn = DriverManager.getConnection("jdbc:sqlite:src/CAIDatabase.db");
             if (conn != null)
             {
                 st = conn.createStatement();
