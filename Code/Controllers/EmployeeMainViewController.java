@@ -302,7 +302,8 @@ public class EmployeeMainViewController {
         PS_ToInfo.setText("To: " + to);
         PS_DateInfo.setText("Date: " + date);
         PS_TimeInfo.setText("Time: " + time);
-        PS_PriceInfo.setText("Adjusted Price: " + adjprice);
+        PS_PriceInfo.setText("Adjusted Price: $" + new BigDecimal(adjprice).setScale(2,
+                BigDecimal.ROUND_HALF_UP).toString());
         return null;
     }
 
