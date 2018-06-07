@@ -3,10 +3,8 @@ package src;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 /*
 
@@ -960,6 +958,27 @@ public class SQL_Database implements Database {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public int getSelectedTripID(Trip selectedTrip, String from, String to) {
+
+        if (selectedTrip != null) {
+
+            int flightID = uniqueInstance.getFlightId(from, to);
+
+            Calendar date = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
+
+            try {
+                date.setTime(sdf.parse(selectedTrip.getDateString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return uniqueInstance.getTripId(flightID, date);
+        }
+
+        return 0;
     }
 
 }
