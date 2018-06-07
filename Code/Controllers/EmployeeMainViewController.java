@@ -582,7 +582,7 @@ public class EmployeeMainViewController {
     private ObservableList<Employee> allEmployees;
 
     private void refreshEmployeeList() {
-        
+
         ArrayList<Employee> all = SQL_Database.getInstance().getAllEmployees(Session.getInstance().getUsername());
         allEmployees = FXCollections.observableArrayList(all);
 

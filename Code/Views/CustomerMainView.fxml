@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerMainViewController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerMainViewController">
    <children>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
         <tabs>
@@ -221,7 +221,12 @@
             <Image url="@../Assets/whitegold_logo.png" />
          </image>
       </ImageView>
-      <JFXButton layoutX="14.0" layoutY="16.0" onAction="#L_HandleLogout" prefHeight="26.0" prefWidth="80.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px;" styleClass="#046A38" text="&lt; Logout" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <JFXButton layoutX="14.0" layoutY="16.0" onAction="#L_HandleLogout" prefHeight="34.0" prefWidth="110.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px; -fx-text-fill: white;" styleClass="#046A38" text="&lt; Logout" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="AsEmployeeButton" layoutX="838.0" layoutY="17.0" onAction="#HandleToEmployee" prefHeight="34.0" prefWidth="128.0" ripplerFill="BLACK" style="-fx-background-color: #151515 #151515; -fx-background-radius: 3px; -fx-text-fill: white;" styleClass="#046A38" text="As Employee &gt;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
