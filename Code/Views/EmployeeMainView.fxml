@@ -321,7 +321,7 @@
                                           <JFXButton onAction="#EM_HandleRemove" prefHeight="36.0" prefWidth="157.0" style="-fx-background-color: #8b0000; -fx-background-radius: 3px; -fx-text-fill: white;" text="Remove Employee" />
                                        </children>
                                     </HBox>
-                                    <TableView fx:id="EM_Table" prefHeight="466.0" prefWidth="572.0" style="-fx-background-color: #151515;">
+                                    <TableView fx:id="EM_Table" prefHeight="342.0" prefWidth="452.0" style="-fx-background-color: #151515;">
                                        <columns>
                                           <TableColumn fx:id="EM_UsernameCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="Username" />
                                           <TableColumn fx:id="EM_FirstCol" prefWidth="150.0" style="-fx-background-color: #151515;" text="First Name" />
@@ -341,8 +341,9 @@
                                           <JFXPasswordField fx:id="EM_NewPassword" focusColor="#b5a369" prefHeight="40.0" promptText="Password" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF; -fx-text-font-size: 12pt; -fx-font-family: Avenir; -fx-font-weight: bold; -fx-prompt-text-fill: gray;" unFocusColor="WHITE" />
                                        </children>
                                     </VBox>
-                                    <Label fx:id="B_ErrMsg1" alignment="CENTER" prefHeight="20.0" prefWidth="327.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
+                                    <Label fx:id="EM_ErrMsg" alignment="CENTER" prefHeight="20.0" prefWidth="327.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
                                     <JFXButton onAction="#EM_HandleAdd" prefHeight="36.0" prefWidth="337.0" style="-fx-background-color: #046A38; -fx-background-radius: 3px;" styleClass="#046A38" text="Add this new employee!" />
+                                    <Label fx:id="EM_Msg" alignment="CENTER" layoutX="10.0" layoutY="294.0" prefHeight="20.0" prefWidth="327.0" scaleShape="false" style="-fx-text-fill: #b5a369; -fx-font-family: Avenir;" />
                                  </children>
                               </VBox>
                            </children>
