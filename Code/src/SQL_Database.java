@@ -154,32 +154,6 @@ public class SQL_Database implements Database {
         }
     }
 
-    /*public double getAvgSeats(int FlightId) {
-        String query = "SELECT NumFlights FROM NumberOfTripsPerDestination WHERE FlightId = " + FlightId;
-        String query2 = "SELECT SUM(NumEmptySeats) FROM NumEmptySeatsPerTrip GROUP BY FlightId HAVING FlightId = " + FlightId;
-        double numtrips;
-        double numempty;
-        try
-        {
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            numtrips = rs.getInt(1);
-            rs = st.executeQuery(query2);
-            rs.next();
-            numempty = rs.getInt(1);
-            if (numtrips == 0)
-            {
-                return 20.0;
-            }
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-            return -1;
-        }
-        return numempty / numtrips;
-    }
-*/
     // Gets status of flight by ID, 0 = On-time, 1 = Delayed, 2 = Cancelled, Returns -1 on invalid ID
     public int getStatus(int TripId)
     {
@@ -784,6 +758,29 @@ public class SQL_Database implements Database {
             return 1;
         }
         return 0;
+    }
+
+    public ArrayList<Employee> getAllEmployees()
+    {
+        String query = "SELECT * FROM employees";
+        ArrayList<Employee> output = new ArrayList<>();
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                output.add(new Employee(rs.getString("Username"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName")));
+            }
+            return output;
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /*
