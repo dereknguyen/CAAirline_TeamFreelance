@@ -5,8 +5,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,20 +24,6 @@
             </ImageView>
             <VBox spacing="10.0">
                <children>
-                  <TabPane fx:id="modeTabPane" prefHeight="71.0" prefWidth="255.0" stylesheets="@ViewsCSS/LoginModeTab.css" tabClosingPolicy="UNAVAILABLE">
-                     <tabs>
-                        <Tab closable="false" style="-fx-background-color: black;" text="Customer">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="261.0" />
-                           </content>
-                        </Tab>
-                        <Tab style="-fx-background-color: black;" text="Employee">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="14.0" prefWidth="255.0" />
-                           </content>
-                        </Tab>
-                     </tabs>
-                  </TabPane>
                   <VBox spacing="15.0">
                      <children>
                         <JFXTextField fx:id="newFirstname" alignment="CENTER" focusColor="#b5a369" prefHeight="40.0" promptText="First Name" style="-fx-border-width: 0px; -fx-text-fill: #FFFFFF;" unFocusColor="#a0a0a0" />

@@ -10,7 +10,6 @@ import src.SQL_Database;
 
 public class CreateAccountController {
 
-    @FXML private TabPane modeTabPane;
     @FXML private JFXTextField newUsername;
     @FXML private JFXPasswordField newPassword;
     @FXML private JFXTextField newFirstname;
@@ -21,7 +20,6 @@ public class CreateAccountController {
 
     @FXML
     void HandleCreateClick() {
-        int mode = modeTabPane.getSelectionModel().getSelectedIndex();
 
         String username = newUsername.getText().trim();
         String password = src.MD5Password.encodePassword(newPassword.getText().trim());
@@ -44,12 +42,7 @@ public class CreateAccountController {
 
         }
         else {
-            if (mode == 0) {
-                handleCreateCustomer(username, password, firstName, lastName);
-            }
-            else if (mode == 1) {
-                handleCreateEmployee(username, password, firstName, lastName);
-            }
+            handleCreateCustomer(username, password, firstName, lastName);
         }
     }
 
@@ -63,19 +56,6 @@ public class CreateAccountController {
         else {
             createAccountButton.getScene().getWindow().hide();
             Utilities.present("../Views/CustomerMainView.fxml", "Main");
-        }
-    }
-
-    private void handleCreateEmployee(String username, String password, String first, String last) {
-        src.Database db = SQL_Database.getInstance();
-
-        if (db.addEmployeeAccount(username, password, first, last) == -1) {
-            errMsg.setText("Username already in use");
-            errMsg.setVisible(true);
-        }
-        else {
-            createAccountButton.getScene().getWindow().hide();
-            Utilities.present("../Views/EmployeeMainView.fxml", "Main");
         }
     }
 

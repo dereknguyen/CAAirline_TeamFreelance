@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to bottom right,  #046A38 , black);" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EmployeeMainViewController">
    <children>
       <TabPane fx:id="TripModeTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="500.0" prefWidth="1000.0" stylesheets="@ViewsCSS/TabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
          <tabs>
@@ -99,6 +99,7 @@
                                                 </JFXTextField>
                                              </children>
                                           </HBox>
+                                          <Label text="(Base price will be adjusted using the previous two weeks of flight information)" />
                                        </children>
                                     </VBox>
                                     <Label fx:id="PS_ErrMsg" prefHeight="43.0" prefWidth="574.0" scaleShape="false" style="-fx-text-fill: red; -fx-font-family: Avenir;" />
@@ -115,7 +116,7 @@
                                           <Label fx:id="PS_ToInfo" text="To:" />
                                           <Label fx:id="PS_DateInfo" text="Date:" />
                                           <Label fx:id="PS_TimeInfo" text="Time:" />
-                                          <Label fx:id="PS_PriceInfo" text="Base Price:" />
+                                          <Label fx:id="PS_PriceInfo" text="Adjusted Price:" />
                                        </children>
                                     </VBox>
                                  </children>
