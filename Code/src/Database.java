@@ -1,6 +1,5 @@
 package src;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -10,6 +9,7 @@ public interface Database
     /* Trip methods */
     int getTripId(int FlightId, Calendar Date);
     int getNumTrips(Calendar from, Calendar to);
+    double getAvgRevenue(int FlightId);
     int getStatus(int TripId);
     int setStatus(int TripId, int Status);
     int addTrip(int FlightId, Calendar Date, double Price);
@@ -41,6 +41,7 @@ public interface Database
     int addEmployeeAccount(String Username, String EncryptedPassword, String FirstName, String LastName);
     int editEmployee(String Username, String EncryptedPassword, String FirstName, String LastName);
     int removeEmployee(String Username);
+    ArrayList<Employee> getAllEmployees(String currentEmployee);
 
     /* Ticket methods */
     int addTicket(String Username, int TripId, int SeatNumber, int NumBags, boolean CheckedIn);
@@ -50,4 +51,5 @@ public interface Database
     int setBags(String Username, int TripId, int NumBags);
     ArrayList<Integer> getFullSeats(int TripId);
     ArrayList<Ticket> getTicketsByUsername(String Username);
+    int getSelectedTripID(Trip selectedTrip, String from, String to);
 }

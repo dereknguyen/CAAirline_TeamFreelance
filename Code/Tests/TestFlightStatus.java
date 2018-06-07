@@ -15,10 +15,10 @@ public class TestFlightStatus {
     public void testFlightStatusUpdate() {
         db.setStatus(5, 1);
         int status = db.getStatus(5);
-        assertEquals(status, 1);
+        assertEquals("setandgetStatus: ", 1, status);
         db.setStatus(5, 2);
         status = db.getStatus(5);
-        assertEquals(status, 2);
+        assertEquals("setandgetStatus: ",2, status);
     }
 
     @Test
@@ -27,10 +27,10 @@ public class TestFlightStatus {
         int tripId = db.addTrip(1, c, 50);
         db.setStatus(tripId, 1);
         int status = db.getStatus(tripId);
-        assertEquals(status, 1);
+        assertEquals("setandgetStatus: ", 1, status);
 
         db.removeTrip(tripId);
         status = db.getStatus(tripId);
-        assertEquals(status, -1);
+        assertEquals("Status when trip DNE: ", -1, status);
     }
 }
