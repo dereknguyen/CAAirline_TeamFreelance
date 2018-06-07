@@ -6,9 +6,6 @@ import javafx.scene.layout.VBox;
 import src.Trip;
 
 public class PaymentSuccessViewController {
-
-    private boolean isEmployee = false;
-
     @FXML private Label D_From;
     @FXML private Label D_To;
     @FXML private Label D_Date;
@@ -21,15 +18,8 @@ public class PaymentSuccessViewController {
 
     @FXML
     void HandleReturn() {
-
         ReturnFlightInfo.getScene().getWindow().hide();
-
-        if (isEmployee) {
-            Utilities.present("/Views/EmployeeMainView.fxml", "Main");
-        }
-        else {
-            Utilities.present("/Views/CustomerMainView.fxml", "Main");
-        }
+        Utilities.present("/Views/CustomerMainView.fxml", "Main");
     }
 
     @FXML
@@ -37,7 +27,7 @@ public class PaymentSuccessViewController {
         ReturnFlightInfo.setVisible(false);
     }
 
-    public void setInfo(Trip departTrip, Trip returnTrip) {
+    void setInfo(Trip departTrip, Trip returnTrip) {
         D_From.setText("From: " + departTrip.getFromString());
         D_To.setText("To: " + departTrip.getToString());
         D_Date.setText("Date: " + departTrip.formatDate());

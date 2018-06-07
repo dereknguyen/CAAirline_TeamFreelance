@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 import src.SQL_Database;
 
 public class CreateAccountController {
