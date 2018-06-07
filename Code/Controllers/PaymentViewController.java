@@ -2,9 +2,12 @@ package Controllers;
 
 import com.jfoenix.controls.JFXComboBox;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import src.SQL_Database;
 import src.Session;
+import src.Trip;
 
 import java.util.ArrayList;
 
@@ -36,47 +39,68 @@ public class PaymentViewController {
         String username = s.getUsername();
 
         if (this.selectedMode == ONE_WAY) {
-            if (seatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (seatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select a seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
+
             ErrMsg.setVisible(false);
             int seat = seatSelection.getSelectionModel().getSelectedItem();
 
-            System.out.println(username);
-            System.out.println(this.tripID);
-            System.out.println(seat);
 
             if (this.db.addTicket(username, this.tripID, seat) == 0) {
+
+                presentTicektView(
+                        this.db.getTripInfo(this.tripID),
+                        null
+                );
+
                 totalCost.getScene().getWindow().hide();
             }
         }
         else if (this.selectedMode == ROUND_TRIP) {
-            if (seatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (seatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select an outgoing seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
-            if (returnSeatSelection.getSelectionModel().getSelectedItem() == null)
-            {
+
+            if (returnSeatSelection.getSelectionModel().getSelectedItem() == null) {
                 ErrMsg.setText("Please select a returning seat number");
                 ErrMsg.setVisible(true);
                 return;
             }
+
             ErrMsg.setVisible(false);
             int departSeat = seatSelection.getSelectionModel().getSelectedItem();
             int returnSeat = returnSeatSelection.getSelectionModel().getSelectedItem();
 
             if (this.db.addTicket(username, this.tripID, departSeat) == 0) {
                 if (this.db.addTicket(username, this.returnTripID, returnSeat) == 0) {
+
+                    presentTicektView(
+                            this.db.getTripInfo(this.tripID),
+                            this.db.getTripInfo(this.returnTripID)
+                    );
+
                     totalCost.getScene().getWindow().hide();
                 }
             }
         }
     }
+
+    private void presentTicektView(Trip trip, Trip returnTrip) {
+        Stage stage = new Stage();
+        FXMLLoader loader = Utilities.present(stage, "/Views/PaymentSuccess.fxml", "Your Ticket");
+        PaymentSuccessViewController controller = loader.getController();
+        controller.setInfo(trip, returnTrip);
+        stage.show();
+    }
+
+
 
     @FXML
     void initialize() {
