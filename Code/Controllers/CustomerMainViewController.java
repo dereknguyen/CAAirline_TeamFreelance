@@ -101,6 +101,8 @@ public class CustomerMainViewController {
     @FXML
     void B_HandlePurchase() {
 
+        SQL_Database db = SQL_Database.getInstance();
+
         int mode = B_TripModeTabPane.getSelectionModel().getSelectedIndex();
 
         if (mode == ONE_WAY) {
@@ -108,12 +110,15 @@ public class CustomerMainViewController {
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
             if (selectedTrip == null) return;
 
-            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+            int tripID = db.getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
 
             if (tripID != -1) {
 
                 Stage stage = new Stage();
-                FXMLLoader loader = Utilities.present(stage, "/Views/PaymentView.fxml", "Confirm Ticket");
+                FXMLLoader loader = Utilities.present(stage,
+                        "/Views/PaymentView.fxml",
+                        "Confirm Ticket");
+
                 PaymentViewController controller = loader.getController();
                 controller.setTripID(tripID);
                 controller.setSelectedMode(ONE_WAY);
@@ -127,7 +132,7 @@ public class CustomerMainViewController {
             Trip selectedTrip = B_AvailableFlightsTable.getSelectionModel().getSelectedItem();
             if (selectedTrip == null) return;
 
-            int tripID = getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
+            int tripID = db.getSelectedTripID(selectedTrip, selectedTrip.getFromString(), selectedTrip.getToString());
 
             String from = B_RoundTripFrom.getSelectionModel().getSelectedItem();
             String to = B_RoundTripTo.getSelectionModel().getSelectedItem();
@@ -180,6 +185,41 @@ public class CustomerMainViewController {
         }
     }
 
+    private String searchFlight(String from, String to, LocalDate localDate) {
+        System.out.println("\nSearching:");
+
+        if (from == null) {
+            System.out.println("\tError: From location missing");
+            return "Please specify location you are from.";
+        }
+        else if (to == null) {
+            System.out.println("\tError: To location missing");
+            return "Please specify location are are going to.";
+        }
+        else if (localDate == null) {
+            System.out.println("\tError: Departure date missing");
+            return "Please specify departure date.";
+        }
+        else {
+            Calendar departDate = Calendar.getInstance();
+            departDate.setTime(Date.valueOf(localDate));
+
+            Database db = SQL_Database.getInstance();
+            results = FXCollections.observableArrayList(
+                    db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
+            );
+            /* remove cancelled trips */
+            results.removeIf(t -> t.getStatus() == 2);
+
+            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
+            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
+            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
+            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+            B_AvailableFlightsTable.setItems(results);
+        }
+        return null;
+    }
 
     /*******************************************************************************************************************
      *
@@ -196,20 +236,11 @@ public class CustomerMainViewController {
         try {
             id = Integer.parseInt(CI_FlightID.getText().trim());
             if (db.checkIn(username, id) == 0) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/CustomerBaggageView.fxml"));
-                Parent root;
-
-                try {
-                    root = loader.load();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
 
                 Stage stage = new Stage();
-                stage.setTitle("Declare Baggage");
-                stage.setScene(new Scene(root));
+                FXMLLoader loader = Utilities.present(stage,
+                        "/Views/CustomerBaggageView.fxml",
+                        "Declare Baggage");
 
                 CustomerBaggageViewController controller = loader.getController();
                 controller.setTripID(id);
@@ -217,7 +248,6 @@ public class CustomerMainViewController {
                 CI_ErrMsg.setVisible(false);
                 CI_FlightID.getScene().getWindow().hide();
                 stage.show();
-
             }
             else {
                 CI_ErrMsg.setText("No matching ticket number found");
@@ -301,92 +331,23 @@ public class CustomerMainViewController {
         MF_HandleRefresh();
     }
 
+
+    /*******************************************************************************************************************
+     *
+     *  LOG OUT
+     *
+     ******************************************************************************************************************/
+
     @FXML
-    void L_HandleLogout()
-    {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/LoginView.fxml"));
-        Parent root;
-
-        try {
-            root = loader.load();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
+    void L_HandleLogout() {
         Stage stage = new Stage();
-        stage.setTitle("California System");
-        stage.setScene(new Scene(root));
+        FXMLLoader loader = Utilities.present(stage,
+                "/Views/LoginView.fxml",
+                "California System");
+
         B_TripModeTabPane.getScene().getWindow().hide();
-
-        Session s = Session.getInstance();
-        s.setUsername(null);
+        Session.getInstance().setUsername(null);
         stage.show();
-    }
-
-
-    /*================================================================================================================*
-     *
-     *  HELPERS METHODS
-     *
-     *================================================================================================================*/
-    private String searchFlight(String from, String to, LocalDate localDate) {
-        System.out.println("\nSearching:");
-
-        if (from == null) {
-            System.out.println("\tError: From location missing");
-            return "Please specify location you are from.";
-        }
-        else if (to == null) {
-            System.out.println("\tError: To location missing");
-            return "Please specify location are are going to.";
-        }
-        else if (localDate == null) {
-            System.out.println("\tError: Departure date missing");
-            return "Please specify departure date.";
-        }
-        else {
-            Calendar departDate = Calendar.getInstance();
-            departDate.setTime(Date.valueOf(localDate));
-
-            Database db = SQL_Database.getInstance();
-            results = FXCollections.observableArrayList(
-                    db.getTripsByFlightAndDate(db.getFlightId(from, to), departDate)
-            );
-            /* remove cancelled trips */
-            results.removeIf(t -> t.getStatus() == 2);
-
-            B_FromCol.setCellValueFactory(new PropertyValueFactory<>("FromString"));
-            B_ToCol.setCellValueFactory(new PropertyValueFactory<>("ToString"));
-            B_DepartDateCol.setCellValueFactory(new PropertyValueFactory<>("DateString"));
-            B_PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-            B_AvailableFlightsTable.setItems(results);
-        }
-        return null;
-    }
-
-    private int getSelectedTripID(Trip selectedTrip, String from, String to) {
-        SQL_Database db = SQL_Database.getInstance();
-
-        if (selectedTrip != null) {
-
-            int flightID = db.getFlightId(from, to);
-
-            Calendar date = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM HH:mm:ss z yyyy", Locale.ENGLISH);
-
-            try {
-                date.setTime(sdf.parse(selectedTrip.getDateString()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return db.getTripId(flightID, date);
-        }
-
-        return 0;
     }
 
 }
